@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Contact - Urban Beat</title>
+    <link rel="stylesheet" href="Index.css">
+    <link rel="stylesheet" href="Contact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="logo"> <a href="index.html"> <img src="https://template.canva.com/EAE1YAgPM_U/1/0/400w-R-Meu_EcnME.jpg" alt="Logo Festival" height="50"></a></div>
+        <nav class="main-nav">
+            <a href="Login.html" class="btn">Login</a>
+            <a href="Register.html" class="btn">Register</a>
+            <a href="FAQ.html" class="btn">FAQ</a>
+            <a href="Donatii.html" class="btn">Donatii</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Contactează Echipa Urban Beat</h1>
+
+        <div class="contact-container">
+            
+            <section class="contact-form-card">
+                <h2>Trimite-ne un mesaj rapid</h2>
+                <form action="trimite_mesaj.php" method="POST" class="contact-form">
+                    
+                    <div class="form-group">
+                        <label for="nume">Numele tău:</label>
+                        <input type="text" id="nume" name="nume" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Adresa de Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subiect">Subiect:</label>
+                        <input type="text" id="subiect" name="subiect" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mesaj">Mesajul tău:</label>
+                        <textarea id="mesaj" name="mesaj" rows="6" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="send-message-btn">Trimite Mesajul</button>
+                </form>
+            </section>
+
+            <section class="contact-info-card">
+                <h2>Alte Modalități de Contact</h2>
+                <div class="info-group">
+                    <p class="info-title">📧 Email Suport Clienți:</p>
+                    <p class="info-detail"><a href="mailto:suport@urbanbeat.ro">suport@urbanbeat.ro</a></p>
+                </div>
+                <div class="info-group">
+                    <p class="info-title">☎️ Telefon (L-V, 10:00-18:00):</p>
+                    <p class="info-detail"><a href="tel:+40700123456">+40 700 123 456</a></p>
+                </div>
+                <div class="info-group">
+                    <p class="info-title">📍 Adresă Sediul Central:</p>
+                    <p class="info-detail">Strada Libertății, Nr. 10, București</p>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-left">© 2025 Urban Beat</div>
+        <div class="footer-right">
+            <a href="FAQ.html" class="btn">Faq</a>
+            <a href="Contact.html" class="btn">Contact</a>
+        </div>
+    </footer>
+</body>
+</html>

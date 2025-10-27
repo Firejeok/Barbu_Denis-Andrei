@@ -1,37 +1,808 @@
+/* === REGLĂRI DE BAZĂ === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh; /* Asigură că body-ul ocupă cel puțin înălțimea ecranului */
+  position: relative; 
+}
+
+/* 2. Asigură că secțiunea principală crește pentru a împinge footerul */
+main {
+  flex-grow: 1; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* === HEADER === */
 .site-header {
-  display: flex;                 
-  justify-content: space-between; 
-  align-items: center;           
-  padding: 10px 20px;
-  background-color: #000000;
-  color: white;
-}
-
-.site-header .main-nav a {
-  margin-left: 20px;            
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.site-header .logo img {
-  display: block;               
-  height: 50px;               
-}
-
-
-.site-footer {
+  width: 100%;
+  background: rgba(1, 88, 113, 0.9);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #222;
-  color: white;
+  padding: 0.6rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.site-footer a {
-  margin-left: 15px;
+.site-header .logo img {
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.site-header .logo img:hover {
+  transform: scale(1.05);
+}
+
+.main-nav .btn {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 1.2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  background: #0294b3;
+  transition: all 0.3s ease;
+}
+
+.main-nav .btn:hover {
+  background: #04b3d2;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* === TITLU PRINCIPAL === */
+h1 {
+  color: #015871;
+  text-align: center;
+  margin: 2rem 0 1rem;
+  font-size: 2.2rem;
+}
+
+/* === SECȚIUNE LOGIN / GENERAL SECTION STYLES === */
+/* NOTĂ: Această secțiune este folosită ca bază pentru FAQ-Container */
+section {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 2rem 3rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  margin-bottom: 5rem;
+  backdrop-filter: blur(4px);
+}
+
+/* Stiluri Formular (păstrate de la tine) */
+section h2 {
+  color: #015871;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+form label {
+  display: block;
+  color: #015871;
+  margin: 0.5rem 0 0.2rem;
+  text-align: left;
+}
+
+form input[type="email"],
+form input[type="password"],
+form input[type="text"],
+form input[type="password"], 
+form input[type="tel"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid #aad8dc;
+  outline: none;
+  transition: 0.3s;
+}
+
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form input[type="tel"]:focus {
+  border-color: #04b3d2;
+  box-shadow: 0 0 5px rgba(4,179,210,0.4);
+}
+
+form input[type="submit"] {
+  background: #04b3d2;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+form input[type="submit"]:hover {
+  background: #0294b3;
+}
+
+form a {
+  display: inline-block;
+  color: #015871;
+  text-decoration: none;
+  margin-top: 0.8rem;
+  transition: color 0.3s;
+}
+
+form a:hover {
+  color: #04b3d2;
+}
+
+form p {
+  margin-top: 1rem;
+  color: #015871;
+}
+
+form .btn {
+  background: #04b3d2;
   color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  margin-left: 0.3rem;
+  transition: 0.3s;
   text-decoration: none;
 }
 
+form .btn:hover {
+  background: #0294b3;
+}
+
+
+/* === FOOTER === */
+.site-footer {
+  width: 100%;
+  background: #015871;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem 2rem;
+  font-size: 0.9rem;
+  position: relative; 
+  margin-top: auto; 
+}
+
+.site-footer .btn {
+  color: #fff;
+  text-decoration: none;
+  background: #04b3d2;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  transition: 0.3s;
+}
+
+.site-footer .btn:hover {
+  background: #0294b3;
+}
+
+/* === ANIMAȚIILE DE VALURI (ELIMINATE) === */
+/* Am eliminat stilurile .ocean, .wave și @keyframes pentru că nu le mai dorești */
+
+/* === STILURI SPECIFICE FAQ CARDS (NOI) === */
+
+.faq-container {
+    max-width: 900px;
+    width: 90%;
+    margin-top: 3rem;
+    margin-bottom: 5rem; /* Ajustat pentru a face loc înainte de footer */
+    padding: 2.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; 
+}
+
+.faq-container h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #015871;
+    text-align: center;
+}
+
+.faq-card {
+    background: #fff;
+    border: 2px solid #04b3d2;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(4, 179, 210, 0.3);
+}
+
+.faq-card h3 {
+    color: #0294b3;
+    font-size: 1.25rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed #aad8dc;
+}
+
+.faq-card p {
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+.intro-text, .data-actualizare {
+    max-width: 800px;
+    margin: 1rem auto 3rem auto;
+    text-align: center;
+    line-height: 1.5;
+    color: #015871;
+    font-size: 1.1rem;
+}
+
+/* Containerul Grid pentru secțiunile de regulament */
+.reglement-grid {
+    width: 90%;
+    max-width: 1400px; 
+    margin: 0 auto 5rem auto; 
+    padding: 2.5rem;
+    
+    /* Configurare Grid pentru 3 coloane */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+}
+
+/* Stil de card aplicat fiecărei secțiuni de regulament */
+.reglement-grid section {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #aad8dc; 
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; /* Asigură că toate cardurile au aceeași înălțime pe rând */
+}
+
+.reglement-grid section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(4, 179, 210, 0.2);
+}
+
+.reglement-grid h2 {
+    color: #0294b3;
+    font-size: 1.35rem;
+    margin-top: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #aad8dc;
+}
+
+.reglement-grid p, .reglement-grid li {
+    color: #333;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.reglement-grid ul {
+    margin-left: 1.2rem;
+    padding-left: 0;
+}
+
+/* Logica de centrare pentru ultima secțiune (Secțiunea 9) */
+/* Această regulă centrează ultimul element pe rândul său */
+/* Deoarece ai 9 secțiuni, toate rândurile sunt complete (3x3),
+   dar dacă ar fi fost 8 sau 7, următoarea regulă ar fi centrat ultimul card: */
+.reglement-grid section:nth-last-child(1):nth-child(3n+1), 
+.reglement-grid section:nth-last-child(1):nth-child(3n+2),
+.reglement-grid section:nth-last-child(2):nth-child(3n+1) {
+    /* Dacă rămân 1 sau 2 elemente pe ultimul rând (pe desktop): */
+    grid-column: 2 / 3; /* Centrare pe coloana din mijloc */
+}
+
+/* Responsive: Revine la 1 coloană pe ecrane mici */
+@media (max-width: 1024px) {
+    .reglement-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 coloane */
+    }
+    /* Centrare pentru 2 coloane: se aplică elementului impar de pe ultimul rând */
+    .reglement-grid section:nth-last-child(1):nth-child(2n+1) {
+        grid-column: 1 / 3; /* Se întinde pe toată lățimea */
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    /* Dezactivăm regulile de 3 coloane */
+    .reglement-grid section:nth-last-child(1):nth-child(3n+1), 
+    .reglement-grid section:nth-last-child(1):nth-child(3n+2),
+    .reglement-grid section:nth-last-child(2):nth-child(3n+1) {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .reglement-grid {
+        grid-template-columns: 1fr; /* 1 coloană pe mobil */
+    }
+    .reglement-grid section:nth-last-child(1):nth-child(2n+1) {
+        grid-column: auto;
+        max-width: none;
+    }
+}
+
+:root {
+    --primary-color: #04b3d2; /* Culoarea ta principală (Cyan) */
+    --secondary-color: #015871; /* Culoarea ta secundară (Navy Blue) */
+    --accent-color: #166786; /* O culoare puternică, diferită, pentru accent */
+}
+
+/* 2. Animație de fundal (o mișcare subtilă de la stânga la dreapta) */
+@keyframes pulseShadow {
+    0% {
+        box-shadow: 0 0 15px rgba(4, 179, 210, 0.6);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(4, 179, 210, 0.9);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(4, 179, 210, 0.6);
+    }
+}
+
+/* 3. Stilul de bază al butonului */
+.buy-ticket-btn {
+    display: inline-block;
+    padding: 22px 50px; /* Dimensiune mare */
+    font-size: 26px; /* Text mare */
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    
+    /* Culori și fundal */
+    background: var(--accent-color); /* Folosim o culoare diferită pentru a fi vizibil! */
+    color: white; 
+    border: none;
+    border-radius: 50px; /* Buton rotunjit */
+    
+    /* Umbra inițială și animație */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Tranziție fluidă */
+    
+    /* Activarea animației de pulsare */
+    animation: pulseShadow 2s infinite alternate ease-in-out;
+}
+
+/* 4. Efectul de Hover (la trecerea mouse-ului) */
+.buy-ticket-btn:hover {
+    background-color: #cc3700; /* Culoare mai închisă */
+    transform: scale(1.05); /* Se mărește ușor (animat) */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4); /* Umbră mai pronunțată */
+    
+    /* Oprim animația de pulsare pe hover (pentru a lăsa loc noului efect) */
+    animation: none;
+}
+
+/* 5. Efectul de Active (la click) */
+.buy-ticket-btn:active {
+    transform: scale(0.98); /* Se "apasă" în pagină */
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Stiluri specifice pentru pagina Bilete */
+
+/* Containerul principal al formularului */
+.ticket-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
+    width: 90%;
+    max-width: 600px;
+    margin: 3rem auto 5rem auto;
+    backdrop-filter: blur(5px);
+}
+
+.ticket-section h2 {
+    color: #015871;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+/* Opțiunile de bilet (Radio buttons) */
+.ticket-option {
+    margin-bottom: 1.5rem;
+}
+
+.ticket-option input[type="radio"] {
+    /* Ascunde radio button-ul implicit */
+    position: absolute;
+    opacity: 0;
+}
+
+.ticket-option label {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border: 2px solid #aad8dc;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f7feff;
+}
+
+/* ---------------------------------------------------------------- */
+/* === STIL NOU PENTRU OPȚIUNEA SELECTATĂ (EVIDENȚIERE) === */
+/* ---------------------------------------------------------------- */
+.ticket-option input[type="radio"]:checked + label {
+    /* Bordură mai groasă și culoare primară */
+    border: 3px solid #04b3d2; 
+    /* Fundal mai vizibil */
+    background: #e6f7fa; 
+    /* Umbră care "scoate" cardul în evidență */
+    box-shadow: 0 4px 15px rgba(4, 179, 210, 0.6);
+    /* Se ridică puțin pentru a simula o ridicare */
+    transform: scale(1.02); 
+}
+/* ---------------------------------------------------------------- */
+
+
+.ticket-option label:hover {
+    border-color: #0294b3;
+}
+
+.ticket-option .type-name {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #015871;
+}
+
+.ticket-option .price {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #cc3700;
+}
+
+.ticket-option .description {
+    flex-basis: 100%;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 0.5rem;
+}
+
+/* Stiluri pentru câmpurile de input (email, număr) */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.ticket-form label {
+    display: block;
+    color: #015871;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.ticket-form input[type="number"],
+.ticket-form input[type="email"] {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #aad8dc;
+    outline: none;
+    transition: 0.3s;
+    font-size: 1rem;
+}
+
+.ticket-form input:focus {
+    border-color: #04b3d2;
+    box-shadow: 0 0 5px rgba(4, 179, 210, 0.4);
+}
+
+/* Stil pentru butonul de Submisie */
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background: #04b3d2;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 1.5rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #0294b3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #04b3d2, rgba(0, 0, 0, 0));
+    margin: 2rem 0;
+}
+
+/* Stiluri specifice pentru pagina de Donatii */
+
+/* 1. Containerul principal (cardul de donații) */
+.donation-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
+    width: 90%;
+    max-width: 550px;
+    margin: 3rem auto 5rem auto;
+    backdrop-filter: blur(5px);
+    text-align: center;
+}
+
+.donation-section h2 {
+    color: #015871;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.donation-section .intro-text {
+    color: #333;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+/* 2. Opțiunile de Sumă (Butoanele Radio) */
+
+.amount-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+
+.amount-options input[type="radio"] {
+    /* Ascunde radio button-ul implicit */
+    position: absolute;
+    opacity: 0;
+}
+
+.amount-btn {
+    flex-grow: 1;
+    padding: 15px 10px;
+    border: 2px solid #aad8dc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f7feff;
+    font-weight: 600;
+    color: #0294b3;
+}
+
+.amount-btn:hover {
+    background: #e6f7fa;
+    border-color: #0294b3;
+}
+
+/* Stil pentru opțiunea selectată (Evidențiere similară cu biletele) */
+.amount-options input[type="radio"]:checked + .amount-btn {
+    border: 3px solid #04b3d2;
+    background: #e6f7fa; 
+    box-shadow: 0 0 10px rgba(4, 179, 210, 0.6);
+    transform: scale(1.05); /* Se mărește vizual */
+    color: #015871;
+}
+
+/* 3. Câmpurile de introducere (Suma Personalizată și Nume) */
+.custom-amount {
+    margin-bottom: 2rem;
+}
+
+.custom-amount label,
+.donation-form .form-group label {
+    display: block;
+    color: #015871;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.custom-amount input[type="number"],
+.donation-form input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #aad8dc;
+    outline: none;
+    transition: 0.3s;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.donation-form input:focus {
+    border-color: #04b3d2;
+    box-shadow: 0 0 5px rgba(4, 179, 210, 0.4);
+}
+
+/* 4. Butonul de Donație (CTA) */
+.donate-btn {
+    width: 100%;
+    padding: 15px;
+    /* Culoare Roșu/Portocaliu pentru CTA (Call to Action) */
+    background: #ff4500; 
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+}
+
+.donate-btn:hover {
+    background: #cc3700;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.donate-btn:active {
+    transform: translateY(0);
+}
+
+.thanks-text {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 1.5rem;
+}
+
+/* Stiluri specifice pentru pagina de Contact */
+
+/* Containerul principal - folosim Grid pentru cele două coloane */
+.contact-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 3rem auto 5rem auto;
+    
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* Formularul este mai lat decât informațiile */
+    gap: 30px; /* Spațiu între coloane */
+}
+
+/* Stil de bază pentru cardurile din container */
+.contact-form-card,
+.contact-info-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
+    backdrop-filter: blur(5px);
+    height: 100%; /* Pentru a avea aceeași înălțime vizuală */
+}
+
+.contact-form-card h2,
+.contact-info-card h2 {
+    color: #015871;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #aad8dc;
+    padding-bottom: 10px;
+}
+
+/* Stiluri pentru Formular */
+.contact-form .form-group {
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+.contact-form label {
+    display: block;
+    color: #015871;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #aad8dc;
+    outline: none;
+    transition: 0.3s;
+    font-size: 1rem;
+    font-family: inherit; /* Asigură că fontul Poppins e folosit și în textarea */
+    resize: vertical; /* Permite redimensionarea pe verticală */
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #04b3d2;
+    box-shadow: 0 0 5px rgba(4, 179, 210, 0.4);
+}
+
+/* Butonul de Trimite Mesajul */
+.send-message-btn {
+    width: 100%;
+    padding: 15px;
+    background: #04b3d2; 
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.send-message-btn:hover {
+    background: #0294b3;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.send-message-btn:active {
+    transform: translateY(0);
+}
+
+/* Stiluri pentru Informațiile Suplimentare */
+.info-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.info-title {
+    font-weight: 700;
+    color: #015871;
+    margin-bottom: 0.2rem;
+}
+
+.info-detail a {
+    color: #04b3d2;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.info-detail a:hover {
+    color: #0294b3;
+    text-decoration: underline;
+}
+
+
+/* === MEDIA QUERY: Schimbă layout-ul în stivă pe mobil === */
+@media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr; /* O singură coloană pe mobil */
+        gap: 20px;
+    }
+}
