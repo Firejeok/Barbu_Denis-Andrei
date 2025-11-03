@@ -62,7 +62,37 @@
             </div>
 
         </section>
+        
     </main>
+    <button id="scrollTopBtn" title="Mergi sus">
+    &#9650; <!-- Săgeată în sus -->
+</button>
+
+<script>
+// Logica pentru butonul "Go to Top"
+window.onload = function() {
+    const scrollButton = document.getElementById('scrollTopBtn');
+    // Arată butonul după 300px de scroll
+    const scrollThreshold = 300; 
+
+    // Funcția care gestionează vizibilitatea butonului la scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > scrollThreshold) {
+            scrollButton.classList.add('show');
+        } else {
+            scrollButton.classList.remove('show');
+        }
+    });
+
+    // Funcția care realizează scroll-ul lin înapoi în vârf
+    scrollButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Scroll animat
+        });
+    });
+};
+</script>
 
     <!-- Am eliminat valurile conform cererii -->
     

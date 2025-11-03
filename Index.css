@@ -1,13 +1,17 @@
 /* === REGLĂRI DE BAZĂ === */
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", sans-serif;
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+ font-family: "Poppins", sans-serif;
 }
 
 html, body {
-  height: 100%;
+  html, body {
+ height: 100%;
+ min-height: 100vh;
+ width: 100vw;
+}
 }
 
 body {
@@ -17,12 +21,13 @@ body {
   align-items: center;
   min-height: 100vh; /* Asigură că body-ul ocupă cel puțin înălțimea ecranului */
   position: relative; 
+  overflow-x: hidden;
 }
 
 /* 2. Asigură că secțiunea principală crește pentru a împinge footerul */
 main {
   flex-grow: 1; 
-  width: 100%;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,19 +36,20 @@ main {
 
 /* === HEADER === */
 .site-header {
-  width: 100%;
+  width: 100vw;
   background: rgba(1, 88, 113, 0.9);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 2rem;
+  padding: 0.6vh 2vw;
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 .site-header .logo img {
-  border-radius: 8px;
+height: 6vh;
+  border-radius: 0.8vh;
   transition: transform 0.3s ease;
 }
 
@@ -174,7 +180,7 @@ form .btn:hover {
 
 /* === FOOTER === */
 .site-footer {
-  width: 100%;
+  width: 100vw;
   background: #015871;
   color: #fff;
   display: flex;
@@ -805,4 +811,613 @@ hr {
         grid-template-columns: 1fr; /* O singură coloană pe mobil */
         gap: 20px;
     }
+}
+
+/* --- CORECȚII GLOBALE PENTRU STRUCTURA FLEXBOX ȘI FOOTER --- */
+
+/* 1. Asigură-te că body-ul folosește flexbox pentru a împinge footer-ul în jos */
+body {
+ display: flex;
+ flex-direction: column;
+ min-height: 100vh; /* Ocupă cel puțin toată înălțimea vizibilă */
+}
+
+/* 2. Permite secțiunii main să ocupe tot spațiul rămas */
+main {
+ flex-grow: 1; 
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+ align-items: center; 
+}
+
+/* 3. Forțează footer-ul să se așeze la baza conținutului */
+.site-footer {
+ position: relative; 
+ margin-top: auto; 
+}
+
+
+/* === STILURI SPECIFICE COȘ DE CUMPĂRĂTURI (cart.html) - VIZUALIZARE LATĂ ȘI ÎNĂLȚIME FIXĂ === */
+
+.cart-page {
+    /* Setat pentru a fi foarte lat pe ecrane mari */
+    max-width: 1600px; 
+    width: 95vw; /* Folosește aproape toată lățimea viewport-ului */
+    min-height: 80vh;
+    padding: 3vh 2vw;
+    margin: 0 auto;
+}
+
+.cart-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3vh;
+    margin-top: 3vh;
+    width: 100%; 
+    flex-grow: 1;
+    
+    /* MODIFICARE CHEIE: Aplică stilul de "card" pe containerul principal */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3vh; /* Padding intern pentru tot cardul */
+    border-radius: 2vh;
+    box-shadow: 0 0.5vh 3vh rgba(1, 88, 113, 0.15);
+    backdrop-filter: blur(0.5vh);
+}
+
+/* Secțiunea cu articolele din coș (Articolele ocupă mai mult spațiu: 70%) */
+.cart-items {
+    flex: 3; /* Articolele ocupă mai mult spațiu (3/4) */
+    min-width: 65%; 
+    /* ELIMINĂ stilul de card duplicat */
+    background: none; 
+    padding: 0; /* Ajustat padding-ul */
+    border-radius: 0;
+    box-shadow: none;
+    
+    /* MODIFICARE CHEIE: Înălțime fixă pentru a evita scroll-ul paginii */
+    max-height: 55vh; /* Ajustat la 55vh pentru a încadra și sumarul */
+    overflow-y: auto; /* Permite scroll doar în acest container, dacă e cazul */
+    padding-right: 1.5vw; /* Spațiu între cele două coloane */
+}
+
+.cart-items h2 {
+    color: #015871;
+    margin-bottom: 2vh;
+    border-bottom: 0.2vh solid #0294b3;
+    padding-bottom: 1vh;
+    font-size: 2.5vh;
+    /* Face titlul să stea fix în timpul scroll-ului interior */
+    position: sticky;
+    top: 0;
+    background: white; /* Fundal alb pentru titlu sticky */
+    z-index: 10;
+}
+
+.cart-items table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 1.5vh;
+}
+
+.cart-items th, .cart-items td {
+    padding: 1.2vh;
+    text-align: left;
+    color: #015871;
+    font-size: 1.7vh;
+}
+
+.cart-items thead {
+    background-color: #aad8dc;
+    border-radius: 1vh;
+    overflow: hidden;
+    /* Face header-ul tabelului să stea fix */
+    position: sticky;
+    top: 6vh; /* Ajustat sub h2 sticky */
+    z-index: 5;
+}
+
+.cart-items thead th:first-child { border-top-left-radius: 1vh; }
+.cart-items thead th:last-child { border-top-right-radius: 1vh; }
+
+.cart-items tbody tr {
+    background: #f7feff; /* O mică nuanță de culoare pe rânduri */
+    border-bottom: 0.1vh solid #eee;
+    transition: box-shadow 0.3s;
+    border-radius: 0.5vh;
+}
+
+.cart-items tbody tr:hover {
+    box-shadow: 0 0.3vh 1vh rgba(4, 179, 210, 0.2);
+}
+
+.cart-items input[type="number"] {
+    width: 6vh;
+    padding: 0.6vh;
+    border: 0.1vh solid #aad8dc;
+    border-radius: 0.8vh;
+    text-align: center;
+    font-size: 1.8vh;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: #015871;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 2vh;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.remove-btn:hover {
+    opacity: 1;
+    color: red;
+}
+
+/* --- Sumar Comandă (Ocupă spațiul rămas: 30%) --- */
+
+.cart-summary {
+    flex: 1; 
+    min-width: 300px;
+    /* ELIMINĂ stilul de card duplicat */
+    background: none; 
+    padding: 0; 
+    border-radius: 0;
+    box-shadow: none;
+    height: fit-content;
+    
+    /* MODIFICARE CHEIE: Poziționare fixă pe verticală (sticky) în interiorul cardului mare */
+    position: sticky;
+    top: 3vh; /* Se aliniază cu padding-ul intern al cart-container */
+}
+
+.cart-summary h2 {
+    color: #015871;
+    margin-bottom: 2vh;
+    font-size: 2.5vh;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.2vh;
+    color: #015871;
+    font-size: 1.8vh;
+}
+
+#donation-amount {
+    width: 6vh;
+    padding: 0.5vh;
+    border: 0.1vh solid #aad8dc;
+    border-radius: 0.8vh;
+    text-align: right;
+    margin-left: auto;
+    margin-right: 0.5vw;
+    font-size: 1.8vh;
+}
+
+hr {
+    border: none;
+    height: 0.1vh;
+    background-color: #aad8dc;
+    margin: 1.5vh 0;
+}
+
+.summary-line.total strong {
+    font-size: 2.3vh;
+    color: #0294b3;
+}
+
+.checkout-btn {
+    width: 100%;
+    display: block;
+    text-align: center;
+    padding: 1.5vh 2vw;
+    margin-top: 2vh;
+    font-size: 2.2vh;
+    font-weight: 700;
+}
+
+
+/* --- RESPONSIVITATE (Mobile) --- */
+
+@media (max-width: 768px) {
+    /* Pe mobil, containerul principal revine la coloană */
+    .cart-container {
+        flex-direction: column;
+        padding: 3vh 1.5vw; /* Padding intern mai mic pe mobil */
+        box-shadow: none; /* Elimină umbra pe mobil */
+    }
+    
+    .cart-items {
+        max-height: none; /* Elimină înălțimea fixă pe mobil */
+        overflow-y: visible;
+        padding-right: 0; /* Elimină spațiul suplimentar */
+    }
+
+    .cart-summary {
+        position: relative; /* Elimină sticky pe mobil */
+        top: 0;
+    }
+    
+    /* Stiluri tabel pe mobil... (păstrate) */
+
+    .cart-items table {
+        display: block;
+        width: 100%;
+        font-size: 1.8vh;
+    }
+
+    .cart-items thead {
+        display: none;
+    }
+
+    .cart-items tbody, .cart-items tr {
+        display: block;
+        width: 100%;
+    }
+
+    .cart-items td {
+        display: block;
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .cart-items td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 1vw;
+        font-weight: 600;
+        color: #015871;
+        font-size: 1.8vh;
+    }
+
+    .cart-items input[type="number"] {
+        text-align: left;
+    }
+    
+    /* Reajustări fonturi mari pe mobil */
+    h1 {
+        font-size: 4vh;
+    }
+}
+
+/* --- STILURI SPECIFICE PAGINII DE PROFIL (profile.html) --- */
+
+.profile-page {
+    /* Folosim același stil de container lat ca la coș */
+    max-width: 1300px;
+    width: 90vw;
+    padding: 3vh 2vw;
+    margin: 0 auto;
+}
+
+.profile-container {
+    display: grid;
+    /* Structură de bază: 1 coloană mai mică (stânga) și 1 mai mare (dreapta) */
+    grid-template-columns: 1.5fr 2fr; 
+    gap: 3vh;
+    margin-top: 3vh;
+}
+
+/* Stil de bază pentru carduri */
+.profile-info-card,
+.tickets-history-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 2.5vh;
+    border-radius: 2vh;
+    box-shadow: 0 0.5vh 1.5vh rgba(0, 0, 0, 0.08);
+    height: fit-content; /* Se ajustează la înălțimea conținutului */
+}
+
+.profile-info-card h2,
+.tickets-history-card h2,
+.profile-info-card h3 {
+    color: #015871;
+    margin-bottom: 2vh;
+    border-bottom: 0.2vh solid #aad8dc;
+    padding-bottom: 1vh;
+    font-size: 2.5vh;
+}
+
+/* --- Secțiunea de Informații Personale --- */
+
+.info-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5vh 0;
+    border-bottom: 0.1vh dashed #eee;
+}
+
+.info-label {
+    font-weight: 600;
+    color: #0294b3;
+    font-size: 1.8vh;
+    flex-grow: 1;
+}
+
+.info-value {
+    color: #333;
+    font-size: 1.8vh;
+    margin-right: 1vw;
+}
+
+.edit-btn {
+    background: #e6f7fa;
+    color: #0294b3;
+    border: 1px solid #0294b3;
+    padding: 0.5vh 1.5vw;
+    border-radius: 1.5vh;
+    cursor: pointer;
+    font-size: 1.5vh;
+    transition: all 0.3s;
+}
+
+.edit-btn:hover {
+    background: #0294b3;
+    color: white;
+}
+
+/* --- Securitatea Contului și Butoane de Acțiune --- */
+
+.action-btn {
+    width: 100%;
+    padding: 1.5vh;
+    border: none;
+    border-radius: 2vh;
+    margin-top: 1.5vh;
+    cursor: pointer;
+    font-size: 1.8vh;
+    font-weight: 700;
+    transition: background 0.3s ease;
+}
+
+.secondary-btn {
+    background: #04b3d2; /* Schimbă Parola */
+    color: white;
+}
+.secondary-btn:hover { background: #015871; }
+
+.danger-btn {
+    background: #ff4500; /* Dezactivează Contul (Culoare Roșie) */
+    color: white;
+}
+.danger-btn:hover { background: #cc3700; }
+
+.logout-btn {
+    background: #015871; /* Logout */
+    color: white;
+    margin-top: 2.5vh;
+}
+.logout-btn:hover { background: #0294b3; }
+
+
+/* --- Secțiunea Bilete Cumpărate --- */
+
+.ticket-entry {
+    background: #f7feff;
+    border: 1px solid #aad8dc;
+    border-radius: 1vh;
+    padding: 1.5vh;
+    margin-bottom: 1.5vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.active-ticket {
+    border-left: 0.5vh solid #04b3d2; /* Bandă verticală pentru biletele active */
+}
+
+.ticket-type {
+    font-weight: 700;
+    color: #015871;
+    font-size: 1.8vh;
+}
+
+.ticket-date {
+    font-size: 1.6vh;
+    color: #555;
+    margin-left: 2vw;
+    flex-grow: 1;
+}
+
+.view-btn {
+    background: #04b3d2;
+    color: white;
+    padding: 0.8vh 1.5vw;
+    border: none;
+    border-radius: 1.5vh;
+    cursor: pointer;
+    font-size: 1.6vh;
+    transition: background 0.3s;
+}
+
+.view-btn:hover {
+    background: #015871;
+}
+
+.no-tickets-msg {
+    text-align: center;
+    margin: 2vh 0;
+    font-size: 1.7vh;
+}
+.no-tickets-msg a {
+    color: #04b3d2;
+    text-decoration: none;
+}
+.no-tickets-msg a:hover {
+    text-decoration: underline;
+}
+
+.order-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2vh;
+    font-size: 1.7vh;
+}
+.order-list li {
+    padding: 0.5vh 0;
+    color: #333;
+}
+
+
+/* --- RESPONSIVITATE (Mobile) --- */
+
+@media (max-width: 992px) {
+    .profile-container {
+        /* Pe ecrane mai mici (tabletă), se trece la o singură coloană */
+        grid-template-columns: 1fr;
+        gap: 2vh;
+    }
+}
+
+/* --- BUTON GO TO TOP --- */
+
+#scrollTopBtn {
+    /* Poziționare Fixă, se mișcă odată cu scroll-ul */
+    position: fixed;
+    bottom: 30px; /* Distanța de la baza ecranului */
+    right: 50vw; /* Distanța de la marginea dreaptă */
+    
+    /* Stiluri vizuale */
+    background: #04b3d2; /* Culoarea ta principală */
+    color: white;
+    border: none;
+    border-radius: 50%; /* Buton circular */
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    line-height: 50px;
+    text-align: center;
+    cursor: pointer;
+    
+    /* Umbre și Tranziții */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* Începe ascuns */
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s, background 0.3s;
+    
+    /* Asigură că este deasupra altor elemente */
+    z-index: 9999;
+}
+
+#scrollTopBtn:hover {
+    background: #015871; /* Culoare la Hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Clasa adăugată de JavaScript pentru a-l face vizibil */
+#scrollTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* sau width: 0; */
+}
+
+/* Ascunderea barelor de scroll pentru Edge și Internet Explorer */
+body {
+    -ms-overflow-style: none; /* IE și Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.quick-nav-container {
+    position: relative;
+    z-index: 1100;
+    margin-left: auto; /* Asigură că este deasupra header-ului sticky */
+    /* ATENȚIE: Am șters margin-left de aici pentru ca Flexbox-ul din header să-l poată împinge la dreapta. */
+}
+
+/* Stilul de bază al butonului Hamburger (cel pe care îl vezi) */
+.hamburger-btn {
+    background: #015871; /* Culoarea ta secundară */
+    border: 2px solid #04b3d2;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    transition: all 0.3s;
+}
+
+.hamburger-btn:hover {
+    background: #0294b3;
+}
+
+/* Liniile din interiorul butonului */
+.hamburger-btn span {
+    display: block;
+    width: 80%;
+    height: 3px;
+    background: white;
+    border-radius: 1px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Efectul de transformare la "X" (Când clasa .open este adăugată de JS) */
+.hamburger-btn.open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger-btn.open span:nth-child(2) {
+    opacity: 0; /* Linia din mijloc dispare */
+}
+
+.hamburger-btn.open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Meniul Derulant (Quick Nav Menu) */
+.quick-nav-menu {
+    position: absolute;
+    top: 55px; /* Poziționat sub buton */
+    right: 0;
+    width: 200px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+
+    /* Stare ascunsă inițial (transformat de JS) */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+}
+
+/* Stare activă (Afișată de JS când are clasa .active) */
+.quick-nav-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.quick-nav-link {
+    display: block;
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #015871;
+    font-weight: 600;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+.quick-nav-link:last-child {
+    border-bottom: none;
+}
+
+.quick-nav-link:hover {
+    background: #e6f7fa;
+    color: #04b3d2;
 }
