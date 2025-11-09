@@ -868,7 +868,7 @@ main {
 /* Secțiunea cu articolele din coș (Articolele ocupă mai mult spațiu: 70%) */
 .cart-items {
     flex: 3; /* Articolele ocupă mai mult spațiu (3/4) */
-    min-width: 65%; 
+    min-width: 100%; 
     /* ELIMINĂ stilul de card duplicat */
     background: none; 
     padding: 0; /* Ajustat padding-ul */
@@ -1420,4 +1420,98 @@ body {
 .quick-nav-link:hover {
     background: #e6f7fa;
     color: #04b3d2;
+}
+
+.artists-container {
+    /* Utilizează un container similar cu .reglement-grid pentru structura de carduri */
+    width: 90%;
+    max-width: 1400px; 
+    margin: 3rem auto 5rem auto; 
+    padding: 2.5rem;
+    
+    /* Simulează stilul de fundal al containerelor mari */
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
+    backdrop-filter: blur(5px);
+    
+    /* Configurare Grid (ideal pentru carduri) */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 coloane pe desktop */
+    gap: 30px; 
+}
+
+
+/* === STILUL CARDULUI INDIVIDUAL (.artist-card) === */
+
+.artist-card {
+    /* Preia stilul de card (similar cu .reglement-grid section sau .faq-card) */
+    background: #fff;
+    border: 2px solid var(--primary-color); /* Bordură din culoarea principală */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden; /* Asigură că imaginea e conținută */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; /* Asigură înălțime uniformă pe rând */
+}
+
+.artist-card:hover {
+    /* Efect de hover similar cu cel din Index.css */
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 30px rgba(4, 179, 210, 0.3);
+}
+
+.artist-image {
+    width: 100%;
+    height: 250px; /* Înălțime fixă pentru imagine */
+    object-fit: cover; /* Ajustează imaginea */
+    display: block;
+}
+
+.artist-info {
+    padding: 15px 20px 25px 20px;
+}
+
+.artist-info h2 {
+    /* Stil pentru numele artistului (similar cu titlurile din Index.css) */
+    color: var(--secondary-color); /* Navy Blue */
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.artist-genre,
+.artist-stage {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+}
+
+.artist-description {
+    color: #333;
+    line-height: 1.4;
+    margin: 1rem 0 1.5rem 0;
+    font-size: 0.9rem;
+}
+
+/* === BUTONUL DE DETALII (.details-button) === */
+
+.details-button {
+    /* Stil similar cu .main-nav .btn sau .send-message-btn */
+    display: inline-block;
+    background: var(--primary-color); /* Cyan */
+    color: white;
+    padding: 0.8rem 1.5rem;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.details-button:hover {
+    background: #0294b3; /* O nuanță mai închisă de cyan */
+    box-shadow: 0 0 10px rgba(4, 179, 210, 0.5);
+    transform: translateY(-1px);
 }
