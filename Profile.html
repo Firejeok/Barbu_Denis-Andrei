@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilul Meu - Urban Beat</title>
+    <!-- Asigură-te că Index.css este link-ul corect către fișierul tău principal -->
+    <link rel="stylesheet" href="Index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; display: flex; align-items: center;">
+                <!-- Logo-ul SVG (pastrat de la discutiile anterioare) -->
+                <svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <style>
+                        .urban-text { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+                        .beat-text { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+                        .slogan-text { font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 600; }
+                        .wave-line { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+                    </style>
+                    <path class="wave-line" d="M10 30 C 25 15, 45 40, 60 25 S 90 10, 105 25 S 135 40, 150 25 S 180 10, 190 20" stroke="#04b3d2" opacity="0.7"/>
+                    <text x="5" y="28" class="urban-text" fill="#015871">URBAN</text>
+                    <text x="90" y="28" class="beat-text" fill="#04b3d2">BEAT</text>
+                    <text x="15" y="42" class="slogan-text" fill="#015871">CHARITY FEST</text>
+                </svg>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <a href="Login.html" class="btn">Login</a>
+            <a href="Register.html" class="btn">Register</a>
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </nav>
+    </header>
+
+    <main class="profile-page">
+        <h1>Bun venit, [Nume Utilizator]!</h1>
+
+        <div class="profile-container">
+            
+            <!-- COLOANA DIN STÂNGA: Informații Personale și Gestionare -->
+            <section class="profile-info-card">
+                <h2>Informații Cont</h2>
+                
+                <div class="info-group">
+                    <span class="info-label">Nume:</span>
+                    <span class="info-value">Popescu Ion</span>
+                    
+                </div>
+                
+                <div class="info-group">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">ion.popescu@exemplu.ro</span>
+                    
+                </div>
+
+                <hr>
+
+                <h3>Securitatea Contului</h3>
+                <button class="action-btn secondary-btn">Schimbă Parola</button>
+                <button class="action-btn danger-btn">Dezactivează Contul</button>
+            </section>
+            
+            <!-- COLOANA DIN DREAPTA: Bilete Cumpărate (Istoric) -->
+            <section class="tickets-history-card">
+                <h2>Biletele Mele Active</h2>
+                
+                <div class="ticket-entry active-ticket">
+                    <span class="ticket-type">Abonament 3 Zile Standard</span>
+                    <span class="ticket-date">5-7 Iunie 2025</span>
+                    <button class="view-btn">Vezi QR Code</button>
+                </div>
+                
+                <div class="ticket-entry">
+                    <span class="ticket-type">Bilet Zilei (Sâmbătă)</span>
+                    <span class="ticket-date">6 Iunie 2025</span>
+                    <button class="view-btn">Vezi QR Code</button>
+                </div>
+                
+                <p class="no-tickets-msg">
+                    <a href="CumBil.html">Nu ai bilete active? Cumpără acum!</a>
+                </p>
+
+                <hr>
+
+                <h2>Istoric</h2>
+                <ul class="order-list">
+                    <li>Comandă #2025-456 (2 bilete) - 270 RON</li>
+                    <li>Comandă #2024-012 (1 bilet VIP) - 450 RON</li>
+                    <li>Donatie caritabila - 5000 RON</li>
+                </ul>
+                
+                <button class="action-btn logout-btn">Deconectare (Logout)</button>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-left">© 2025 Urban Beat</div>
+        <div class="footer-right">
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </div>
+    </footer>
+
+</body>
+</html>

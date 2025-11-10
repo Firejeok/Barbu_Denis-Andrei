@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coș de Cumpărături - Urban Beat</title>
+    <!-- Asigură-te că Index.css include toate stilurile de bază + cele din cart-styles.css de mai jos -->
+    <link rel="stylesheet" href="Index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; display: flex; align-items: center;">
+                <svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <style>
+                        .urban-text { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+                        .beat-text { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+                        .slogan-text { font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 600; }
+                        .wave-line { 
+                            fill: none;
+                            stroke-width: 3;
+                            stroke-linecap: round;
+                            stroke-linejoin: round;
+                        }
+                    </style>
+                    <path class="wave-line" d="M10 30 C 25 15, 45 40, 60 25 S 90 10, 105 25 S 135 40, 150 25 S 180 10, 190 20" stroke="#04b3d2" opacity="0.7"/>
+                    <text x="5" y="28" class="urban-text" fill="#015871">URBAN</text>
+                    <text x="90" y="28" class="beat-text" fill="#04b3d2">BEAT</text>
+                    <text x="15" y="42" class="slogan-text" fill="#015871">CHARITY FEST</text>
+                </svg>
+            </a>
+        </div>
+        <nav class="main-nav">
+            <a href="Login.html" class="btn">Login</a>
+            <a href="Register.html" class="btn">Register</a>
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </nav>
+    </header>
+
+    <main class="cart-page">
+        <h1>Coșul Tău de Cumpărături</h1>
+
+        <section class="cart-container">
+            <!-- Tabela pentru Produse (Bilete) -->
+            <div class="cart-items">
+                <h2>Bilete Adăugate</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bilet</th>
+                            <th>Preț Unitar</th>
+                            <th>Cantitate</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Exemplu de bilet adăugat -->
+                        <tr>
+                            <td>Abonament 3 Zile Standard</td>
+                            <td>150 RON</td>
+                            <td><input type="number" value="1" min="1"></td>
+                            <td>150 RON</td>
+                        </tr>
+                        <!-- Exemplu 2 -->
+                        <tr>
+                            <td>Bilet Zilei (Vineri)</td>
+                            <td>60 RON</td>
+                            <td><input type="number" value="2" min="1"></td>
+                            <td>120 RON</td>
+                        </tr>
+                        <!-- Aici se adaugă dinamic rânduri cu JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Sumar Comandă -->
+            <div class="cart-summary">
+                <h2>Sumar Comandă</h2>
+                <div class="summary-line">
+                    <span>Subtotal Bilete:</span>
+                    <span id="subtotal">270 RON</span>
+                </div>
+                <div class="summary-line donation">
+                    <span>Donație Caritabilă:</span>
+                    <input type="number" id="donation-amount" value="10" min="0">
+                    <span>RON</span>
+                </div>
+                <hr>
+                <div class="summary-line total">
+                    <strong>Total de Plată:</strong>
+                    <strong id="final-total">280 RON</strong>
+                </div>
+
+                <a href="#" class="btn checkout-btn">Finalizează Comanda</a>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="site-footer">
+        <div class="footer-left">© 2025 Urban Beat</div>
+        <div class="footer-right">
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </div>
+    </footer>
+
+</body>
+</html>
