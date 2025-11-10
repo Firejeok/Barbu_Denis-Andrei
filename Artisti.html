@@ -72,43 +72,153 @@ window.onload = function() {
             <img src="calea/catre/imaginea/artistului1.jpg" alt="Imagine Artist 1" class="artist-image">
             <div class="artist-info">
                 <h2>Nume Artist 1</h2>
-                <p class="artist-genre">Gen: Rock Alternativ</p>
-                <p class="artist-stage">Scena: Main Stage</p>
-                <p class="artist-description">Descriere scurtă a stilului sau un hit notabil.</p>
-                <a href="link_detalii_artist1.html" class="details-button">Detalii & Oră</a>
+        
+        <a href="#" class="details-button"
+           data-name="Nume Artist 1"
+           data-genre="Rock Alternativ"
+           data-stage="Main Stage"
+           data-time="Vineri, 22:00 - 23:30"
+           data-image="calea/catre/imaginea/artistului1.jpg"
+           data-description="Nume Artist 1 este cap de afiș. Setul va include piese de pe noul album și hit-uri clasice. Nu ratați show-ul lor de lumini!"
+           data-social-link="https://instagram.com/artist1">
+           Detalii & Oră
+        </a>
             </div>
         </div>
         <div class="artist-card">
             <img src="calea/catre/imaginea/artistului2.jpg" alt="Imagine Artist 2" class="artist-image">
             <div class="artist-info">
                 <h2>Nume Artist 2</h2>
-                <p class="artist-genre">Gen: EDM/Techno</p>
-                <p class="artist-stage">Scena: Electronic Dome</p>
-                <p class="artist-description">Un DJ de top, cunoscut pentru seturile sale energice.</p>
-                <a href="link_detalii_artist2.html" class="details-button">Detalii & Oră</a>
+        
+        <a href="#" class="details-button"
+           data-name="Nume Artist 2"
+           data-genre="Techno Progresiv"
+           data-stage="Electronic Dome"
+           data-time="Sâmbătă, 01:00 - 03:00"
+           data-image="calea/catre/imaginea/artistului2.jpg"
+           data-description="Faimosul DJ 2 aduce un set exploziv de 2 ore. Pregătiți-vă pentru un show cu mult bass și efecte vizuale uimitoare."
+           data-social-link="https://facebook.com/artist2">
+           Detalii & Oră
+        </a>
             </div>
         </div>
         <div class="artist-card">
             <img src="calea/catre/imaginea/artistului3.jpg" alt="Imagine Artist 3" class="artist-image">
             <div class="artist-info">
                 <h2>Nume Artist 3</h2>
-                <p class="artist-genre">Gen: Pop/Hip-Hop</p>
-                <p class="artist-stage">Scena: Main Stage</p>
-                <p class="artist-description">Nume popular, așteptat cu nerăbdare de fani.</p>
-                <a href="link_detalii_artist3.html" class="details-button">Detalii & Oră</a>
+                <a href="#" class="details-button"
+           data-name="Nume Artist 2"
+           data-genre="Techno Progresiv"
+           data-stage="Electronic Dome"
+           data-time="Sâmbătă, 01:00 - 03:00"
+           data-image="calea/catre/imaginea/artistului2.jpg"
+           data-description="Faimosul DJ 2 aduce un set exploziv de 2 ore. Pregătiți-vă pentru un show cu mult bass și efecte vizuale uimitoare."
+           data-social-link="https://facebook.com/artist2">
+           Detalii & Oră
+        </a>
             </div>
         </div>
         <div class="artist-card">
             <img src="calea/catre/imaginea/artistului1.jpg" alt="Imagine Artist 1" class="artist-image">
             <div class="artist-info">
                 <h2>Nume Artist 1</h2>
-                <p class="artist-genre">Gen: Rock Alternativ</p>
-                <p class="artist-stage">Scena: Main Stage</p>
-                <p class="artist-description">Descriere scurtă a stilului sau un hit notabil.</p>
-                <a href="link_detalii_artist1.html" class="details-button">Detalii & Oră</a>
+                <a href="#" class="details-button"
+           data-name="Nume Artist 2"
+           data-genre="Techno Progresiv"
+           data-stage="Electronic Dome"
+           data-time="Sâmbătă, 01:00 - 03:00"
+           data-image="calea/catre/imaginea/artistului2.jpg"
+           data-description="Faimosul DJ 2 aduce un set exploziv de 2 ore. Pregătiți-vă pentru un show cu mult bass și efecte vizuale uimitoare."
+           data-social-link="https://facebook.com/artist2">
+           Detalii & Oră
+        </a>
             </div>
         </div>
         </div>
+
+        <div id="artistModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        
+        <img id="modal-image" src="" alt="Imagine Artist Modal" class="modal-artist-image">
+        <div class="modal-info">
+            <h2 id="modal-name">Nume Artist</h2>
+            <p><strong class="modal-label">Gen:</strong> <span id="modal-genre">Rock Alternativ</span></p>
+            <p><strong class="modal-label">Scena:</strong> <span id="modal-stage">Main Stage</span></p>
+            <p><strong class="modal-label">Ora de Început:</strong> <span id="modal-time">22:00 - 23:30</span></p>
+            <p><strong class="modal-label">Descriere:</strong> <span id="modal-description">Biografia completă a artistului și detalii despre setlist.</span></p>
+            <a id="modal-social" href="#" target="_blank" class="modal-social-btn">Vezi Social Media</a>
+        </div>
+    </div>
+</div>
+<script>
+    // 1. Obținerea elementelor DOM
+    const modal = document.getElementById('artistModal');
+    const closeBtn = document.querySelector('.close-btn');
+    const detailButtons = document.querySelectorAll('.details-button');
+
+    // Elementele din interiorul modalului pe care le vom umple
+    const modalImage = document.getElementById('modal-image');
+    const modalName = document.getElementById('modal-name');
+    const modalGenre = document.getElementById('modal-genre');
+    const modalStage = document.getElementById('modal-stage');
+    const modalTime = document.getElementById('modal-time');
+    const modalDescription = document.getElementById('modal-description');
+    const modalSocial = document.getElementById('modal-social');
+
+
+    // 2. Funcția de Despide Modal
+    function openModal(e) {
+        e.preventDefault(); // Oprește link-ul de a merge nicăieri
+
+        // Extrage datele din atributele data-* ale butonului
+        const data = e.currentTarget.dataset;
+
+        // Umple modalul cu datele extrase
+        modalImage.src = data.image;
+        modalName.textContent = data.name;
+        modalGenre.textContent = data.genre;
+        modalStage.textContent = data.stage;
+        modalTime.textContent = data.time;
+        modalDescription.textContent = data.description;
+        modalSocial.href = data.socialLink;
+
+        // Afișează modalul
+        modal.style.display = 'block';
+    }
+
+    // 3. Funcția de Închidere Modal
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+
+    // 4. Ascultători de Evenimente
+
+    // Adaugă ascultător pentru fiecare buton de detalii
+    detailButtons.forEach(button => {
+        button.addEventListener('click', openModal);
+    });
+
+    // Închide modalul la click pe X
+    closeBtn.addEventListener('click', closeModal);
+
+    // Închide modalul la click în afara ferestrei (pe fundalul negru)
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Închide modalul la apăsarea tastei ESC
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            closeModal();
+        }
+    });
+</script>
+<canvas id="particle-canvas" class="particle-background"></canvas>
+<script defer src="script.js"></script>
 
 </body>
 <footer class="site-footer">

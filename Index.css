@@ -7,12 +7,12 @@
 }
 
 html, body {
-  html, body {
  height: 100%;
  min-height: 100vh;
  width: 100vw;
+ z-index: 1000;
 }
-}
+
 
 body {
   background: radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
@@ -22,6 +22,7 @@ body {
   min-height: 100vh; /* Asigură că body-ul ocupă cel puțin înălțimea ecranului */
   position: relative; 
   overflow-x: hidden;
+  z-index: 999;
 }
 
 /* 2. Asigură că secțiunea principală crește pentru a împinge footerul */
@@ -31,6 +32,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 999;
 }
 
 
@@ -1514,4 +1516,190 @@ body {
     background: #0294b3; /* O nuanță mai închisă de cyan */
     box-shadow: 0 0 10px rgba(4, 179, 210, 0.5);
     transform: translateY(-1px);
+}
+
+
+.countdown-section {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
+    text-align: center;
+}
+
+.countdown-section h2 {
+    color: var(--secondary-color); /* #015871 */
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+}
+
+.countdown-display {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.time-block {
+    background: var(--primary-color); /* #04b3d2 */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    min-width: 120px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+}
+
+.time-block span {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.time-block small {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-top: 5px;
+}
+
+.status-msg {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #cc3700; /* Culoare de accent, Portocaliu/Roșu */
+}
+
+/* Stil pentru când timpul a expirat */
+.countdown-finished {
+    color: var(--secondary-color) !important; 
+    background: #ffe082; /* Galben moale de avertizare */
+    font-size: 2rem !important;
+}
+
+.particle-background {
+    display: block;
+    position: fixed; /* Se fixează pe viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -10; /* O valoare foarte mică pentru a fi SUB toate celelalte elemente */
+    /* Adaugă gradientul tău de bază pe canvas (opțional, dacă nu vrei să folosești body-ul) */
+    background: radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
+}
+
+/* Containerul Modal (Fundalul Negru Opac) */
+.modal {
+    display: none; /* Ascuns implicit */
+    position: fixed; /* Rămâne fix pe ecran când utilizatorul derulează */
+    z-index: 10000; /* Foarte mare, pentru a fi DEASUPRA TUTUROR elementelor (inclusiv header) */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8); /* Fundal negru semi-transparent */
+    backdrop-filter: blur(5px); /* Efect de blur pe fundal */
+}
+
+/* Conținutul Modalului (Cardul Alb) */
+.modal-content {
+    background-color: white;
+    margin: 5% auto; /* Centrarea verticală și orizontală */
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    animation-name: modalopen;
+    animation-duration: 0.5s;
+    display: flex; /* Folosim flexbox pentru aranjament imagine/text */
+    gap: 30px;
+}
+
+/* Animație de intrare */
+@keyframes modalopen {
+    from {opacity: 0; transform: translateY(-50px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+/* Butonul de Închidere (X) */
+.close-btn {
+    color: #015871; /* Culoarea ta secundară */
+    float: right;
+    font-size: 36px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #ff4500; /* Culoarea de accent (roșu/portocaliu) */
+    text-decoration: none;
+}
+
+/* Stiluri pentru imaginea artistului în modal */
+.modal-artist-image {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0; /* Nu se micșorează */
+}
+
+.modal-info h2 {
+    color: #015871;
+    margin-top: 0;
+    font-size: 1.8rem;
+    border-bottom: 2px solid #aad8dc;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.modal-info p {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.modal-label {
+    color: #04b3d2;
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+.modal-social-btn {
+    display: inline-block;
+    background: #04b3d2;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.modal-social-btn:hover {
+    background: #0294b3;
+}
+
+/* Responsive: Pe mobil, așază imaginea deasupra textului */
+@media (max-width: 768px) {
+    .modal-content {
+        flex-direction: column;
+        padding: 20px;
+        margin: 10% auto;
+    }
+    .modal-artist-image {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 15px;
+    }
 }
