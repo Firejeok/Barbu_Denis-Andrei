@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercițiul 5</title>
+</head>
+<body>
+    <h1>Exercitiul 5</h1>
+
+    <script>
+
+        function clasificaTriunghi(a, b, c) {
+
+            if (a > 0 && b > 0 && c > 0 && 
+                a + b > c && 
+                a + c > b && 
+                b + c > a) {
+
+
+                if (a === b && b === c) {
+
+                    console.log("Cele 3 laturi pot forma un triunghi echilateral");
+                } else if (a === b || a === c || b === c) {
+
+                    console.log("Cele 3 laturi pot forma un triunghi isoscel");
+                } else {
+
+                    console.log("Cele 3 laturi pot forma un triunghi oarecare");
+                }
+
+            } else {
+
+                console.log("Cele 3 numere NU pot reprezenta laturile unui triunghi");
+            }
+        }
+
+
+        clasificaTriunghi(10, 10, 10); 
+        clasificaTriunghi(8, 8, 5); 
+        clasificaTriunghi(4, 5, 6); 
+        clasificaTriunghi(1, 2, 10); 
+        
+    </script>
+</body>
+</html>
