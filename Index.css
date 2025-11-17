@@ -843,185 +843,198 @@ main {
 /* === STILURI SPECIFICE COȘ DE CUMPĂRĂTURI (cart.html) - VIZUALIZARE LATĂ ȘI ÎNĂLȚIME FIXĂ === */
 
 .cart-page {
-    /* Setat pentru a fi foarte lat pe ecrane mari */
-    max-width: 1600px; 
-    width: 95vw; /* Folosește aproape toată lățimea viewport-ului */
+    max-width: 1400px; /* Redus puțin lățimea max pentru un aspect mai compact */
+    width: 95vw; 
     min-height: 80vh;
     padding: 3vh 2vw;
     margin: 0 auto;
 }
 
+/* 2. CONTAINERUL COȘULUI (.cart-container) - MODIFICARE MAJORĂ LA GRID */
 .cart-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 3vh;
-    margin-top: 3vh;
+    /* Eliminăm flexbox și trecem la Grid */
+    display: grid; 
+    /* Două coloane: 3/4 pentru articole, 1/4 pentru sumar (sidebar) */
+    grid-template-columns: 3fr 1fr; 
+    gap: 3vh; /* Spațiu între coloane */
+    margin-top: 3vh; 
     width: 100%; 
-    flex-grow: 1;
     
-    /* MODIFICARE CHEIE: Aplică stilul de "card" pe containerul principal */
+    /* Stilul de card rămâne același */
     background: rgba(255, 255, 255, 0.9);
-    padding: 3vh; /* Padding intern pentru tot cardul */
+    padding: 3vh; 
     border-radius: 2vh;
     box-shadow: 0 0.5vh 3vh rgba(1, 88, 113, 0.15);
     backdrop-filter: blur(0.5vh);
 }
 
-/* Secțiunea cu articolele din coș (Articolele ocupă mai mult spațiu: 70%) */
+/* 3. SECȚIUNEA ARTICOLE (.cart-items) */
 .cart-items {
-    flex: 3; /* Articolele ocupă mai mult spațiu (3/4) */
-    min-width: 100%; 
-    /* ELIMINĂ stilul de card duplicat */
-    background: none; 
-    padding: 0; /* Ajustat padding-ul */
-    border-radius: 0;
-    box-shadow: none;
+    /* Elimină linia: min-width: 100%; */ 
     
-    /* MODIFICARE CHEIE: Înălțime fixă pentru a evita scroll-ul paginii */
-    max-height: 55vh; /* Ajustat la 55vh pentru a încadra și sumarul */
-    overflow-y: auto; /* Permite scroll doar în acest container, dacă e cazul */
-    padding-right: 1.5vw; /* Spațiu între cele două coloane */
+    /* Asigură-te că flex-grow este eliminat sau setat la auto/unset */
+    flex: unset; 
+    /* Păstrează regulile Grid: */
+    grid-column: 1 / 2;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 1.5vw;
+    /* ... restul stilurilor ... */
+}
+.cart-items input[type="number"] {
+    width: 6vh;
+    padding: 0.6vh;
+    border: 0.1vh solid #aad8dc;
+    border-radius: 0.8vh; /* Rotunjire */
+    text-align: center;
+    font-size: 1.8vh;
+    /* Adaugă tranziție pentru focus */
+    transition: all 0.3s ease; 
 }
 
+/* Stil când caseta este selectată */
+.cart-items input[type="number"]:focus {
+    border-color: #04b3d2; /* Bordură Cyan la focus */
+    box-shadow: 0 0 5px rgba(4, 179, 210, 0.5); /* Umbră subtilă */
+    outline: none; /* Elimină outline-ul implicit al browserului */
+}
+
+.remove-btn {
+    /* Stil de bază, preluat din codul tău anterior, dar îmbunătățit */
+    background: none;
+    border: none;
+    color: #015871; /* Navy Blue (culoarea ta secundară) */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 2vh;
+    opacity: 0.6;
+    transition: opacity 0.3s, background 0.3s, color 0.3s;
+    
+    /* === STIL NOU DE BUTON ROTUND === */
+    width: 3vh; /* Lățime fixă */
+    height: 3vh; /* Înălțime fixă */
+    border-radius: 50%; /* Face butonul rotund */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1; /* Aliniere verticală mai bună a "X"-ului */
+}
+
+.remove-btn:hover {
+    opacity: 1;
+    color: white; /* Textul alb */
+    background: #ff4500; /* Fundal roșu (culoarea de accent pentru pericol/ștergere) */
+    box-shadow: 0 2px 5px rgba(255, 69, 0, 0.4);
+}
+/* Corecție pentru alinierea butonului X în coloana finală */
+.cart-items th:last-child, 
+.cart-items td:last-child {
+    text-align: center; /* Centrează butonul X */
+}
 .cart-items h2 {
     color: #015871;
     margin-bottom: 2vh;
     border-bottom: 0.2vh solid #0294b3;
     padding-bottom: 1vh;
     font-size: 2.5vh;
-    /* Face titlul să stea fix în timpul scroll-ului interior */
+    
+    /* Poziționare sticky pentru a urmări scroll-ul interior */
     position: sticky;
-    top: 0;
-    background: white; /* Fundal alb pentru titlu sticky */
-    z-index: 10;
+    top: 0; 
+    background: #FFFFFF;
+    padding-top: 1vh; /* Fundal semi-opac pentru titlu sticky */
+    z-index: 15;
 }
 
+/* 4. SUMAR COMANDĂ (.cart-summary) - SIDEBAR STICKY */
+.cart-summary {
+    /* Ocupă a doua coloană (1/4) */
+    grid-column: 2 / 3;
+    min-width: 250px; /* Lățime minimă asigurată */
+    
+    /* Poziționare fixă (sticky) în interiorul containerului Grid */
+    position: sticky;
+    top: 3vh; /* Aliniat cu padding-ul containerului mare */
+    height: fit-content; /* Ocupă doar înălțimea conținutului său */
+    
+    /* Transformăm sumarul într-un mini-card distinct */
+    background: #f7feff; /* Fundal foarte deschis */
+    padding: 2.5vh;
+    border-radius: 1.5vh;
+    box-shadow: 0 0.5vh 2vh rgba(4, 179, 210, 0.1); /* Umbră cu culoarea primară */
+}
+
+.cart-summary h2 {
+    color: #015871;
+    margin-bottom: 2vh;
+    font-size: 2.3vh;
+    border-bottom: 0.1vh solid #aad8dc;
+    padding-bottom: 1vh;
+}
+
+/* 5. STILURI TABEL (Fără modificări majore la aspectul rândurilor) */
 .cart-items table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 1.5vh;
 }
 
-.cart-items th, .cart-items td {
-    padding: 1.2vh;
-    text-align: left;
-    color: #015871;
-    font-size: 1.7vh;
-}
-
+/* Păstrăm stilul sticky pentru header-ul tabelului, ajustat sub h2 */
 .cart-items thead {
     background-color: #aad8dc;
+    position: sticky;
     border-radius: 1vh;
     overflow: hidden;
-    /* Face header-ul tabelului să stea fix */
-    position: sticky;
-    top: 6vh; /* Ajustat sub h2 sticky */
-    z-index: 5;
+    top: 7vh; /* Ajustat sub h2 sticky */
+    z-index: 30;
+    background: #aad8dc;
+    /* ... restul stilurilor thead ... */
 }
-
-.cart-items thead th:first-child { border-top-left-radius: 1vh; }
-.cart-items thead th:last-child { border-top-right-radius: 1vh; }
 
 .cart-items tbody tr {
-    background: #f7feff; /* O mică nuanță de culoare pe rânduri */
-    border-bottom: 0.1vh solid #eee;
-    transition: box-shadow 0.3s;
-    border-radius: 0.5vh;
+    /* NU adăuga position: relative; și z-index mare aici */
+    position: relative; 
+    z-index: 1; /* Asigură că rămâne la un nivel de stivuire scăzut */
+    /* ... restul stilurilor ... */
 }
+/* ... restul stilurilor tabelului (rânduri, butoane, etc.) rămân la fel ... */
 
-.cart-items tbody tr:hover {
-    box-shadow: 0 0.3vh 1vh rgba(4, 179, 210, 0.2);
-}
 
-.cart-items input[type="number"] {
-    width: 6vh;
-    padding: 0.6vh;
-    border: 0.1vh solid #aad8dc;
-    border-radius: 0.8vh;
-    text-align: center;
-    font-size: 1.8vh;
-}
-
-.remove-btn {
-    background: none;
-    border: none;
-    color: #015871;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 2vh;
-    opacity: 0.6;
-    transition: opacity 0.3s;
-}
-
-.remove-btn:hover {
-    opacity: 1;
-    color: red;
-}
-
-/* --- Sumar Comandă (Ocupă spațiul rămas: 30%) --- */
-
-.cart-summary {
-    flex: 1; 
-    min-width: 300px;
-    /* ELIMINĂ stilul de card duplicat */
-    background: none; 
-    padding: 0; 
-    border-radius: 0;
-    box-shadow: none;
-    height: fit-content;
+/* --- RESPONSIVITATE (Mobile) --- */
+@media (max-width: 992px) {
+    /* Pe tabletă, revenim la Flexbox pe coloană */
+    .cart-container {
+        display: flex;
+        flex-direction: column;
+        padding: 3vh 1.5vw;
+        box-shadow: none;
+        gap: 4vh; /* Spațiu mai mare între secțiuni */
+    }
     
-    /* MODIFICARE CHEIE: Poziționare fixă pe verticală (sticky) în interiorul cardului mare */
-    position: sticky;
-    top: 3vh; /* Se aliniază cu padding-ul intern al cart-container */
-}
+    .cart-items {
+        max-height: none; 
+        overflow-y: visible;
+        padding-right: 0; 
+        /* Resetăm sticky pentru elementele din interior */
+    }
 
-.cart-summary h2 {
-    color: #015871;
-    margin-bottom: 2vh;
-    font-size: 2.5vh;
-}
+    .cart-items h2 {
+        position: relative; /* Eliminăm sticky pe mobil */
+        background: none;
+    }
+    
+    .cart-items thead {
+        position: relative; /* Eliminăm sticky pe mobil */
+        top: 0;
+    }
 
-.summary-line {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1.2vh;
-    color: #015871;
-    font-size: 1.8vh;
+    .cart-summary {
+        position: relative; /* Eliminăm sticky pe mobil (sidebar-ul nu mai plutește) */
+        top: 0;
+        min-width: 100%;
+        margin-bottom: 2vh;
+    }
 }
-
-#donation-amount {
-    width: 6vh;
-    padding: 0.5vh;
-    border: 0.1vh solid #aad8dc;
-    border-radius: 0.8vh;
-    text-align: right;
-    margin-left: auto;
-    margin-right: 0.5vw;
-    font-size: 1.8vh;
-}
-
-hr {
-    border: none;
-    height: 0.1vh;
-    background-color: #aad8dc;
-    margin: 1.5vh 0;
-}
-
-.summary-line.total strong {
-    font-size: 2.3vh;
-    color: #0294b3;
-}
-
-.checkout-btn {
-    width: 100%;
-    display: block;
-    text-align: center;
-    padding: 1.5vh 2vw;
-    margin-top: 2vh;
-    font-size: 2.2vh;
-    font-weight: 700;
-}
-
 
 /* --- RESPONSIVITATE (Mobile) --- */
 

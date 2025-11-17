@@ -10,13 +10,61 @@
 </head>
 <body>
     <header class="site-header">
-        <div class="logo"> <a href="index.html"> <img src="https://template.canva.com/EAE1YAgPM_U/1/0/400w-R-Meu_EcnME.jpg" alt="Logo Festival" height="50"></a></div>
-        <nav class="main-nav">
-        <a href="Login.html" class="btn">Login</a>
-        <a href="Register.html" class="btn">Register</a>
-        <a href="FAQ.html" class="btn">FAQ</a>
-        </nav>
-    </header>
+ <div class="logo">  Logo </div>
+
+<nav class="main-nav">
+ <a href="Login.html" class="btn">Login</a>
+ <a href="Register.html" class="btn">Register</a>
+ <a href="FAQ.html" class="btn">FAQ</a>
+</nav>
+
+<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
+<div class="quick-nav-container">
+ <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+<span></span>
+ <span></span>
+<span></span>
+ </button>
+<div id="quickNavMenu" class="quick-nav-menu">
+<a href="index.html" class="quick-nav-link">Acasă</a>
+ <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+ <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+ <a href="regulament.html" class="quick-nav-link">Regulament</a>
+<a href="FAQ.html" class="quick-nav-link">FAQ</a>
+<a href="profile.html" class="quick-nav-link">Profil</a>
+</div>
+ </div>
+ <script>
+window.onload = function() {
+    const toggleButton = document.getElementById('quickNavToggle');
+    const menu = document.getElementById('quickNavMenu');
+    
+    // Asigură că funcția se rulează doar dacă elementele există
+    if (!toggleButton || !menu) return; 
+
+    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
+    toggleButton.addEventListener('click', () => {
+        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
+        toggleButton.classList.toggle('open');
+        
+        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
+        menu.classList.toggle('active');
+        
+        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
+    });
+    
+    // Opțional: Închide meniul dacă se dă click pe un link din interior
+    const links = menu.querySelectorAll('.quick-nav-link');
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            toggleButton.classList.remove('open');
+            menu.classList.remove('active');
+        });
+    });
+};
+
+ </script>
+</header>
 
   <main>
     <h1>Regulament — Urban Beat</h1>
