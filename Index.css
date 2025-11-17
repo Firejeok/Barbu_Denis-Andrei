@@ -70,8 +70,10 @@ height: 6vh;
 }
 
 .main-nav .btn:hover {
-  background: #04b3d2;
-  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  /* Modificat: Roșu la hover, eliminat box-shadow alb */
+  background: #dc3545; /* Roșu */
+  box-shadow: 0 0 10px rgba(220, 53, 69, 0.5); 
+  /* Fără transform: scale */
 }
 
 /* === TITLU PRINCIPAL === */
@@ -165,6 +167,24 @@ form p {
   color: #015871;
 }
 
+/* Butonul de Submisie (Submit) */
+form input[type="submit"] {
+  background: #04b3d2;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+form input[type="submit"]:hover {
+  /* Modificat: Roșu la hover */
+  background: #dc3545; 
+}
+
+/* Butoanele de link (ex: Register/Login) din interiorul formularului */
 form .btn {
   background: #04b3d2;
   color: white;
@@ -176,7 +196,8 @@ form .btn {
 }
 
 form .btn:hover {
-  background: #0294b3;
+  /* Modificat: Roșu la hover */
+  background: #dc3545; 
 }
 
 
@@ -203,9 +224,10 @@ form .btn:hover {
 }
 
 .site-footer .btn:hover {
-  background: #0294b3;
+  /* Modificat: Roșu la hover */
+  background: #dc3545;
+  /* Fără transform: scale */
 }
-
 /* === ANIMAȚIILE DE VALURI (ELIMINATE) === */
 /* Am eliminat stilurile .ocean, .wave și @keyframes pentru că nu le mai dorești */
 
@@ -530,6 +552,7 @@ form .btn:hover {
 }
 
 /* Stil pentru butonul de Submisie */
+/* Stil pentru butonul de Submisie */
 .submit-btn {
     width: 100%;
     padding: 15px;
@@ -545,9 +568,10 @@ form .btn:hover {
 }
 
 .submit-btn:hover {
-    background: #0294b3;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Modificat: Roșu la hover, eliminat translateY */
+    background: #dc3545; 
+    transform: translateY(0); /* Elimină mișcarea */
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.5);
 }
 
 .submit-btn:active {
@@ -759,6 +783,7 @@ hr {
 }
 
 /* Butonul de Trimite Mesajul */
+/* Butonul de Trimite Mesajul */
 .send-message-btn {
     width: 100%;
     padding: 15px;
@@ -774,9 +799,10 @@ hr {
 }
 
 .send-message-btn:hover {
-    background: #0294b3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Modificat: Roșu la hover, eliminat translateY */
+    background: #dc3545;
+    transform: translateY(0); /* Elimină mișcarea */
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.5);
 }
 
 .send-message-btn:active {
@@ -1195,7 +1221,7 @@ main {
     background: #04b3d2; /* Schimbă Parola */
     color: white;
 }
-.secondary-btn:hover { background: #015871; }
+.secondary-btn:hover { background: #dc3545; }
 
 .danger-btn {
     background: #ff4500; /* Dezactivează Contul (Culoare Roșie) */
@@ -1208,7 +1234,7 @@ main {
     color: white;
     margin-top: 2.5vh;
 }
-.logout-btn:hover { background: #0294b3; }
+.logout-btn:hover { background: #dc3545; }
 
 
 /* --- Secțiunea Bilete Cumpărate --- */
@@ -1254,7 +1280,7 @@ main {
 }
 
 .view-btn:hover {
-    background: #015871;
+    background: #dc3545;
 }
 
 .no-tickets-msg {
@@ -1323,7 +1349,7 @@ main {
 }
 
 #scrollTopBtn:hover {
-    background: #015871; /* Culoare la Hover */
+    background: #d40051; /* Culoare la Hover */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
@@ -1526,9 +1552,10 @@ body {
 }
 
 .details-button:hover {
-    background: #0294b3; /* O nuanță mai închisă de cyan */
-    box-shadow: 0 0 10px rgba(4, 179, 210, 0.5);
-    transform: translateY(-1px);
+    /* Modificat: Roșu la hover, eliminat translateY */
+    background: #dc3545; /* Roșu */
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+    transform: translateY(0); /* Elimină mișcarea */
 }
 
 
@@ -1715,4 +1742,95 @@ body {
         height: 200px;
         margin-bottom: 15px;
     }
+}
+
+/* 1. Definirea Animației de Pulsare (Shadow Pulse) */
+@keyframes pulseShadow {
+    /* Umbra bazată pe culoarea primară (Cyan) pentru starea normală */
+    0% {
+        box-shadow: 0 6px 15px rgba(4, 179, 210, 0.4); 
+    }
+    100% {
+        box-shadow: 0 8px 20px rgba(4, 179, 210, 0.8);
+    }
+}
+
+/* 2. Stilul de Bază al Butonului (Starea Normală - --primary-color / Cyan) */
+.checkout-btn {
+    /* Mărime și Aliniere */
+    display: block; 
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 1.2em;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 20px; 
+    
+    /* Culori și Fundal: Folosește variabila --primary-color */
+    background-color: var(--primary-color); /* #04b3d2 (Cyan) */
+    color: white; 
+    border: none;
+    border-radius: 8px; 
+    cursor: pointer;
+    
+    /* Umbra inițială și Tranziție Fluidă */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    /* Activarea Animației de Pulsare (pe culoarea Cyan) */
+    animation: pulseShadow 2s infinite alternate ease-in-out;
+}
+
+/* 3. Efectul de Hover (Mouse-ul este deasupra - ROȘU FIX) */
+.checkout-btn:hover {
+    background-color: #dc3545; /* ROȘU VIBRANT (cod fix) */
+    transform: scale(1.02); 
+    /* Umbra la hover bazată pe Roșu */
+    box-shadow: 0 10px 20px rgba(220, 53, 69, 0.6); 
+    
+    /* Oprim animația de pulsare pe hover */
+    animation: none;
+}
+
+/* 4. Efectul de Active (la click - Roșu mai închis) */
+.checkout-btn:active {
+    background-color: #c82333; /* Roșu mai închis la apăsare */
+    transform: scale(0.99);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.decorative-palm {
+    /* Poziționare fixă: Rămân pe loc, indiferent de scroll */
+    position: fixed;
+    top: 50vh; /* Începe la jumătatea înălțimii ecranului */
+    width: 15vw; /* Lățime relativă */
+    height: 35vh; /* Înălțime relativă */
+    
+    /* Asigură că sunt sub header (z-index: 1000) dar deasupra conținutului principal */
+    z-index: 900; 
+    
+    /* Tranziție (opțional) */
+    transition: all 0.5s ease-in-out; 
+    
+    /* Culoarea: Folosește variabila ta --primary-color */
+    background-color: var(--primary-color);
+    background-image: url('palm.svg'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* Vă vom folosi această clasă pentru o imagine SVG sau un gradient,
+       dar momentan doar le dă o culoare uniformă. */
+}
+
+/* Stil specific pentru Palmierul din Stânga */
+.left-palm {
+    left: -5vw; /* Îl scoate puțin în afara ecranului în stânga */
+    transform: skewY(-5deg); /* O mică înclinare pentru dinamism */
+}
+
+/* Stil specific pentru Palmierul din Dreapta */
+.right-palm {
+    right: -5vw; /* Îl scoate puțin în afara ecranului în dreapta */
+    transform: skewY(5deg); /* O mică înclinare în sens opus */
 }

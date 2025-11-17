@@ -1,108 +1,112 @@
 document.addEventListener('DOMContentLoaded', () => {
-    setupCartLogic(); 
-    setupParticleAnimation(); // Presupunând că ai funcția de animație definită
-});
-
-
-// --- Funcția de Bază a Logicii Coșului ---
-
-function setupCartLogic() {
-    // Verifică existența containerului principal (CartContainer)
-    const cartContainer = document.querySelector('.cart-container');
-    if (!cartContainer) return;
-
-    // --- Definirea Elementelor DOM (Verifică ID-urile/Clasele din HTML!) ---
+    // --- Selectori Cheie ---
+    const cartTableBody = document.querySelector('.cart-items table tbody');
     const donationInput = document.getElementById('donation-amount');
-    const subtotalDisplay = document.querySelector('.summary-line:nth-child(1) span:last-child');
-    const totalDisplay = document.querySelector('.summary-line.total strong:last-child');
-    const cartTable = document.querySelector('.cart-items table');
-
-    // Verificare strictă a elementelor critice
-    if (!donationInput || !subtotalDisplay || !totalDisplay || !cartTable) {
-        console.error("Eroare Critică JS: Nu s-au putut găsi toate elementele de Sumar (ID/Class mismatch). Logica de calcul nu va rula.");
-        return; 
-    }
-
-    // Constanta de Taxă (trebuie să se potrivească cu ce este afișat în HTML: 5 EUR)
-    const PROCESSING_FEE = 5.00; 
-
-    /**
-     * Parsează un număr dintr-un input sau text, returnând 0 dacă eșuează.
-     */
-    function safeParseFloat(value) {
-        const cleanValue = String(value).replace(',', '.');
-        const num = parseFloat(cleanValue);
-        return isNaN(num) ? 0 : num;
-    }
-
-    /**
-     * Calculează și actualizează totalurile coșului.
-     */
-    function updateCartTotals() {
-        let currentSubtotal = 0;
-        let currentDonation = safeParseFloat(donationInput.value); 
-        
-        const allRows = document.querySelectorAll('.cart-items tbody tr');
-        
-        allRows.forEach(row => {
-            
-            // 1. CITIRE PREȚ UNITAR (din atributul data-price-unit al rândului <tr>)
-            const unitPrice = safeParseFloat(row.dataset.priceUnit);
-            
-            // 2. CITIRE CANTITATE (din input-ul cu clasa item-quantity)
-            const quantityInput = row.querySelector('.item-quantity');
-            const quantity = quantityInput ? safeParseFloat(quantityInput.value) : 0;
-            
-            // 3. CALCUL
-            const rowTotal = unitPrice * quantity;
-            currentSubtotal += rowTotal;
-            
-            // 4. ACTUALIZARE TOTAL RÂND (coloana 4)
-            const rowTotalCell = row.querySelector('td:nth-child(4)');
-            if (rowTotalCell) {
-                // Afișează Totalul formatat
-                rowTotalCell.textContent = `${rowTotal.toFixed(2)} EUR`; 
-            }
-        });
-        
-        // Calculează Totalul Final
-        const finalTotal = currentSubtotal + PROCESSING_FEE + currentDonation;
-
-        // 5. Actualizează Sumarul
-        subtotalDisplay.textContent = `${currentSubtotal.toFixed(2)} EUR`;
-        totalDisplay.textContent = `${finalTotal.toFixed(2)} EUR`;
-    }
-
     
-    /**
-     * Funcție pentru ștergerea unui articol
-     */
-    function removeItem(event) {
-        if (event.target.classList.contains('remove-btn')) {
-            event.preventDefault(); // Oprirea acțiunii default a butonului, dacă există
-            const rowToRemove = event.target.closest('tr');
+    // Selectăm elementele de afișare. Vom adăuga o verificare de existență mai jos.
+    const subtotalDisplay = document.querySelector('.summary-line:nth-child(1) span:last-child');
+    const taxDisplay = document.querySelector('.summary-line:nth-child(3) span:last-child');
+    const totalDisplay = document.querySelector('.summary-line.total strong:last-child');
+
+    // --- Constante ---
+    let TAX_PROCESSING = 0; 
+    
+    // Extragerea taxei într-un mod sigur pentru a evita eroarea 'null' (TypeError: Cannot read properties of null)
+    if (taxDisplay) {
+        // Dacă elementul taxDisplay este găsit, extrage valoarea
+        const taxProcessingText = taxDisplay.textContent; 
+        TAX_PROCESSING = parseFloat(taxProcessingText.replace(' EUR', '').trim());
+    } else {
+        // Dacă elementul nu este găsit (de exemplu, selector greșit), setăm o valoare implicită de 5 EUR, 
+        // conform datelor inițiale din HTML.
+        TAX_PROCESSING = 5.00; 
+        console.warn("Atenție: Elementul pentru afișarea taxei de procesare nu a fost găsit. S-a folosit valoarea implicită de 5.00 EUR.");
+    }
+
+    // --- Funcții Utilitare ---
+
+    // Funcție pentru a extrage valoarea numerică dintr-un text (ex: "150 EUR" -> 150)
+    function extractPrice(text) {
+        // Înlocuiește " EUR", spațiile și convertește în float.
+        return parseFloat(text.replace(' EUR', '').trim());
+    }
+
+    // Funcție pentru a formata un număr ca preț (ex: 475 -> "475.00 EUR")
+    function formatPrice(number) {
+        if (isNaN(number)) return "0.00 EUR";
+        return `${number.toFixed(2)} EUR`;
+    }
+
+    // --- Funcția Principală de Calcul ---
+
+    function calculateCart() {
+        let itemsSubtotal = 0;
+
+        // 1. Iterarea prin fiecare rând de produs din tabel
+        cartTableBody.querySelectorAll('tr').forEach(row => {
+            const cells = row.querySelectorAll('td');
             
-            if (rowToRemove) {
-                rowToRemove.remove(); // Șterge rândul
-                updateCartTotals();  // Recalculează totalurile
-            }
+            // Verificăm dacă rândul are un număr suficient de celule
+            if (cells.length < 5) return; 
+
+            // Extrage Prețul Unitar (index 1)
+            const unitPrice = extractPrice(cells[1].textContent);
+            
+            // Extrage Cantitatea (index 2)
+            const quantityInput = cells[2].querySelector('input[type="number"]');
+            // Verifică dacă input-ul există și extrage valoarea, asigurând că nu e NaN
+            const quantity = (quantityInput && parseInt(quantityInput.value, 10)) || 0; 
+
+            // Calculează Totalul pe Produs și adaugă la subtotal
+            const productTotal = unitPrice * quantity;
+            itemsSubtotal += productTotal;
+
+            // Actualizează celula 'Total' a rândului curent (index 3)
+            cells[3].textContent = formatPrice(productTotal);
+        });
+
+        // 2. Calculul Totalului General
+        const donation = parseFloat(donationInput.value) || 0; // Extrage valoarea donației
+        const grandTotal = itemsSubtotal + donation + TAX_PROCESSING;
+
+        // 3. Afișarea Rezultatelor în Sumar (Verificăm din nou existența elementelor de afișare)
+        if (subtotalDisplay) subtotalDisplay.textContent = formatPrice(itemsSubtotal);
+        if (totalDisplay) totalDisplay.textContent = formatPrice(grandTotal);
+    }
+    
+    // --- Funcția de Ștergere a Rândului ---
+    
+    function removeProduct(button) {
+        const row = button.closest('tr'); // Găsește cel mai apropiat element <tr>
+        if (row) {
+            row.remove(); // Șterge rândul din DOM
+            calculateCart(); // Recalculează totalul după ștergere
         }
     }
-    
-    
-    /**
-     * Inițializarea Ascultătorilor de Evenimente
-     */
-    function setupListeners() {
-        // Ascultă click-urile pe tabel pentru ștergere
-        cartTable.addEventListener('click', removeItem);
 
-        // Ascultă schimbările de valoare (Cantitate și Donație)
-        cartTable.addEventListener('input', updateCartTotals);
-        donationInput.addEventListener('input', updateCartTotals);
+    // --- Atașarea Evenimentelor (Metoda robustă cu Event Delegation) ---
+
+    // 1. Evenimente pentru Cantitate (input) și Ștergere (click)
+    // Evenimentul 'input' asigură actualizarea în timp real a cantității.
+    cartTableBody.addEventListener('input', (e) => {
+        if (e.target.matches('input[type="number"]')) {
+            calculateCart();
+        }
+    });
+    
+    // Eveniment pentru Butonul de ștergere
+    cartTableBody.addEventListener('click', (e) => {
+        if (e.target.matches('.remove-btn')) {
+            removeProduct(e.target);
+        }
+    });
+
+    // 2. Eveniment pentru Donație
+    if (donationInput) {
+        // Folosim 'input' pentru actualizare în timp real când utilizatorul tastează donația
+        donationInput.addEventListener('input', calculateCart);
     }
 
-    // --- Pornirea Logicii ---
-    setupListeners();
-    updateCartTotals(); // Execută o dată la încărcarea paginii pentru a inițializa afișajul
-}
+    // Inițializează coșul de cumpărături la încărcarea paginii
+    calculateCart();
+});
