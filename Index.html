@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Urban Beat</title>
+        <link rel="stylesheet" href="Index.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    </head>
+
+    <header class="site-header">
+ <div class="logo">
+    <a href="Index.html"><img src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png" alt="Logo Urban Beat Festival"> </a> </div>
+<nav class="main-nav">
+ <a href="Login.html" class="btn">Login</a>
+ <a href="Register.html" class="btn">Register</a>
+ <a href="FAQ.html" class="btn">FAQ</a>
+</nav>
+
+<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
+<div class="quick-nav-container">
+ <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+<span></span>
+ <span></span>
+<span></span>
+ </button>
+<div id="quickNavMenu" class="quick-nav-menu">
+<a href="index.html" class="quick-nav-link">Acasă</a>
+ <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+ <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+ <a href="regulament.html" class="quick-nav-link">Regulament</a>
+<a href="FAQ.html" class="quick-nav-link">FAQ</a>
+<a href="profile.html" class="quick-nav-link">Profil</a>
+</div>
+ </div>
+ <script>
+window.onload = function() {
+    const toggleButton = document.getElementById('quickNavToggle');
+    const menu = document.getElementById('quickNavMenu');
+    
+    // Asigură că funcția se rulează doar dacă elementele există
+    if (!toggleButton || !menu) return; 
+
+    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
+    toggleButton.addEventListener('click', () => {
+        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
+        toggleButton.classList.toggle('open');
+        
+        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
+        menu.classList.toggle('active');
+        
+        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
+    });
+    
+    // Opțional: Închide meniul dacă se dă click pe un link din interior
+    const links = menu.querySelectorAll('.quick-nav-link');
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            toggleButton.classList.remove('open');
+            menu.classList.remove('active');
+        });
+    });
+};
+
+ </script>
+</header>
+
+
+    <h1>Bine ai venit la Urban Beat!</h1>
+
+    <body>
+            
+            <div style="text-align: center; margin-top: 50px;">
+            <a href="CumBil.html" class="buy-ticket-btn">Cumpara Bilet!</a>
+            </div>
+            <div class="countdown-section">
+    <h2>Evenimentul Incepe in:</h2>
+    <div id="event-countdown" class="countdown-display">
+        <div class="time-block">
+            <span id="days">00</span>
+            <small>Zile</small>
+        </div>
+        <div class="time-block">
+            <span id="hours">00</span>
+            <small>Ore</small>
+        </div>
+        <div class="time-block">
+            <span id="minutes">00</span>
+            <small>Minute</small>
+        </div>
+        <div class="time-block">
+            <span id="seconds">00</span>
+            <small>Secunde</small>
+        </div>
+    </div>
+    <p id="event-status" class="status-msg"></p>
+</div>
+<script>
+    // === 1. SETAREA DATEI EVENIMENTULUI ===
+    // Setați data, ora și fusul orar al evenimentului
+    // Format: 'An, Lună - 1, Zi, Oră, Minut, Secundă'
+    // Ex: 10 Ianuarie 2026, ora 18:00
+    const eventDate = new Date("May 20, 2026 20:00:00").getTime(); 
+
+    // === 2. Elementele DOM ===
+    const daysDisplay = document.getElementById('days');
+    const hoursDisplay = document.getElementById('hours');
+    const minutesDisplay = document.getElementById('minutes');
+    const secondsDisplay = document.getElementById('seconds');
+    const statusMsg = document.getElementById('event-status');
+
+    // === 3. Funcția de Actualizare a Cronometrului ===
+    function updateCountdown() {
+        // Obține data și ora curentă
+        const now = new Date().getTime();
+
+        // Calculează diferența în milisecunde
+        const distance = eventDate - now;
+
+        // Cazul 1: Cronometrul a expirat
+        if (distance < 0) {
+            clearInterval(interval);
+            daysDisplay.textContent = '00';
+            hoursDisplay.textContent = '00';
+            minutesDisplay.textContent = '00';
+            secondsDisplay.textContent = '00';
+            
+            // Afișează mesajul de finalizare
+            statusMsg.textContent = "EVENIMENTUL A ÎNCEPUT!";
+            statusMsg.classList.add('countdown-finished');
+            return;
+        }
+
+        // Cazul 2: Calculul Timpului Rămas
+        
+        // Calculele pentru Zile, Ore, Minute, Secunde
+        const _second = 1000;
+        const _minute = _second * 60;
+        const _hour = _minute * 60;
+        const _day = _hour * 24;
+
+        const days = Math.floor(distance / _day);
+        const hours = Math.floor((distance % _day) / _hour);
+        const minutes = Math.floor((distance % _hour) / _minute);
+        const seconds = Math.floor((distance % _minute) / _second);
+
+        // Actualizează elementele HTML
+        // Funcția .padStart(2, '0') adaugă un zero în față pentru numerele sub 10 (ex: 5 -> 05)
+        daysDisplay.textContent = days.toString().padStart(2, '0');
+        hoursDisplay.textContent = hours.toString().padStart(2, '0');
+        minutesDisplay.textContent = minutes.toString().padStart(2, '0');
+        secondsDisplay.textContent = seconds.toString().padStart(2, '0');
+
+        statusMsg.textContent = "Nu mai e mult! Grabeste-te!";
+    }
+
+    // === 4. Pornirea Cronometrului ===
+    // Rulează funcția updateCountdown la fiecare secundă (1000ms)
+    const interval = setInterval(updateCountdown, 1000);
+
+    // Rulează o dată imediat la încărcare pentru a evita o întârziere de 1 secundă
+    updateCountdown();
+
+</script>
+      <canvas id="particle-canvas" class="particle-background"></canvas>
+      <script>
+    const canvas = document.getElementById('particle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    // Culorile tale principale
+    const PRIMARY_COLOR = '#04b3d2'; // Cyan
+    const SECONDARY_COLOR = '#015871'; // Navy Blue
+
+    // Configurări
+    const NUM_PARTICLES = 100;
+    const MAX_DISTANCE = 100; // Distanța maximă pentru a trasa o linie
+    
+    // Ajustează dimensiunea canvas-ului la dimensiunea ferestrei
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    // Constructor pentru o particulă
+    class Particle {
+        constructor() {
+            // Poziție aleatorie pe canvas
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            
+            // Viteză mică și aleatorie (mișcare subtilă)
+            this.vx = (Math.random() - 0.5) * 0.4; 
+            this.vy = (Math.random() - 0.5) * 0.4;
+            
+            this.radius = Math.random() * 2 + 1; // Rază între 1 și 3
+            this.color = Math.random() > 0.5 ? PRIMARY_COLOR : SECONDARY_COLOR;
+        }
+
+        // Metoda de desenare a particulei
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+
+        // Metoda de actualizare a poziției și a marginilor
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Inversarea direcției când ajunge la margini (efect de rebound)
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+    }
+
+    // Inițializarea particulelor
+    function init() {
+        resizeCanvas();
+        for (let i = 0; i < NUM_PARTICLES; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    // Funcția pentru desenarea liniilor între particule
+    function drawLines() {
+        for (let i = 0; i < NUM_PARTICLES; i++) {
+            for (let j = i; j < NUM_PARTICLES; j++) {
+                const p1 = particles[i];
+                const p2 = particles[j];
+
+                // Calculează distanța dintre particule
+                const dx = p1.x - p2.x;
+                const dy = p1.y - p2.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                // Dacă sunt suficient de aproape, trage o linie
+                if (distance < MAX_DISTANCE) {
+                    // Calculează opacitatea liniei (cu cât e mai departe, cu atât e mai transparentă)
+                    const opacity = 1 - (distance / MAX_DISTANCE);
+                    
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(4, 179, 210, ${opacity})`; // Folosim Cyan cu opacitatea variabilă
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    // Funcția principală de animație
+    function animate() {
+        // Șterge frame-ul anterior
+        ctx.clearRect(0, 0, canvas.width, canvas.height); 
+        
+        drawLines();
+        
+        for (let i = 0; i < NUM_PARTICLES; i++) {
+            particles[i].update();
+            particles[i].draw();
+        }
+
+        requestAnimationFrame(animate); // Continuă bucla de animație
+    }
+
+    // Gestionează redimensionarea ferestrei
+    window.addEventListener('resize', resizeCanvas);
+    
+    // Pornirea aplicației
+    init();
+    animate();
+</script>  
+
+
+    </body>
+
+
+    <footer class="site-footer">
+    <div class="footer-left">© 2025 Urban Beat</div>
+    <div class="footer-right">
+    <a href="FAQ.html" class="btn">Faq</a>
+    <a href="Contact.html" class="btn">Contact</a>
+  </div>
+</footer>
+
+</html>

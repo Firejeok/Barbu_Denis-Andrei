@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Regulament — Urban Beat</title>
+  <!-- Am schimbat Index.css în styles.css pentru uniformitate cu răspunsurile anterioare -->
+  <link rel="stylesheet" href="Index.css"> 
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="site-header">
+<div class="logo">
+    <a href="Index.html"><img src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png" alt="Logo Urban Beat Festival"> </a> </div>
+
+<nav class="main-nav">
+ <a href="Login.html" class="btn">Login</a>
+ <a href="Register.html" class="btn">Register</a>
+ <a href="FAQ.html" class="btn">FAQ</a>
+</nav>
+
+<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
+<div class="quick-nav-container">
+ <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+<span></span>
+ <span></span>
+<span></span>
+ </button>
+<div id="quickNavMenu" class="quick-nav-menu">
+<a href="index.html" class="quick-nav-link">Acasă</a>
+ <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+ <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+ <a href="regulament.html" class="quick-nav-link">Regulament</a>
+<a href="FAQ.html" class="quick-nav-link">FAQ</a>
+<a href="profile.html" class="quick-nav-link">Profil</a>
+</div>
+ </div>
+ <script>
+window.onload = function() {
+    const toggleButton = document.getElementById('quickNavToggle');
+    const menu = document.getElementById('quickNavMenu');
+    
+    // Asigură că funcția se rulează doar dacă elementele există
+    if (!toggleButton || !menu) return; 
+
+    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
+    toggleButton.addEventListener('click', () => {
+        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
+        toggleButton.classList.toggle('open');
+        
+        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
+        menu.classList.toggle('active');
+        
+        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
+    });
+    
+    // Opțional: Închide meniul dacă se dă click pe un link din interior
+    const links = menu.querySelectorAll('.quick-nav-link');
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            toggleButton.classList.remove('open');
+            menu.classList.remove('active');
+        });
+    });
+};
+
+ </script>
+</header>
+
+  <main>
+    <h1>Regulament — Urban Beat</h1>
+    <p class="data-actualizare">Ultima actualizare: 20 octombrie 2025</p>
+    <p class="intro-text">Acest document conține regulile oficiale pentru participanți, spectatorii și personalul Festivalului Muzicii. Prin achiziționarea biletului sau prin intrarea în perimetrul festivalului, sunteți de acord să respectați prezentul regulament.</p>
+
+    <!-- NOU: Containerul Grid pentru secțiunile de regulament -->
+    <div class="reglement-grid">
+        <section id="1">
+          <h2>1. Dispoziții generale</h2>
+          <ul>
+            <li>Organizatorul: Asociația Urban Beat.</li>
+            <li>Locație și date: Parcul Central, 5–7 iunie 2026 (exemplu).</li>
+            <li>Accesul în incintă se realizează pe baza biletului/abonamentului valabil și a unui act de identitate la cerere.</li>
+          </ul>
+        </section>
+
+        <section id="2">
+          <h2>2. Bilete și acces</h2>
+          <ul>
+            <li>Biletele sunt personale și netransmisibile, cu excepția cazului în care organizatorul anunță altfel.</li>
+            <li>Nu se permite reproducerea, falsificarea sau revânzarea biletelor în mod speculativ. Organizatorul își rezervă dreptul de a anula biletele suspecte.</li>
+            <li>Accesul copiilor sub 14 ani se poate face doar însoțiți de un adult responsabil; politica exactă (gratuitate/vânzare bilet) este afișată pe site-ul oficial.</li>
+          </ul>
+        </section>
+
+        <section id="3">
+          <h2>3. Comportament și siguranță</h2>
+          <ul>
+            <li>Este interzisă procurarea și consumul de substanțe ilegale în incinta festivalului. Orice persoană prinsă va fi predată autorităților competente.</li>
+            <li>Este interzisă agresiunea fizică sau verbală, discriminarea sau hărțuirea de orice natură. Organizatorul poate solicita părăsirea incintei fără drept de rambursare.</li>
+            <li>Urmați indicațiile personalului de securitate și ale salvatorilor. În caz de urgență, respectați rutele de evacuare și instrucțiunile afișate.</li>
+          </ul>
+        </section>
+
+        <section id="4">
+          <h2>4. Obiecte permise / interzise</h2>
+          <ul>
+            <li>Permise: aparate foto compacte, sticle goale (pentru umplut la punctele special amenajate), haine și rucsacuri mici.</li>
+            <li>Interzise: arme (inclusiv arme albe), artificii, sticle de sticlă (unde se aplică), droguri, spray-uri iritante, scaune pliante mari, umbrele cu muchii ascuțite.</li>
+            <li>Organizatorul poate efectua controale la acces (scanare bagaje). Refuzul de a permite controlul poate duce la refuzul intrării.</li>
+          </ul>
+        </section>
+
+        <section id="5">
+          <h2>5. Foto / Video</h2>
+          <p>Prin intrarea în incintă, participanții acceptă posibilitatea de a fi filmați sau fotografiați. Organizatorul are drepturile de utilizare a materialelor foto-video pentru promovare.</p>
+          <ul>
+            <li>Este permisă fotografierea pentru uz personal. Utilizarea profesională a echipamentelor (obiective mari, trepiede) necesită acreditare.</li>
+          </ul>
+        </section>
+
+        <section id="6">
+          <h2>6. Rambursări și anulări</h2>
+          <ul>
+            <li>Din motive de securitate sau forță majoră, organizatorul poate anula sau modifica programul; politica de rambursare se afișează pe site-ul oficial și în condițiile de vânzare.</li>
+            <li>În cazul anulării totale a evenimentului, organizatorul va comunica modalitățile de rambursare în termen de 30 de zile de la data anunțului.</li>
+          </ul>
+        </section>
+
+        <section id="7">
+          <h2>7. Sancțiuni</h2>
+          <ul>
+            <li>Încălcarea regulilor poate conduce la avertisment, evacuare imediată sau predare autorităților, după gravitate.</li>
+            <li>Persoanele evacuate pentru comportament ilegal sau periculos nu au drept la rambursare.</li>
+          </ul>
+        </section>
+
+        <section id="8">
+          <h2>8. Protecția datelor personale (GDPR)</h2>
+          <p>Datele colectate pentru achiziția biletelor sau acreditări vor fi prelucrate conform politicii de confidențialitate afișate pe site. Pentru exercitarea drepturilor (acces, rectificare, ștergere) contactați organizatorul.</p>
+        </section>
+
+        <section id="9">
+          <h2>9. Contact și informații</h2>
+          <ul>
+            <li>Website oficial: <a href="#">www.festivalul-muzicii.exemplu</a></li>
+            <li>Email organizator: <a href="mailto:contact@festivalul-muzicii.exemplu">contact@festivalul-muzicii.exemplu</a></li>
+            <li>Linie de urgență eveniment: +40 700 000 000</li>
+          </ul>
+          <p>Acest regulament poate fi actualizat. Verificați ultima versiune înainte de eveniment.</p>
+        </section>
+    </div>
+        <button id="scrollTopBtn" title="Mergi sus">
+    &#9650; <!-- Săgeată în sus -->
+</button>
+
+<script>
+// Logica pentru butonul "Go to Top"
+window.onload = function() {
+    const scrollButton = document.getElementById('scrollTopBtn');
+    // Arată butonul după 300px de scroll
+    const scrollThreshold = 300; 
+
+    // Funcția care gestionează vizibilitatea butonului la scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > scrollThreshold) {
+            scrollButton.classList.add('show');
+        } else {
+            scrollButton.classList.remove('show');
+        }
+    });
+
+    // Funcția care realizează scroll-ul lin înapoi în vârf
+    scrollButton.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Scroll animat
+        });
+    });
+};
+</script>
+    <!-- Am scos textul final și l-am inclus în secțiunea 9 pentru a fi stilizat ca parte din grid -->
+  </main>
+  <!-- Am șters div-ul ocean/wave conform cererii anterioare de a le elimina -->
+  <footer class="site-footer">
+    <div class="footer-left">© 2025 Festivalul Muzicii</div>
+    <div class="footer-right">
+    <a href="FAQ.html" class="btn">Faq</a>
+    <a href="Contact.html" class="btn">Contact</a>
+  </div>
+</footer>
+</body>
+</html>
