@@ -6,8 +6,8 @@ if (canvas) {
     let particles = [];
     
     // Culorile tale principale (folosite și în CSS)
-    const PRIMARY_COLOR = '#04b3d2'; // Cyan
-    const SECONDARY_COLOR = '#015871'; // Navy Blue
+    const PRIMARY_COLOR = '#ffffffff'; // Cyan
+    const SECONDARY_COLOR = '#ffffffff'; // Navy Blue
 
     // Configurări (poți schimba aceste valori)
     const NUM_PARTICLES = 100; // Numărul de particule
@@ -76,7 +76,7 @@ if (canvas) {
                     
                     ctx.beginPath();
                     // Folosim o culoare deschisă pentru linii (Cyan)
-                    ctx.strokeStyle = `rgba(4, 179, 210, ${opacity})`; 
+                    ctx.strokeStyle = '#a1a1a1ff'; 
                     ctx.lineWidth = 1;
                     ctx.moveTo(p1.x, p1.y);
                     ctx.lineTo(p2.x, p2.y);

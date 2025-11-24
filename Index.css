@@ -39,7 +39,7 @@ main {
 /* === HEADER === */
 .site-header {
   width: 100vw;
-  background: rgba(1, 88, 113, 0.9);
+  background: rgba(0, 0, 0, 0);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -78,7 +78,7 @@ height: 6vh;
 
 /* === TITLU PRINCIPAL === */
 h1 {
-  color: #015871;
+  color: #ffffff;
   text-align: center;
   margin: 2rem 0 1rem;
   font-size: 2.2rem;
@@ -87,7 +87,7 @@ h1 {
 /* === SECȚIUNE LOGIN / GENERAL SECTION STYLES === */
 /* NOTĂ: Această secțiune este folosită ca bază pentru FAQ-Container */
 section {
-  background: rgba(255, 255, 255, 0.85);
+  background: var(--gri-nou);
   border-radius: 20px;
   padding: 2rem 3rem;
   box-shadow: 0 4px 20px rgba(0,0,0,0.15);
@@ -96,18 +96,19 @@ section {
   text-align: center;
   margin-bottom: 5rem;
   backdrop-filter: blur(4px);
+
 }
 
 /* Stiluri Formular (păstrate de la tine) */
 section h2 {
-  color: #015871;
+  color: #ffffff;
   margin-bottom: 1.5rem;
   font-size: 1.4rem;
 }
 
 form label {
   display: block;
-  color: #015871;
+  color: #ffffff;
   margin: 0.5rem 0 0.2rem;
   text-align: left;
 }
@@ -152,19 +153,19 @@ form input[type="submit"]:hover {
 
 form a {
   display: inline-block;
-  color: #015871;
+  color: #ffffff;
   text-decoration: none;
   margin-top: 0.8rem;
   transition: color 0.3s;
 }
 
 form a:hover {
-  color: #04b3d2;
+  color: #929292;
 }
 
 form p {
   margin-top: 1rem;
-  color: #015871;
+  color: #ffffff;
 }
 
 /* Butonul de Submisie (Submit) */
@@ -204,7 +205,7 @@ form .btn:hover {
 /* === FOOTER === */
 .site-footer {
   width: 100vw;
-  background: #015871;
+  background: rgba(0, 0, 0, 0);
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -239,7 +240,7 @@ form .btn:hover {
     margin-top: 3rem;
     margin-bottom: 5rem; /* Ajustat pentru a face loc înainte de footer */
     padding: 2.5rem;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--gri-nou);
     border-radius: 20px;
     box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
     backdrop-filter: blur(5px);
@@ -251,12 +252,12 @@ form .btn:hover {
 .faq-container h2 {
     font-size: 1.6rem;
     margin-bottom: 1rem;
-    color: #015871;
+    color: #00c8ff  ;
     text-align: center;
 }
 
 .faq-card {
-    background: #fff;
+    background: #777777;
     border: 2px solid #04b3d2;
     border-radius: 15px;
     padding: 1.5rem;
@@ -270,7 +271,7 @@ form .btn:hover {
 }
 
 .faq-card h3 {
-    color: #0294b3;
+    color: #ffffff;
     font-size: 1.25rem;
     margin-bottom: 0.8rem;
     padding-bottom: 0.5rem;
@@ -278,7 +279,7 @@ form .btn:hover {
 }
 
 .faq-card p {
-    color: #333;
+    color: #ffffff;
     line-height: 1.6;
     margin-bottom: 0;
     font-size: 0.95rem;
@@ -384,7 +385,9 @@ form .btn:hover {
 :root {
     --primary-color: #04b3d2; /* Culoarea ta principală (Cyan) */
     --secondary-color: #015871; /* Culoarea ta secundară (Navy Blue) */
-    --accent-color: #166786; /* O culoare puternică, diferită, pentru accent */
+    --accent-color: #166786;
+    --gri-nou: rgba(83, 83, 83, 0.95);
+    --alb: #fff; /* O culoare puternică, diferită, pentru accent */
 }
 
 /* 2. Animație de fundal (o mișcare subtilă de la stânga la dreapta) */
@@ -410,7 +413,7 @@ form .btn:hover {
     text-transform: uppercase;
     
     /* Culori și fundal */
-    background: var(--accent-color); /* Folosim o culoare diferită pentru a fi vizibil! */
+    background: var(--primary-color); /* Folosim o culoare diferită pentru a fi vizibil! */
     color: white; 
     border: none;
     border-radius: 50px; /* Buton rotunjit */
@@ -443,7 +446,7 @@ form .btn:hover {
 
 /* Containerul principal al formularului */
 .ticket-section {
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--gri-nou);
     border-radius: 20px;
     padding: 2.5rem;
     box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
@@ -454,7 +457,7 @@ form .btn:hover {
 }
 
 .ticket-section h2 {
-    color: #015871;
+    color: #ffffff;
     margin-bottom: 2rem;
     font-size: 1.8rem;
     text-align: center;
@@ -481,7 +484,7 @@ form .btn:hover {
     border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: #f7feff;
+    background: var(--gri-nou);
 }
 
 /* ---------------------------------------------------------------- */
@@ -491,7 +494,7 @@ form .btn:hover {
     /* Bordură mai groasă și culoare primară */
     border: 3px solid #04b3d2; 
     /* Fundal mai vizibil */
-    background: #e6f7fa; 
+    background: #3f3f3f; 
     /* Umbră care "scoate" cardul în evidență */
     box-shadow: 0 4px 15px rgba(4, 179, 210, 0.6);
     /* Se ridică puțin pentru a simula o ridicare */
@@ -507,19 +510,19 @@ form .btn:hover {
 .ticket-option .type-name {
     font-weight: 700;
     font-size: 1.25rem;
-    color: #015871;
+    color: #ffffff;
 }
 
 .ticket-option .price {
     font-weight: 700;
     font-size: 1.4rem;
-    color: #cc3700;
+    color: #ff0000;
 }
 
 .ticket-option .description {
     flex-basis: 100%;
     font-size: 0.9rem;
-    color: #555;
+    color: #ffffff;
     margin-top: 0.5rem;
 }
 
@@ -530,7 +533,7 @@ form .btn:hover {
 
 .ticket-form label {
     display: block;
-    color: #015871;
+    color: #ffffff;
     margin-bottom: 0.5rem;
     font-weight: 600;
 }
@@ -544,6 +547,8 @@ form .btn:hover {
     outline: none;
     transition: 0.3s;
     font-size: 1rem;
+    background: var(--gri-nou);
+    color: #ffffff;
 }
 
 .ticket-form input:focus {
@@ -1471,7 +1476,7 @@ body {
     padding: 2.5rem;
     
     /* Simulează stilul de fundal al containerelor mari */
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--gri-nou);
     border-radius: 20px;
     box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
     backdrop-filter: blur(5px);
@@ -1487,7 +1492,7 @@ body {
 
 .artist-card {
     /* Preia stilul de card (similar cu .reglement-grid section sau .faq-card) */
-    background: #fff;
+    background: rgba(121, 121, 121, 0.95);
     border: 2px solid var(--primary-color); /* Bordură din culoarea principală */
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
@@ -1516,7 +1521,7 @@ body {
 
 .artist-info h2 {
     /* Stil pentru numele artistului (similar cu titlurile din Index.css) */
-    color: var(--secondary-color); /* Navy Blue */
+    color: var(--alb); /* Navy Blue */
     font-size: 1.6rem;
     margin: 0 0 0.5rem 0;
 }
@@ -1563,14 +1568,14 @@ body {
     max-width: 800px;
     margin: 50px auto;
     padding: 30px;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(121, 121, 121, 0.95);
     border-radius: 20px;
     box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
     text-align: center;
 }
 
 .countdown-section h2 {
-    color: var(--secondary-color); /* #015871 */
+    color: var(--alb); /* #015871 */
     margin-bottom: 25px;
     font-size: 1.8rem;
 }
@@ -1608,12 +1613,12 @@ body {
 .status-msg {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #cc3700; /* Culoare de accent, Portocaliu/Roșu */
+    color: #ff0000; /* Culoare de accent, Portocaliu/Roșu */
 }
 
 /* Stil pentru când timpul a expirat */
 .countdown-finished {
-    color: var(--secondary-color) !important; 
+    color: var(--alb) !important; 
     background: #ffe082; /* Galben moale de avertizare */
     font-size: 2rem !important;
 }
@@ -1627,7 +1632,7 @@ body {
     height: 100vh;
     z-index: -10; /* O valoare foarte mică pentru a fi SUB toate celelalte elemente */
     /* Adaugă gradientul tău de bază pe canvas (opțional, dacă nu vrei să folosești body-ul) */
-    background: radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
+    background: radial-gradient(ellipse at center, rgb(80, 80, 80) 0%, rgb(51, 51, 51) 35%, #000000 100%);
 }
 
 /* Containerul Modal (Fundalul Negru Opac) */
@@ -1646,7 +1651,7 @@ body {
 
 /* Conținutul Modalului (Cardul Alb) */
 .modal-content {
-    background-color: white;
+    background-color: var(--gri-nou);
     margin: 5% auto; /* Centrarea verticală și orizontală */
     padding: 30px;
     border-radius: 20px;
@@ -1668,7 +1673,7 @@ body {
 
 /* Butonul de Închidere (X) */
 .close-btn {
-    color: #015871; /* Culoarea ta secundară */
+    color: #00a5d3; /* Culoarea ta secundară */
     float: right;
     font-size: 36px;
     font-weight: bold;
@@ -1695,7 +1700,7 @@ body {
 }
 
 .modal-info h2 {
-    color: #015871;
+    color: #04b3d2;
     margin-top: 0;
     font-size: 1.8rem;
     border-bottom: 2px solid #aad8dc;
@@ -1705,7 +1710,7 @@ body {
 
 .modal-info p {
     margin-bottom: 8px;
-    color: #333;
+    color: #ffffff;
 }
 
 .modal-label {

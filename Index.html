@@ -168,8 +168,8 @@ window.onload = function() {
     let particles = [];
     
     // Culorile tale principale
-    const PRIMARY_COLOR = '#04b3d2'; // Cyan
-    const SECONDARY_COLOR = '#015871'; // Navy Blue
+    const PRIMARY_COLOR = '#ffffffff'; // Cyan
+    const SECONDARY_COLOR = '#ffffffff'; // Navy Blue
 
     // Configurări
     const NUM_PARTICLES = 100;
@@ -241,7 +241,7 @@ window.onload = function() {
                     const opacity = 1 - (distance / MAX_DISTANCE);
                     
                     ctx.beginPath();
-                    ctx.strokeStyle = `rgba(4, 179, 210, ${opacity})`; // Folosim Cyan cu opacitatea variabilă
+                    ctx.strokeStyle = '#a1a1a1ff'; // Folosim Cyan cu opacitatea variabilă
                     ctx.lineWidth = 1;
                     ctx.moveTo(p1.x, p1.y);
                     ctx.lineTo(p2.x, p2.y);
