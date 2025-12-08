@@ -1,90 +1,132 @@
 <!DOCTYPE html>
-<html lang="ro">
-
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Formular de Contact</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            resize: vertical;
-            height: 100px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .error {
-            color: red;
-            margin-top: 5px;
-        }
-    </style>
+    <title>Contact - Urban Beat</title>
+    <link rel="stylesheet" href="Index.css">
+    <link rel="stylesheet" href="Contact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <header class="site-header">
+<div class="logo">
+    <a href="Index.html"><img src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png" alt="Logo Urban Beat Festival"> </a> </div>
 
-    <h1>Contactați-ne</h1>
+<nav class="main-nav">
+ <a href="Login.html" class="btn">Login</a>
+ <a href="Register.html" class="btn">Register</a>
+ <a href="FAQ.html" class="btn">FAQ</a>
+</nav>
 
-    <form action="proceseaza.php" method="POST">
+<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
+<div class="quick-nav-container">
+ <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+<span></span>
+ <span></span>
+<span></span>
+ </button>
+<div id="quickNavMenu" class="quick-nav-menu">
+<a href="index.html" class="quick-nav-link">Acasă</a>
+ <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+ <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+ <a href="regulament.html" class="quick-nav-link">Regulament</a>
+<a href="FAQ.html" class="quick-nav-link">FAQ</a>
+<a href="profile.html" class="quick-nav-link">Profil</a>
+</div>
+ </div>
+ <script>
+window.onload = function() {
+    const toggleButton = document.getElementById('quickNavToggle');
+    const menu = document.getElementById('quickNavMenu');
+    
+    // Asigură că funcția se rulează doar dacă elementele există
+    if (!toggleButton || !menu) return; 
 
-        <div class="form-group">
-            <label for="nume">Nume:</label>
-            <input type="text" id="nume" name="nume" required minlength="3">
+    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
+    toggleButton.addEventListener('click', () => {
+        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
+        toggleButton.classList.toggle('open');
+        
+        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
+        menu.classList.toggle('active');
+        
+        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
+    });
+    
+    // Opțional: Închide meniul dacă se dă click pe un link din interior
+    const links = menu.querySelectorAll('.quick-nav-link');
+    links.forEach(link => {
+        link.addEventListener('click', () => {
+            toggleButton.classList.remove('open');
+            menu.classList.remove('active');
+        });
+    });
+};
+
+ </script>
+</header>
+
+    <main>
+        <h1>Contactează Echipa Urban Beat</h1>
+
+        <div class="contact-container">
+            
+            <section class="contact-form-card">
+                <h2>Trimite-ne un mesaj rapid</h2>
+                <form action="trimite_mesaj.php" method="POST" class="contact-form">
+                    
+                    <div class="form-group">
+                        <label for="nume">Numele tău:</label>
+                        <input type="text" id="nume" name="nume" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Adresa de Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subiect">Subiect:</label>
+                        <input type="text" id="subiect" name="subiect" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mesaj">Mesajul tău:</label>
+                        <textarea id="mesaj" name="mesaj" rows="6" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="send-message-btn">Trimite Mesajul</button>
+                </form>
+            </section>
+
+            <section class="contact-info-card">
+                <h2>Alte Modalități de Contact</h2>
+                <div class="info-group">
+                    <p class="info-title">📧 Email Suport Clienți:</p>
+                    <p class="info-detail"><a href="mailto:suport@urbanbeat.ro">suport@urbanbeat.ro</a></p>
+                </div>
+                <div class="info-group">
+                    <p class="info-title">☎️ Telefon (L-V, 10:00-18:00):</p>
+                    <p class="info-detail"><a href="tel:+40700123456">+40 700 123 456</a></p>
+                </div>
+                <div class="info-group">
+                    <p class="info-title">📍 Adresă Sediul Central:</p>
+                    <p class="info-detail">Strada Libertății, Nr. 10, București</p>
+                </div>
+            </section>
         </div>
 
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+    </main>
+    <canvas id="particle-canvas" class="particle-background"></canvas>
+<script defer src="script.js"></script>
+
+    <footer class="site-footer">
+        <div class="footer-left">© 2025 Urban Beat</div>
+        <div class="footer-right">
+            <a href="FAQ.html" class="btn">Faq</a>
+            <a href="Contact.html" class="btn">Contact</a>
         </div>
-
-        <div class="form-group">
-            <label for="mesaj">Mesaj:</label>
-            <textarea id="mesaj" name="mesaj"></textarea>
-        </div>
-
-        <button type="submit" name="submit">Trimite</button>
-
-    </form>
-
+    </footer>
 </body>
-
 </html>
