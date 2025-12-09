@@ -174,15 +174,19 @@
         </div>
     </div>
     <script>
-        // URL-ul Endpoint-ului PHP
-        const API_URL = 'artisti.php';
+        // --------------------------------------------------------------------
+        // CONFIGURARE
+        // --------------------------------------------------------------------
+
+        // ATENȚIE: Aceasta presupune că 'artisti.php' este în ACELAȘI folder cu 'Artisti.html'.
+        // Dacă 'artisti.php' este în folderul 'studenti', schimbă în: 'studenti/artisti.php'
+        const API_URL = 'http://localhost:8080/artisti.php';
+
         const artistsGrid = document.getElementById('artists-grid');
 
-        // Obiecte MODAL, declarate global pentru acces ușor
+        // Elemente Modal
         const modal = document.getElementById('artistModal');
         const closeBtn = document.querySelector('.close-btn');
-
-        // Elementele din interiorul modalului (pentru umplere)
         const modalImage = document.getElementById('modal-image');
         const modalName = document.getElementById('modal-name');
         const modalGenre = document.getElementById('modal-genre');
@@ -192,39 +196,39 @@
         const modalSocial = document.getElementById('modal-social');
 
         // --------------------------------------------------------------------
-        // 1. Funcții de RANDARE
+        // 1. Funcția de creare a HTML-ului (Cardul Artistului)
         // --------------------------------------------------------------------
-
         function createArtistCard(artist) {
-            // Functia pentru a crea HTML-ul cardului
-            // Notă: Folosim 'artist' direct din obiectul JSON
+            // Verificăm dacă există o imagine, altfel punem una default
+            const imageSrc = artist.url_poza ? artist.url_poza : 'images/default-placeholder.jpg';
+
             return `
-            <div class="artist-card">
-                <img src="${artist.url_poza}" alt="Imagine Artist ${artist.nume_scena}" class="artist-image">
-                <div class="artist-info">
-                    <h2>${artist.nume_scena}</h2>
-                    
-                    <a href="#" class="details-button"
-                        data-name="${artist.nume_scena}"
-                        data-genre="${artist.gen_muzical}"
-                        data-stage="${artist.scena_alocata}"
-                        data-time="${artist.orar_prezentare}"
-                        data-image="${artist.url_poza}"
-                        data-description="${artist.descriere_scurta}"
-                        data-social-link="${artist.link_social_media}">
-                        Detalii & Oră
-                    </a>
-                </div>
+        <div class="artist-card">
+            <img src="${imageSrc}" alt="Imagine ${artist.nume_scena}" class="artist-image" onerror="this.src='images/default-placeholder.jpg'">
+            <div class="artist-info">
+                <h2>${artist.nume_scena}</h2>
+                
+                <a href="#" class="details-button"
+                    data-name="${artist.nume_scena}"
+                    data-genre="${artist.gen_muzical}"
+                    data-stage="${artist.scena_alocata}"
+                    data-time="${artist.orar_prezentare}"
+                    data-image="${imageSrc}"
+                    data-description="${artist.descriere_scurta}"
+                    data-social-link="${artist.link_social_media}">
+                    Detalii & Oră
+                </a>
             </div>
+        </div>
         `;
         }
 
         // --------------------------------------------------------------------
-        // 2. Funcții de LOGICĂ MODALĂ (deschidere/închidere)
+        // 2. Logica Modală (Pop-up)
         // --------------------------------------------------------------------
-
         function openModal(e) {
             e.preventDefault();
+            // 'currentTarget' asigură că luăm datele de pe buton, chiar dacă dăm click pe textul din interior
             const data = e.currentTarget.dataset;
 
             modalImage.src = data.image;
@@ -243,80 +247,86 @@
         }
 
         // --------------------------------------------------------------------
-        // 3. Funcția CRUCIALĂ: Atașarea evenimentelor la butoane
+        // 3. Atașarea Evenimentelor (Click)
         // --------------------------------------------------------------------
-
         function attachModalEvents() {
-            // Selectează butoanele DOAR după ce au fost adăugate în DOM
             const detailButtons = document.querySelectorAll('.details-button');
 
             detailButtons.forEach(button => {
+                button.removeEventListener('click', openModal); // Previne duplicarea
                 button.addEventListener('click', openModal);
-            });
-
-            // Evenimentele de închidere (care nu se schimbă)
-            closeBtn.addEventListener('click', closeModal);
-            window.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal();
-                }
-            });
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && modal.style.display === 'block') {
-                    closeModal();
-                }
             });
         }
 
-        // --------------------------------------------------------------------
-        // 4. Funcția FETCH (Preluarea datelor)
-        // --------------------------------------------------------------------
+        // Evenimente globale pentru închiderea modalului
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
 
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'block') closeModal();
+        });
+
+        // --------------------------------------------------------------------
+        // 4. Funcția Principală: Încărcare date din PHP
+        // --------------------------------------------------------------------
         async function loadArtists() {
             if (artistsGrid) {
-                artistsGrid.innerHTML = '<p id="loading-message" style="text-align:center; color:#015871;">Se încarcă artiștii...</p>';
+                artistsGrid.innerHTML = '<p style="text-align:center; padding:20px;">Se încarcă artiștii...</p>';
             }
 
             try {
                 const response = await fetch(API_URL);
 
+                // Verificăm dacă răspunsul rețelei este OK (cod 200)
                 if (!response.ok) {
-                    throw new Error('Eroare la preluarea datelor: ' + response.statusText);
+                    throw new Error(`Eroare HTTP: ${response.status} - Fișierul PHP nu a fost găsit.`);
+                }
+
+                // Verificăm dacă răspunsul este JSON valid
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new Error("Răspunsul primit nu este JSON. Verifică erorile din fișierul PHP.");
                 }
 
                 const artists = await response.json();
 
                 if (artistsGrid) {
-                    artistsGrid.innerHTML = ''; // Golește mesajul de încărcare
+                    artistsGrid.innerHTML = ''; // Curățăm loader-ul
 
                     if (artists.length === 0) {
-                        artistsGrid.innerHTML = '<p style="text-align:center;">Programul artiștilor va fi anunțat în curând!</p>';
+                        artistsGrid.innerHTML = '<p style="text-align:center;">Nu există artiști în baza de date.</p>';
                         return;
                     }
 
-                    // Construiește și adaugă cardurile în DOM
+                    // Generăm cardurile
+                    let htmlContent = '';
                     artists.forEach(artist => {
-                        artistsGrid.innerHTML += createArtistCard(artist);
+                        htmlContent += createArtistCard(artist);
                     });
+                    artistsGrid.innerHTML = htmlContent;
 
-                    // CEL MAI IMPORTANT PAS: Atașează evenimentele acum!
+                    // Activăm butoanele
                     attachModalEvents();
                 }
 
             } catch (error) {
-                console.error('Eroare la încărcarea artiștilor:', error);
+                console.error('Eroare detaliată:', error);
                 if (artistsGrid) {
-                    artistsGrid.innerHTML = `<p class="error-message" style="color:red; text-align:center;">
-                        Eroare: ${error.message}. <br>
-                        Verifică consola (F12) pentru detalii complete.
-                    </p>`;
+                    artistsGrid.innerHTML = `
+                    <div style="text-align:center; color:red; padding:20px; border:1px solid red; background:#fff0f0;">
+                        <h3>A apărut o eroare!</h3>
+                        <p>${error.message}</p>
+                        <p><small>Verifică consola (F12) pentru detalii tehnice.</small></p>
+                    </div>`;
                 }
             }
         }
 
-        // 5. Pornirea aplicației după ce DOM-ul e gata
+        // Pornire la încărcarea paginii
         document.addEventListener('DOMContentLoaded', loadArtists);
-
     </script>
     <canvas id="particle-canvas" class="particle-background"></canvas>
     <script defer src="script.js"></script>
