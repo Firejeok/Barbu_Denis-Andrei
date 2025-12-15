@@ -1,70 +1,26 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Register</title>
-        <link rel="stylesheet" href="Index.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    </head>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inregistrare - Urban Beat</title>
+    <link rel="stylesheet" href="Index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
     <header class="site-header">
-<div class="logo">
-    <a href="Index.html"><img src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png" alt="Logo Urban Beat Festival"> </a> </div>
+        <div class="logo">
+            <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+        </div>
+        <nav class="main-nav">
+            <a href="Login.html" class="btn">Login</a>
+            <a href="Register.html" class="btn">Register</a>
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </nav>
+    </header>
 
-<nav class="main-nav">
- <a href="Login.html" class="btn">Login</a>
- <a href="Register.html" class="btn">Register</a>
- <a href="FAQ.html" class="btn">FAQ</a>
-</nav>
-
-<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
-<div class="quick-nav-container">
- <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
-<span></span>
- <span></span>
-<span></span>
- </button>
-<div id="quickNavMenu" class="quick-nav-menu">
-<a href="index.html" class="quick-nav-link">Acasă</a>
- <a href="Artisti.html" class="quick-nav-link">Artiști</a>
- <a href="CumBil.html" class="quick-nav-link">Bilete</a>
- <a href="regulament.html" class="quick-nav-link">Regulament</a>
-<a href="FAQ.html" class="quick-nav-link">FAQ</a>
-<a href="profile.html" class="quick-nav-link">Profil</a>
-</div>
- </div>
- <script>
-window.onload = function() {
-    const toggleButton = document.getElementById('quickNavToggle');
-    const menu = document.getElementById('quickNavMenu');
-    
-    // Asigură că funcția se rulează doar dacă elementele există
-    if (!toggleButton || !menu) return; 
-
-    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
-    toggleButton.addEventListener('click', () => {
-        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
-        toggleButton.classList.toggle('open');
-        
-        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
-        menu.classList.toggle('active');
-        
-        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
-    });
-    
-    // Opțional: Închide meniul dacă se dă click pe un link din interior
-    const links = menu.querySelectorAll('.quick-nav-link');
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            toggleButton.classList.remove('open');
-            menu.classList.remove('active');
-        });
-    });
-};
-
- </script>
-</header>
-
-    <body>
+    <main>
         <h1>Urban Beat</h1>
         <div class="ocean">
             <div class="wave"></div>
@@ -72,34 +28,82 @@ window.onload = function() {
         </div>
         <section>
             <h2>Fii parte din familia noastra!</h2>
-            <form>
-                <label for="Nume">Nume</label>
-                <input type="text" id="nume" name="nume"><br>
-                <label for="Prenume">Prenume</label>
-                <input type="text" id="prenume" name="prenume"><br>
-                <label for="Email">Email</label>
-                <input type="email" id="email" name="email"><br>
-                <label for="Telefon">Telefon</label>
+
+            <form id="registerForm">
+                <label for="nume">Nume</label>
+                <input type="text" id="nume" name="nume" required><br>
+
+                <label for="prenume">Prenume</label>
+                <input type="text" id="prenume" name="prenume" required><br>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required><br>
+
+                <label for="telefon">Telefon</label>
                 <input type="tel" id="telefon" name="telefon" placeholder="0741234567"><br>
-                <label for="Parola">Parola</label>
-                <input type="password" id="password" name="Parola"><br>
-                <label for="ConfirmaParola">Confirma Parola</label>
-                <input type="password" id="confirmpassword" name="ConfirmaParola"><br>
 
-                <input type="submit" value="Inregistrare" class="btn"/>
+                <label for="password">Parola</label>
+                <input type="password" id="password" name="password" required><br>
 
+                <label for="confirmpassword">Confirma Parola</label>
+                <input type="password" id="confirmpassword" name="confirm_password" required><br>
+
+                <input type="submit" value="Inregistrare" class="btn" />
             </form>
-        </section>
-</body>
-<canvas id="particle-canvas" class="particle-background"></canvas>
-<script defer src="script.js"></script>
-<footer class="site-footer">
-    <div class="footer-left">© 2025 Festivalul Muzicii</div>
-    <div class="footer-right">
-    <a href="FAQ.html" class="btn">Faq</a>
-    <a href="Contact.html" class="btn">Contact</a>
-  </div>
-</footer>
 
+            <div id="statusMessage" style="text-align:center; margin-top:15px; font-weight:bold;"></div>
+
+            <p style="text-align:center;">Ai deja cont? <a href="Login.html">Loghează-te aici</a>.</p>
+        </section>
+    </main>
+
+    <script>
+        const registerForm = document.getElementById('registerForm');
+        const statusMessage = document.getElementById('statusMessage');
+
+        registerForm.addEventListener('submit', async (e) => {
+            // ACEASTA LINIE OPRESTE EROAREA 405 (Oprește trimiterea standard)
+            e.preventDefault();
+
+            const formData = new FormData(registerForm);
+
+            try {
+                statusMessage.innerHTML = '<span style="color:blue;">Se procesează...</span>';
+
+                // ⚠️ MODIFICĂ AICI CU NUMELE FOLDERULUI TĂU DIN XAMPP ⚠️
+                // Dacă folderul e "Barbu_Denis-Andrei", pune:
+                // http://localhost/Barbu_Denis-Andrei/register.php
+                const response = await fetch('http://localhost:8080/register.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // Verificăm dacă serverul a răspuns (chiar și cu eroare)
+                const result = await response.json();
+
+                if (result.success) {
+                    statusMessage.innerHTML = '<span style="color:green;">' + result.message + '</span>';
+                    // Resetăm formularul
+                    registerForm.reset();
+                    // Redirecționare după 2 secunde
+                    setTimeout(() => { window.location.href = 'Login.html'; }, 2000);
+                } else {
+                    statusMessage.innerHTML = '<span style="color:red;">' + result.message + '</span>';
+                }
+
+            } catch (error) {
+                console.error("Eroare:", error);
+                statusMessage.innerHTML = '<span style="color:red;">Eroare: Nu mă pot conecta la serverul XAMPP. Verifică dacă Apache este pornit și dacă URL-ul din script este corect.</span>';
+            }
+        });
+    </script>
+
+    <canvas id="particle-canvas" class="particle-background"></canvas>
+    <script defer src="script.js"></script>
+
+    <footer class="site-footer">
+        <div class="footer-left">© 2025 Festivalul Muzicii</div>
+    </footer>
+</body>
 
 </html>

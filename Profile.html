@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,110 +10,112 @@
     <link rel="stylesheet" href="Index.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body>
 
     <header class="site-header">
-<div class="logo">
-    <a href="Index.html"><img src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png" alt="Logo Urban Beat Festival"> </a> </div>
+        <div class="logo">
+            <a href="Index.html"><img
+                    src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png"
+                    alt="Logo Urban Beat Festival"> </a>
+        </div>
 
-<nav class="main-nav">
- <a href="Login.html" class="btn">Login</a>
- <a href="Register.html" class="btn">Register</a>
- <a href="FAQ.html" class="btn">FAQ</a>
-</nav>
+        <nav class="main-nav">
+            <a href="Login.html" class="btn">Login</a>
+            <a href="Register.html" class="btn">Register</a>
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </nav>
 
-<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
-<div class="quick-nav-container">
- <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
-<span></span>
- <span></span>
-<span></span>
- </button>
-<div id="quickNavMenu" class="quick-nav-menu">
-<a href="index.html" class="quick-nav-link">Acasă</a>
- <a href="Artisti.html" class="quick-nav-link">Artiști</a>
- <a href="CumBil.html" class="quick-nav-link">Bilete</a>
- <a href="regulament.html" class="quick-nav-link">Regulament</a>
-<a href="FAQ.html" class="quick-nav-link">FAQ</a>
-<a href="profile.html" class="quick-nav-link">Profil</a>
-</div>
- </div>
- <script>
-window.onload = function() {
-    const toggleButton = document.getElementById('quickNavToggle');
-    const menu = document.getElementById('quickNavMenu');
-    
-    // Asigură că funcția se rulează doar dacă elementele există
-    if (!toggleButton || !menu) return; 
+        <!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
+        <div class="quick-nav-container">
+            <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div id="quickNavMenu" class="quick-nav-menu">
+                <a href="index.html" class="quick-nav-link">Acasă</a>
+                <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+                <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                <a href="profile.html" class="quick-nav-link">Profil</a>
+            </div>
+        </div>
+        <script>
+            window.onload = function () {
+                const toggleButton = document.getElementById('quickNavToggle');
+                const menu = document.getElementById('quickNavMenu');
 
-    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
-    toggleButton.addEventListener('click', () => {
-        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
-        toggleButton.classList.toggle('open');
-        
-        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
-        menu.classList.toggle('active');
-        
-        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
-    });
-    
-    // Opțional: Închide meniul dacă se dă click pe un link din interior
-    const links = menu.querySelectorAll('.quick-nav-link');
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            toggleButton.classList.remove('open');
-            menu.classList.remove('active');
-        });
-    });
-};
+                // Asigură că funcția se rulează doar dacă elementele există
+                if (!toggleButton || !menu) return;
 
- </script>
-</header>
+                // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
+                toggleButton.addEventListener('click', () => {
+                    // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
+                    toggleButton.classList.toggle('open');
+
+                    // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
+                    menu.classList.toggle('active');
+
+                    // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
+                });
+
+                // Opțional: Închide meniul dacă se dă click pe un link din interior
+                const links = menu.querySelectorAll('.quick-nav-link');
+                links.forEach(link => {
+                    link.addEventListener('click', () => {
+                        toggleButton.classList.remove('open');
+                        menu.classList.remove('active');
+                    });
+                });
+            };
+
+        </script>
+    </header>
 
     <main class="profile-page">
         <h1>Bun venit, [Nume Utilizator]!</h1>
 
         <div class="profile-container">
-            
+
             <!-- COLOANA DIN STÂNGA: Informații Personale și Gestionare -->
             <section class="profile-info-card">
                 <h2>Informații Cont</h2>
-                
+
                 <div class="info-group">
                     <span class="info-label">Nume:</span>
                     <span class="info-value">Popescu Ion</span>
-                    
+
                 </div>
-                
+
                 <div class="info-group">
                     <span class="info-label">Email:</span>
                     <span class="info-value">ion.popescu@exemplu.ro</span>
-                    
+
                 </div>
 
                 <hr>
 
-                <h3>Securitatea Contului</h3>
-                <button class="action-btn secondary-btn">Schimbă Parola</button>
-                <button class="action-btn danger-btn">Dezactivează Contul</button>
+
             </section>
-            
+
             <!-- COLOANA DIN DREAPTA: Bilete Cumpărate (Istoric) -->
             <section class="tickets-history-card">
                 <h2>Biletele Mele Active</h2>
-                
+
                 <div class="ticket-entry active-ticket">
                     <span class="ticket-type">Abonament 3 Zile Standard</span>
                     <span class="ticket-date">5-7 Iunie 2025</span>
                     <button class="view-btn">Vezi QR Code</button>
                 </div>
-                
+
                 <div class="ticket-entry">
                     <span class="ticket-type">Bilet Zilei (Sâmbătă)</span>
                     <span class="ticket-date">6 Iunie 2025</span>
                     <button class="view-btn">Vezi QR Code</button>
                 </div>
-                
+
                 <p class="no-tickets-msg">
                     <a href="CumBil.html">Nu ai bilete active? Cumpără acum!</a>
                 </p>
@@ -124,14 +128,14 @@ window.onload = function() {
                     <li>Comandă #2024-012 (1 bilet VIP) - 450 RON</li>
                     <li>Donatie caritabila - 5000 RON</li>
                 </ul>
-                
+
                 <button class="action-btn logout-btn">Deconectare (Logout)</button>
             </section>
 
         </div>
     </main>
-<canvas id="particle-canvas" class="particle-background"></canvas>
-<script defer src="script.js"></script>
+    <canvas id="particle-canvas" class="particle-background"></canvas>
+    <script defer src="script.js"></script>
     <footer class="site-footer">
         <div class="footer-left">© 2025 Urban Beat</div>
         <div class="footer-right">
@@ -140,4 +144,5 @@ window.onload = function() {
     </footer>
 
 </body>
+
 </html>
