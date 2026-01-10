@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ro">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,143 +8,139 @@
     <!-- Link către fișierul CSS furnizat (pe care trebuie să îl actualizați cu stilurile de mai jos) -->
     <link rel="stylesheet" href="Index.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
+
 </head>
+
 <body>
     <header class="site-header">
-<div class="logo">
-    <a href="Index.html"><img src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png" alt="Logo Urban Beat Festival"> </a> </div>
+        <div class="logo">
+            <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+        </div>
 
-<nav class="main-nav">
- <a href="Login.html" class="btn">Login</a>
- <a href="Register.html" class="btn">Register</a>
- <a href="FAQ.html" class="btn">FAQ</a>
-</nav>
+        <nav class="main-nav">
+            <a href="Login.html" class="btn">Login</a>
+            <a href="Register.html" class="btn">Register</a>
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </nav>
 
-<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
-<div class="quick-nav-container">
- <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
-<span></span>
- <span></span>
-<span></span>
- </button>
-<div id="quickNavMenu" class="quick-nav-menu">
-<a href="index.html" class="quick-nav-link">Acasă</a>
- <a href="Artisti.html" class="quick-nav-link">Artiști</a>
- <a href="CumBil.html" class="quick-nav-link">Bilete</a>
- <a href="regulament.html" class="quick-nav-link">Regulament</a>
-<a href="FAQ.html" class="quick-nav-link">FAQ</a>
-<a href="profile.html" class="quick-nav-link">Profil</a>
-</div>
- </div>
- <script>
-window.onload = function() {
-    const toggleButton = document.getElementById('quickNavToggle');
-    const menu = document.getElementById('quickNavMenu');
-    
-    // Asigură că funcția se rulează doar dacă elementele există
-    if (!toggleButton || !menu) return; 
+        <!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
+        <div class="quick-nav-container">
+            <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div id="quickNavMenu" class="quick-nav-menu">
+                <a href="index.html" class="quick-nav-link">Acasă</a>
+                <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+                <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                <a href="profile.html" class="quick-nav-link">Profil</a>
+            </div>
+        </div>
 
-    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
-    toggleButton.addEventListener('click', () => {
-        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
-        toggleButton.classList.toggle('open');
-        
-        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
-        menu.classList.toggle('active');
-        
-        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
-    });
-    
-    // Opțional: Închide meniul dacă se dă click pe un link din interior
-    const links = menu.querySelectorAll('.quick-nav-link');
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            toggleButton.classList.remove('open');
-            menu.classList.remove('active');
-        });
-    });
-};
-
- </script>
-</header>
+    </header>
 
     <main>
         <h1>ÎNTREBĂRI FRECVENTE (FAQ)</h1>
-        
+
         <section class="faq-container">
             <h2>Tot ce trebuie să știi despre Urban Beat 2025</h2>
-            
+
             <!-- FAQ Card 1 -->
             <div class="faq-card">
                 <h3>Când și unde va avea loc Urban Beat 2025?</h3>
-                <p>Evenimentul va avea loc pe <strong>25 August 2025</strong> în Parcul Central din București, începând cu ora 18:00. Vă rugăm să veniți din timp pentru a evita aglomerația!</p>
+                <p>Evenimentul va avea loc pe <strong>25 August 2025</strong> în Parcul Central din București, începând
+                    cu ora 18:00. Vă rugăm să veniți din timp pentru a evita aglomerația!</p>
             </div>
 
             <!-- FAQ Card 2 -->
             <div class="faq-card">
                 <h3>În ce scop sunt folosite donațiile strânse?</h3>
-                <p>Toate fondurile colectate din vânzarea biletelor și din donațiile directe sunt direcționate către Fundația "Inimi Deschise" pentru a sprijini educația și activitățile culturale ale copiilor din centrele de plasament.</p>
+                <p>Toate fondurile colectate din vânzarea biletelor și din donațiile directe sunt direcționate către
+                    Fundația "Inimi Deschise" pentru a sprijini educația și activitățile culturale ale copiilor din
+                    centrele de plasament.</p>
             </div>
 
             <!-- FAQ Card 3 -->
             <div class="faq-card">
                 <h3>Pot cumpăra bilete direct la locație?</h3>
-                <p>Recomandăm achiziționarea biletelor online prin secțiunea "Bilete" pentru a asigura locul. Un număr limitat de bilete va fi disponibil și la poartă, dar nu putem garanta disponibilitatea lor. Este de preferat să le luați online!</p>
+                <p>Recomandăm achiziționarea biletelor online prin secțiunea "Bilete" pentru a asigura locul. Un număr
+                    limitat de bilete va fi disponibil și la poartă, dar nu putem garanta disponibilitatea lor. Este de
+                    preferat să le luați online!</p>
             </div>
 
             <!-- FAQ Card 4 -->
             <div class="faq-card">
                 <h3>Există opțiuni de mâncare și băutură la festival?</h3>
-                <p>Da, vor fi disponibile diverse food truck-uri și standuri cu băuturi, incluzând opțiuni vegetariene și vegane. Vă rugăm să aveți în vedere că plata se va face, de preferat, cu cardul sau prin aplicații mobile.</p>
+                <p>Da, vor fi disponibile diverse food truck-uri și standuri cu băuturi, incluzând opțiuni vegetariene
+                    și vegane. Vă rugăm să aveți în vedere că plata se va face, de preferat, cu cardul sau prin
+                    aplicații mobile.</p>
             </div>
 
             <!-- FAQ Card 5 -->
             <div class="faq-card">
                 <h3>Pot veni cu propria mâncare/băutură?</h3>
-                <p>Conform regulamentului, nu este permis accesul cu băuturi alcoolice sau sticle de sticlă din exterior. Este permis accesul cu o sticlă mică de apă sigilată (500ml).</p>
+                <p>Conform regulamentului, nu este permis accesul cu băuturi alcoolice sau sticle de sticlă din
+                    exterior. Este permis accesul cu o sticlă mică de apă sigilată (500ml).</p>
             </div>
 
         </section>
-        
+
     </main>
     <button id="scrollTopBtn" title="Mergi sus">
-    &#9650; <!-- Săgeată în sus -->
-</button>
+        &#9650; <!-- Săgeată în sus -->
+    </button>
+    <div class="speaker-wall left-wall">
+        <div class="column outer"></div>
+        <div class="column inner"></div>
+    </div>
 
-<script>
-// Logica pentru butonul "Go to Top"
-window.onload = function() {
-    const scrollButton = document.getElementById('scrollTopBtn');
-    // Arată butonul după 300px de scroll
-    const scrollThreshold = 300; 
+    <div class="speaker-wall right-wall">
+        <div class="column outer"></div>
+        <div class="column inner"></div>
 
-    // Funcția care gestionează vizibilitatea butonului la scroll
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > scrollThreshold) {
-            scrollButton.classList.add('show');
-        } else {
-            scrollButton.classList.remove('show');
-        }
-    });
+    </div>
+    <script>
+        window.onload = function () {
+            // --- LOGICA PENTRU MENIU QUICK NAV ---
+            const toggleButton = document.getElementById('quickNavToggle');
+            const menu = document.getElementById('quickNavMenu');
 
-    // Funcția care realizează scroll-ul lin înapoi în vârf
-    scrollButton.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Scroll animat
-        });
-    });
-};
-</script>
-<canvas id="particle-canvas" class="particle-background"></canvas>
-<script defer src="script.js"></script>
+            if (toggleButton && menu) {
+                toggleButton.onclick = function () {
+                    toggleButton.classList.toggle('open');
+                    menu.classList.toggle('active');
+                };
+            }
+
+            // --- LOGICA PENTRU BUTONUL SCROLL TO TOP ---
+            const scrollButton = document.getElementById('scrollTopBtn');
+            if (scrollButton) {
+                window.addEventListener('scroll', () => {
+                    if (window.scrollY > 300) {
+                        scrollButton.classList.add('show');
+                    } else {
+                        scrollButton.classList.remove('show');
+                    }
+                });
+
+                scrollButton.onclick = function () {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+            }
+        };
+    </script>
+    <canvas id="particle-canvas" class="particle-background"></canvas>
+    <script defer src="script.js"></script>
     <!-- Am eliminat valurile conform cererii -->
-    
+
     <footer class="site-footer">
         <div>&copy; 2025 Urban Beat Charity. Toate drepturile rezervate.</div>
         <a href="Contact.html" class="btn">Contact</a>
     </footer>
 
 </body>
+
 </html>

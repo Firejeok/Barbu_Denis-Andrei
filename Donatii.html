@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Donații - Urban Beat</title>
@@ -10,135 +11,148 @@
 
 <body>
     <header class="site-header">
-<div class="logo">
-    <a href="Index.html"><img src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png" alt="Logo Urban Beat Festival"> </a> </div>
+        <div class="logo">
+            <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+        </div>
 
-<nav class="main-nav">
- <a href="Login.html" class="btn">Login</a>
- <a href="Register.html" class="btn">Register</a>
- <a href="FAQ.html" class="btn">FAQ</a>
-</nav>
+        <nav class="main-nav">
+            <a href="Login.html" class="btn">Login</a>
+            <a href="Register.html" class="btn">Register</a>
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </nav>
 
-<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
-<div class="quick-nav-container">
- <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
-<span></span>
- <span></span>
-<span></span>
- </button>
-<div id="quickNavMenu" class="quick-nav-menu">
-<a href="index.html" class="quick-nav-link">Acasă</a>
- <a href="Artisti.html" class="quick-nav-link">Artiști</a>
- <a href="CumBil.html" class="quick-nav-link">Bilete</a>
- <a href="regulament.html" class="quick-nav-link">Regulament</a>
-<a href="FAQ.html" class="quick-nav-link">FAQ</a>
-<a href="profile.html" class="quick-nav-link">Profil</a>
-</div>
- </div>
- <script>
-window.onload = function() {
-    const toggleButton = document.getElementById('quickNavToggle');
-    const menu = document.getElementById('quickNavMenu');
-    
-    // Asigură că funcția se rulează doar dacă elementele există
-    if (!toggleButton || !menu) return; 
+        <!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
+        <div class="quick-nav-container">
+            <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div id="quickNavMenu" class="quick-nav-menu">
+                <a href="index.html" class="quick-nav-link">Acasă</a>
+                <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+                <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                <a href="profile.html" class="quick-nav-link">Profil</a>
+            </div>
+        </div>
+        <div class="speaker-wall left-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
 
-    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
-    toggleButton.addEventListener('click', () => {
-        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
-        toggleButton.classList.toggle('open');
-        
-        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
-        menu.classList.toggle('active');
-        
-        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
-    });
-    
-    // Opțional: Închide meniul dacă se dă click pe un link din interior
-    const links = menu.querySelectorAll('.quick-nav-link');
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            toggleButton.classList.remove('open');
-            menu.classList.remove('active');
-        });
-    });
-};
+        <div class="speaker-wall right-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
 
- </script>
-</header>
+        </div>
+        <script>
+            window.onload = function () {
+                const toggleButton = document.getElementById('quickNavToggle');
+                const menu = document.getElementById('quickNavMenu');
+
+                // Asigură că funcția se rulează doar dacă elementele există
+                if (!toggleButton || !menu) return;
+
+                // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
+                toggleButton.addEventListener('click', () => {
+                    // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
+                    toggleButton.classList.toggle('open');
+
+                    // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
+                    menu.classList.toggle('active');
+
+                    // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
+                });
+
+                // Opțional: Închide meniul dacă se dă click pe un link din interior
+                const links = menu.querySelectorAll('.quick-nav-link');
+                links.forEach(link => {
+                    link.addEventListener('click', () => {
+                        toggleButton.classList.remove('open');
+                        menu.classList.remove('active');
+                    });
+                });
+            };
+
+        </script>
+    </header>
 
     <main>
         <h1>Susține Viziunea Urban Beat!</h1>
 
         <section class="donation-section">
             <p class="intro-text">
-                Fiecare contribuție ne ajută să creștem calitatea artiștilor, scenografia și experiența generală a festivalului. Îți mulțumim pentru generozitate!
+                Fiecare contribuție ne ajută să creștem calitatea artiștilor, scenografia și experiența generală a
+                festivalului. Îți mulțumim pentru generozitate!
             </p>
-            
+
             <form action="proceseaza_donatie.php" method="POST" class="donation-form">
-                
+
                 <h2>Alege Suma</h2>
-                
+
                 <div class="amount-options">
                     <input type="radio" id="d25" name="amount" value="25" required>
                     <label for="d25" class="amount-btn">25 RON</label>
-                    
+
                     <input type="radio" id="d50" name="amount" value="50">
                     <label for="d50" class="amount-btn">50 RON</label>
-                    
+
                     <input type="radio" id="d100" name="amount" value="100">
                     <label for="d100" class="amount-btn">100 RON</label>
                 </div>
 
                 <div class="custom-amount">
                     <label for="custom">Sau introdu o sumă personalizată (RON):</label>
-                    <input type="number" id="custom" name="custom_amount" min="10" placeholder="e.g., 75"> 
+                    <input type="number" id="custom" name="custom_amount" min="10" placeholder="e.g., 75">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="donor-name">Nume (Opțional):</label>
                     <input type="text" id="donor-name" name="donor_name" placeholder="Anonim">
                 </div>
-                
+
                 <button type="submit" class="donate-btn">Donează Acum! 💙</button>
             </form>
 
-            <p class="thanks-text">Toate tranzacțiile sunt sigure și procesate printr-un partener de plată. Mulțumim!</p>
+            <p class="thanks-text">Toate tranzacțiile sunt sigure și procesate printr-un partener de plată. Mulțumim!
+            </p>
         </section>
 
     </main>
 
     <canvas id="particle-canvas" class="particle-background"></canvas>
-<script defer src="script.js"></script>
-<button id="scrollTopBtn" title="Mergi sus">
-    &#9650; <!-- Săgeată în sus -->
-</button>
+    <script defer src="script.js"></script>
+    <button id="scrollTopBtn" title="Mergi sus">
+        &#9650; <!-- Săgeată în sus -->
+    </button>
 
-<script>
-// Logica pentru butonul "Go to Top"
-window.onload = function() {
-    const scrollButton = document.getElementById('scrollTopBtn');
-    // Arată butonul după 300px de scroll
-    const scrollThreshold = 300; 
+    <script>
+        // Logica pentru butonul "Go to Top"
+        window.onload = function () {
+            const scrollButton = document.getElementById('scrollTopBtn');
+            // Arată butonul după 300px de scroll
+            const scrollThreshold = 300;
 
-    // Funcția care gestionează vizibilitatea butonului la scroll
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > scrollThreshold) {
-            scrollButton.classList.add('show');
-        } else {
-            scrollButton.classList.remove('show');
-        }
-    });
+            // Funcția care gestionează vizibilitatea butonului la scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > scrollThreshold) {
+                    scrollButton.classList.add('show');
+                } else {
+                    scrollButton.classList.remove('show');
+                }
+            });
 
-    // Funcția care realizează scroll-ul lin înapoi în vârf
-    scrollButton.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // Scroll animat
-        });
-    });
-};
-</script>
+            // Funcția care realizează scroll-ul lin înapoi în vârf
+            scrollButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth' // Scroll animat
+                });
+            });
+        };
+    </script>
     <footer class="site-footer">
         <div class="footer-left">© 2025 Urban Beat</div>
         <div class="footer-right">
@@ -147,4 +161,5 @@ window.onload = function() {
         </div>
     </footer>
 </body>
+
 </html>

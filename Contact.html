@@ -1,132 +1,139 @@
 <!DOCTYPE html>
-<html>
+<html lang="ro">
+
 <head>
     <meta charset="UTF-8">
-    <title>Contact - Urban Beat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Urban Beat Festival</title>
     <link rel="stylesheet" href="Index.css">
-    <link rel="stylesheet" href="Contact.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header class="site-header">
-<div class="logo">
-    <a href="Index.html"><img src="C:\Users\Barbu Andrei\Desktop\Facultate\An 3 Sem 1 - NOW\Tehno.Web\Barbu_Denis-Andrei\aaa.png" alt="Logo Urban Beat Festival"> </a> </div>
-
-<nav class="main-nav">
- <a href="Login.html" class="btn">Login</a>
- <a href="Register.html" class="btn">Register</a>
- <a href="FAQ.html" class="btn">FAQ</a>
-</nav>
-
-<!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
-<div class="quick-nav-container">
- <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
-<span></span>
- <span></span>
-<span></span>
- </button>
-<div id="quickNavMenu" class="quick-nav-menu">
-<a href="index.html" class="quick-nav-link">Acasă</a>
- <a href="Artisti.html" class="quick-nav-link">Artiști</a>
- <a href="CumBil.html" class="quick-nav-link">Bilete</a>
- <a href="regulament.html" class="quick-nav-link">Regulament</a>
-<a href="FAQ.html" class="quick-nav-link">FAQ</a>
-<a href="profile.html" class="quick-nav-link">Profil</a>
-</div>
- </div>
- <script>
-window.onload = function() {
-    const toggleButton = document.getElementById('quickNavToggle');
-    const menu = document.getElementById('quickNavMenu');
-    
-    // Asigură că funcția se rulează doar dacă elementele există
-    if (!toggleButton || !menu) return; 
-
-    // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
-    toggleButton.addEventListener('click', () => {
-        // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
-        toggleButton.classList.toggle('open');
-        
-        // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
-        menu.classList.toggle('active');
-        
-        // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
-    });
-    
-    // Opțional: Închide meniul dacă se dă click pe un link din interior
-    const links = menu.querySelectorAll('.quick-nav-link');
-    links.forEach(link => {
-        link.addEventListener('click', () => {
-            toggleButton.classList.remove('open');
-            menu.classList.remove('active');
-        });
-    });
-};
-
- </script>
-</header>
+        <div class="logo">
+            <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"></a>
+        </div>
+        <nav class="main-nav">
+            <a href="Login.html" class="btn">Login</a>
+            <a href="Register.html" class="btn">Register</a>
+            <a href="FAQ.html" class="btn">FAQ</a>
+        </nav>
+        <div class="quick-nav-container">
+            <button id="quickNavToggle" class="hamburger-btn">
+                <span></span><span></span><span></span>
+            </button>
+            <div id="quickNavMenu" class="quick-nav-menu">
+                <a href="index.html" class="quick-nav-link">Acasă</a>
+                <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                <a href="Regulament.html" class="quick-nav-link">Regulament</a>
+                <a href="Contact.html" class="quick-nav-link">Contact</a>
+            </div>
+        </div>
+    </header>
 
     <main>
-        <h1>Contactează Echipa Urban Beat</h1>
+        <h1>CONTACTEAZĂ-NE</h1>
 
         <div class="contact-container">
-            
-            <section class="contact-form-card">
-                <h2>Trimite-ne un mesaj rapid</h2>
-                <form action="trimite_mesaj.php" method="POST" class="contact-form">
-                    
+
+            <div class="contact-form-card">
+                <h2>Trimite-ne un mesaj</h2>
+                <form class="contact-form" action="#" method="POST">
                     <div class="form-group">
-                        <label for="nume">Numele tău:</label>
-                        <input type="text" id="nume" name="nume" required>
+                        <label for="nume">Nume complet</label>
+                        <input type="text" id="nume" name="nume" placeholder="Ex: Popescu Andrei" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Adresa de Email:</label>
-                        <input type="email" id="email" name="email" required>
+                        <label for="email">Adresa de Email</label>
+                        <input type="email" id="email" name="email" placeholder="email@exemplu.com" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="subiect">Subiect:</label>
-                        <input type="text" id="subiect" name="subiect" required>
+                        <label for="mesaj">Mesajul tău</label>
+                        <textarea id="mesaj" name="mesaj" rows="5" placeholder="Scrie mesajul tău aici..."
+                            required></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label for="mesaj">Mesajul tău:</label>
-                        <textarea id="mesaj" name="mesaj" rows="6" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="send-message-btn">Trimite Mesajul</button>
+                    <button type="submit" class="send-message-btn">TRIMITE MESAJUL</button>
                 </form>
-            </section>
+            </div>
 
-            <section class="contact-info-card">
-                <h2>Alte Modalități de Contact</h2>
+            <div class="contact-info-card">
+                <h2>Informații</h2>
+
                 <div class="info-group">
-                    <p class="info-title">📧 Email Suport Clienți:</p>
-                    <p class="info-detail"><a href="mailto:suport@urbanbeat.ro">suport@urbanbeat.ro</a></p>
+                    <div class="info-title">📍 Locație Festival:</div>
+                    <div class="info-detail">Parcul Central, Cluj-Napoca</div>
                 </div>
+
                 <div class="info-group">
-                    <p class="info-title">☎️ Telefon (L-V, 10:00-18:00):</p>
-                    <p class="info-detail"><a href="tel:+40700123456">+40 700 123 456</a></p>
+                    <div class="info-title">📧 Email:</div>
+                    <div class="info-detail"><a href="mailto:contact@urbanbeat.ro">contact@urbanbeat.ro</a></div>
                 </div>
+
                 <div class="info-group">
-                    <p class="info-title">📍 Adresă Sediul Central:</p>
-                    <p class="info-detail">Strada Libertății, Nr. 10, București</p>
+                    <div class="info-title">📞 Telefon:</div>
+                    <div class="info-detail"><a href="tel:+40700123456">+40 700 123 456</a></div>
                 </div>
-            </section>
+
+                <div style="width: 100%; height: 200px; margin-top: 20px; border-radius: 10px; overflow: hidden;">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2732.399432608358!2d23.5768346!3d46.7772671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47490e9d6d7a46e5%3A0x6b4020d5c0378e9f!2sParcul%20Central%20Simion%20B%C4%83rnu%C8%9Biu!5e0!3m2!1sro!2sro!4v1709220000000!5m2!1sro!2sro"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
         </div>
-
     </main>
+
+    <div class="speaker-wall left-wall">
+        <div class="column outer"></div>
+        <div class="column inner"></div>
+    </div>
+    <div class="speaker-wall right-wall">
+        <div class="column outer"></div>
+        <div class="column inner"></div>
+    </div>
+
     <canvas id="particle-canvas" class="particle-background"></canvas>
-<script defer src="script.js"></script>
 
     <footer class="site-footer">
-        <div class="footer-left">© 2025 Urban Beat</div>
-        <div class="footer-right">
-            <a href="FAQ.html" class="btn">Faq</a>
-            <a href="Contact.html" class="btn">Contact</a>
-        </div>
+        <div>&copy; 2025 Urban Beat Charity. Toate drepturile rezervate.</div>
+        <a href="Regulament.html" class="btn">Regulament</a>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // 1. Selectăm elementele din HTML
+            const toggleButton = document.getElementById('quickNavToggle');
+            const menu = document.getElementById('quickNavMenu');
+
+            // 2. Verificăm dacă elementele există pe pagină (ca să nu avem erori)
+            if (toggleButton && menu) {
+
+                // 3. Adăugăm evenimentul de CLICK pe butonul hamburger
+                toggleButton.addEventListener('click', function () {
+                    // Adaugă/Scoate clasa .open pe buton (pentru animația X)
+                    toggleButton.classList.toggle('open');
+
+                    // Adaugă/Scoate clasa .active pe meniu (pentru a-l afișa)
+                    menu.classList.toggle('active');
+                });
+
+                // 4. (Opțional) Închide meniul automat când dai click pe un link din el
+                const links = menu.querySelectorAll('a');
+                links.forEach(link => {
+                    link.addEventListener('click', () => {
+                        toggleButton.classList.remove('open');
+                        menu.classList.remove('active');
+                    });
+                });
+            }
+        });
+    </script>
+    <script src="script.js" defer></script>
 </body>
+
 </html>

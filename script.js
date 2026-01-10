@@ -4,7 +4,7 @@ const canvas = document.getElementById('particle-canvas');
 if (canvas) {
     const ctx = canvas.getContext('2d');
     let particles = [];
-    
+
     // Culorile tale principale (folosite și în CSS)
     const PRIMARY_COLOR = '#ffffffff'; // Cyan
     const SECONDARY_COLOR = '#ffffffff'; // Navy Blue
@@ -12,7 +12,7 @@ if (canvas) {
     // Configurări (poți schimba aceste valori)
     const NUM_PARTICLES = 100; // Numărul de particule
     const MAX_DISTANCE = 100; // Distanța maximă pentru a trasa o linie
-    
+
     // Ajustează dimensiunea canvas-ului la dimensiunea ferestrei
     function resizeCanvas() {
         canvas.width = window.innerWidth;
@@ -25,11 +25,11 @@ if (canvas) {
             // Poziție aleatorie
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            
+
             // Viteză mică și aleatorie
-            this.vx = (Math.random() - 0.5) * 0.4; 
+            this.vx = (Math.random() - 0.5) * 0.4;
             this.vy = (Math.random() - 0.5) * 0.4;
-            
+
             this.radius = Math.random() * 2 + 1; // Rază între 1 și 3
             this.color = Math.random() > 0.5 ? PRIMARY_COLOR : SECONDARY_COLOR;
         }
@@ -73,10 +73,10 @@ if (canvas) {
 
                 if (distance < MAX_DISTANCE) {
                     const opacity = 1 - (distance / MAX_DISTANCE);
-                    
+
                     ctx.beginPath();
                     // Folosim o culoare deschisă pentru linii (Cyan)
-                    ctx.strokeStyle = '#a1a1a1ff'; 
+                    ctx.strokeStyle = '#a1a1a1ff';
                     ctx.lineWidth = 1;
                     ctx.moveTo(p1.x, p1.y);
                     ctx.lineTo(p2.x, p2.y);
@@ -88,23 +88,24 @@ if (canvas) {
 
     // Funcția principală de animație
     function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height); 
-        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
         drawLines();
-        
+
         for (let i = 0; i < NUM_PARTICLES; i++) {
             particles[i].update();
             particles[i].draw();
         }
 
-        requestAnimationFrame(animate); 
+        requestAnimationFrame(animate);
     }
 
     // Gestionează redimensionarea ferestrei
     window.addEventListener('resize', resizeCanvas);
-    
+
     // Pornirea aplicației
     init();
     animate();
 }
+
 

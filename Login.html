@@ -50,44 +50,72 @@
     </main>
 
     <script>
-        const loginForm = document.getElementById('loginForm');
-        const statusMessage = document.getElementById('statusMessage');
+        document.addEventListener("DOMContentLoaded", function () {
+            const loginForm = document.getElementById('loginForm');
+            const statusMessage = document.getElementById('statusMessage');
 
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Oprește reîncărcarea paginii
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function (event) {
+                    event.preventDefault(); // Oprește reîncărcarea paginii
 
-            const formData = new FormData(loginForm);
+                    const formData = new FormData(loginForm);
+                    // Convertim FormData în JSON pentru PHP
+                    const plainFormData = Object.fromEntries(formData.entries());
+                    const jsonString = JSON.stringify(plainFormData);
 
-            try {
-                statusMessage.innerHTML = '<span style="color:blue;">Se verifică...</span>';
+                    // ⚠️ ATENȚIE: Dacă fișierele PHP sunt într-un folder în htdocs (ex: "proiect"), 
+                    // adresa trebuie să fie 'http://localhost/proiect/login.php'
+                    // Am scos portul :8080 pentru că XAMPP rulează de obicei pe 80.
+                    const API_LOGIN_URL = 'http://localhost:8080/login.php';
 
-                // ⚠️ MODIFICĂ AICI CU NUMELE FOLDERULUI TĂU DIN XAMPP ⚠️
-                // Exemplu: http://localhost/Barbu_Denis-Andrei/login.php
-                const response = await fetch('http://localhost:8080/login.php', {
-                    method: 'POST',
-                    body: formData
+                    try {
+                        statusMessage.innerHTML = '<span style="color:blue;">Se verifică...</span>';
+
+                        const response = await fetch(API_LOGIN_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: jsonString
+                        });
+
+                        // Verificăm dacă fișierul PHP a fost găsit
+                        if (!response.ok) {
+                            throw new Error(`Eroare HTTP: ${response.status} (Verifică URL-ul!)`);
+                        }
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            // === PAS CRITIC: SALVĂM EMAILUL PENTRU PROFIL ===
+                            localStorage.setItem('userEmail', plainFormData.email);
+
+                            statusMessage.innerHTML = '<span style="color:green;">Login reușit! Redirecționare...</span>';
+
+                            // Așteptăm puțin și redirecționăm
+                            setTimeout(() => {
+                                window.location.href = "Profile.html";
+                            }, 1000);
+                        } else {
+                            statusMessage.innerHTML = `<span style="color:red;">${data.message}</span>`;
+                        }
+
+                    } catch (error) {
+                        console.error("Eroare:", error);
+                        statusMessage.innerHTML = `<span style="color:red;">Eroare tehnică: ${error.message}</span>`;
+                    }
                 });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    statusMessage.innerHTML = '<span style="color:green;">' + result.message + '</span>';
-
-                    // Redirecționare către profil după 1 secundă
-                    setTimeout(() => {
-                        window.location.href = 'profile.html';
-                    }, 1000);
-                } else {
-                    statusMessage.innerHTML = '<span style="color:red;">' + result.message + '</span>';
-                }
-
-            } catch (error) {
-                console.error("Eroare:", error);
-                statusMessage.innerHTML = '<span style="color:red;">Eroare de conexiune. Verifică dacă XAMPP este pornit.</span>';
             }
         });
     </script>
+    <div class="speaker-wall left-wall">
+        <div class="column outer"></div>
+        <div class="column inner"></div>
+    </div>
 
+    <div class="speaker-wall right-wall">
+        <div class="column outer"></div>
+        <div class="column inner"></div>
+
+    </div>
     <canvas id="particle-canvas" class="particle-background"></canvas>
     <script defer src="script.js"></script>
 
@@ -99,5 +127,6 @@
         </div>
     </footer>
 </body>
+
 
 </html>

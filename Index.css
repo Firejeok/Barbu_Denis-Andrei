@@ -1952,3 +1952,611 @@ body {
     transform: scale(0.99);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
+
+:root {
+    --speaker-url: url('speaker.svg');
+    /* Asigură-te că ai fișierul salvat */
+}
+
+.speaker-wall {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    gap: 10px;
+    /* Spațiul dintre coloana de la margine și cea de interior */
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.left-wall {
+    left: 10px;
+}
+
+.right-wall {
+    right: 10px;
+    transform: scaleX(-1);
+    /* Oglindește tot grupul din dreapta */
+}
+
+.column {
+    width: 120px;
+    /* Boxele exterioare puțin mai mari */
+    height: 100%;
+    background-image: var(--speaker-url);
+    background-repeat: repeat-y;
+    background-size: contain;
+}
+
+/* Coloana din interior (cea pe care o doreai în plus) */
+.column.inner {
+    width: 100px;
+    /* Puțin mai mică pentru profunzime */
+    margin-top: 50px;
+    /* O decalăm pe verticală ca să nu fie aliniată perfect cu prima */
+    opacity: 0.7;
+}
+
+/* Animație de beat diferită pentru fiecare coloană ca să pară organic */
+@keyframes pump {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.03);
+    }
+}
+
+.outer {
+    animation: pump 0.8s infinite ease-in-out;
+}
+
+.inner {
+    animation: pump 0.8s infinite ease-in-out 0.2s;
+    /* decalaj de 0.2s */
+}
+
+/* Ascundem peretele pe mobil pentru a nu acoperi textul */
+@media (max-width: 1024px) {
+    .speaker-wall {
+        display: none;
+    }
+}
+
+/* === STILURI PAGINA REGULAMENT === */
+.reglement-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 coloane pe desktop */
+    gap: 30px;
+    width: 90%;
+    max-width: 1400px;
+    margin: 3rem auto 5rem auto;
+    padding: 0 20px;
+    z-index: 999;
+}
+
+.reglement-card {
+    background: var(--gri-nou) !important;
+    /* Forțează griul tău definit în root */
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(5px);
+    width: 100% !important;
+    /* Suprascrie max-width: 400px din selectorul general 'section' */
+}
+
+.reglement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(4, 179, 210, 0.4);
+}
+
+.reglement-card h2 {
+    color: var(--primary-color) !important;
+    font-size: 1.4rem !important;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.reglement-card p,
+.reglement-card li {
+    color: white;
+    text-align: left;
+    line-height: 1.6;
+}
+
+/* Ajustare pentru mobil */
+@media (max-width: 1024px) {
+    .reglement-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .reglement-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === STILURI PAGINA CONTACT (Verificare) === */
+
+.contact-container {
+    width: 90%;
+    max-width: 1100px;
+    /* Lățime similară cu grid-ul de la Reguli */
+    margin: 3rem auto 5rem auto;
+
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    /* Formularul mai lat decât info */
+    gap: 30px;
+    z-index: 10;
+    position: relative;
+}
+
+/* Cardurile de contact (refolosesc stilul vizual transparent) */
+.contact-form-card,
+.contact-info-card {
+    background: var(--gri-nou);
+    border: 2px solid var(--primary-color);
+    /* Cyan */
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
+    backdrop-filter: blur(5px);
+    height: 100%;
+}
+
+/* Titluri */
+.contact-form-card h2,
+.contact-info-card h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+/* Inputuri */
+.contact-form input,
+.contact-form textarea {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid #aad8dc;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Link-uri din info */
+.info-detail a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.info-detail a:hover {
+    color: var(--primary-color);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        /* O singură coloană pe mobil/tabletă */
+    }
+}
+
+/* === MODIFICARE CULORI CONTACT === */
+
+/* 1. Schimbă culoarea etichetelor din formular (Nume, Email, Mesaj) */
+.contact-form label {
+    color: #04b3d2 !important;
+    /* Albastru deschis (Cyan) */
+    font-weight: 700;
+    /* Le facem și puțin mai groase */
+}
+
+/* 2. Schimbă culoarea titlurilor din stânga (Locație, Email, Telefon) */
+.info-title {
+    color: #04b3d2 !important;
+    /* Același albastru deschis */
+}
+
+/* Opțional: Dacă vrei și link-urile (adresa de mail/telefon) să fie la fel */
+.info-detail a {
+    color: #ffffff;
+    /* Le lăsăm albe pentru contrast */
+}
+
+.info-detail a:hover {
+    color: #04b3d2;
+    /* Se fac albastre doar când pui mouse-ul pe ele */
+}
+
+/* === STILURI PAGINA PROFIL === */
+
+.profile-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 3rem auto 5rem auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    /* Coloana stângă mai mică, dreapta mai mare */
+    gap: 30px;
+    z-index: 10;
+    position: relative;
+}
+
+/* Stil general pentru cardurile de profil */
+.profile-card {
+    background: var(--gri-nou);
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(1, 88, 113, 0.2);
+    backdrop-filter: blur(5px);
+    height: fit-content;
+    /* Se mulează pe conținut */
+}
+
+/* === COLOANA STÂNGA (USER INFO) === */
+
+.user-avatar {
+    width: 80px;
+    height: 80px;
+    background: rgba(4, 179, 210, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px auto;
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.profile-header h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.member-status {
+    color: #aaaaaa;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    padding-bottom: 15px;
+}
+
+/* Detaliile (Nume, Email, etc.) - Culoarea cerută */
+.detail-row {
+    margin-bottom: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 5px;
+}
+
+.detail-row label {
+    display: block;
+    color: #04b3d2 !important;
+    /* Albastru deschis */
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.detail-row span {
+    color: #ffffff;
+    font-size: 1.1rem;
+}
+
+/* Butoane Profil */
+.profile-actions {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-btn {
+    padding: 10px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.edit-btn {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+}
+
+.edit-btn:hover {
+    background: var(--primary-color);
+    color: white;
+}
+
+.logout-btn {
+    background: #ff4500;
+    /* Roșu pentru logout */
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #cc3700;
+}
+
+/* === COLOANA DREAPTA (ISTORIC BILETE) === */
+
+.tickets-card h2 {
+    color: #04b3d2;
+    text-align: left;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.ticket-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 5px solid var(--primary-color);
+    /* Linie de accent */
+    transition: transform 0.3s;
+}
+
+.ticket-item:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.ticket-info {
+    text-align: left;
+}
+
+.ticket-info h3 {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.ticket-date {
+    color: #ccc;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.status {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status.active {
+    background: rgba(4, 179, 210, 0.2);
+    color: #04b3d2;
+}
+
+.status.used {
+    background: rgba(100, 100, 100, 0.2);
+    color: #aaa;
+}
+
+.download-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.download-btn:hover {
+    background: #dc3545;
+    /* Roșu la hover, conform temei tale */
+    box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+}
+
+.download-btn.secondary {
+    background: transparent;
+    border: 1px solid #aaa;
+    color: #aaa;
+}
+
+.download-btn.secondary:hover {
+    border-color: #fff;
+    color: #fff;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+        /* Stivă pe verticală la mobil */
+    }
+
+    .ticket-item {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .download-btn {
+        width: 100%;
+    }
+}
+
+/* ======================================================= */
+/* === HEADER COMPLET (Stânga - Centru - Dreapta) === */
+/* ======================================================= */
+
+.site-header {
+    width: 100vw;
+    background: rgba(0, 0, 0, 0);
+    /* Transparent */
+    display: flex;
+    justify-content: space-between;
+    /* Împarte spațiul */
+    align-items: center;
+    padding: 10px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* --- 1. PARTEA STÂNGĂ (Logo + FAQ unul lângă altul) --- */
+.header-left-group {
+    display: flex;
+    /* <--- ASTA LE PUNE UNUL LÂNGĂ ALTUL */
+    align-items: center;
+    /* Le centrează pe verticală */
+    gap: 20px;
+    /* Spațiu între Logo și butonul FAQ */
+}
+
+.site-header .logo img {
+    height: 6vh;
+    border-radius: 0.8vh;
+    transition: transform 0.3s ease;
+    display: block;
+    /* Elimină spațiile fantomă de sub imagine */
+}
+
+.site-header .logo img:hover {
+    transform: scale(1.05);
+}
+
+/* Stilul Butonului FAQ (Rotund / Pilulă) */
+.btn-faq-left {
+    background-color: #008baa;
+    color: white !important;
+    text-decoration: none;
+
+    /* Forma rotundă */
+    border-radius: 50px !important;
+    padding: 8px 25px !important;
+
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-faq-left:hover {
+    background: #dc3545;
+    /* Roșu la hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.4);
+}
+
+/* --- 2. PARTEA CENTRALĂ (Login / Register) --- */
+.main-nav .btn {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 0.5rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 25px;
+    background: #0294b3;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.main-nav .btn:hover {
+    background: #dc3545;
+}
+
+/* --- 3. PARTEA DREAPTĂ (User + Hamburger - Codul tău) --- */
+.header-right-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Spațiu între "Salut, Andrei" și Buton */
+}
+
+/* Link-ul cu numele și poza (care duce la profil) */
+.user-header-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    background: rgba(4, 179, 210, 0.15);
+    /* Fundal subtil Cyan */
+    padding: 5px 15px;
+    border-radius: 30px;
+    border: 1px solid rgba(4, 179, 210, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-header-display:hover {
+    background: rgba(4, 179, 210, 0.4);
+    border-color: #ffffff;
+    box-shadow: 0 0 10px rgba(4, 179, 210, 0.6);
+}
+
+/* Textul "Salut, User" */
+#userHeaderName {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+/* Cerculețul pentru avatar */
+.header-avatar {
+    width: 32px;
+    height: 32px;
+    background: #04b3d2;
+    /* Culoarea Cyan */
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Ajustare pentru mobil */
+@media (max-width: 768px) {
+
+    /* Pe mobil ascundem FAQ-ul de lângă logo (e prea înghesuit) */
+    .btn-faq-left {
+        display: none;
+    }
+
+    #userHeaderName {
+        display: none;
+    }
+
+    .user-header-display {
+        padding: 5px;
+        background: transparent;
+        border: none;
+    }
+}
