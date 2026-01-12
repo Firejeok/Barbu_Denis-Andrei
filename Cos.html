@@ -53,87 +53,154 @@
     </header>
 
     <main>
-
         <h1>🛒 Coșul Meu</h1>
 
         <div class="cart-page">
-
             <div class="cart-container">
 
                 <div class="cart-items">
                     <h2>Articole în Coș</h2>
-
-                    <table>
+                    <table id="cartTable">
                         <thead>
                             <tr>
                                 <th style="width: 50%;">Tip Bilet</th>
-                                <th style="width: 8%;">Preț Unit.</th>
+                                <th style="width: 15%;">Preț Unit.</th>
                                 <th style="width: 15%;">Cantitate</th>
-                                <th style="width: 15%;">Total</th>
-                                <th style="width: 5%;"></th>
+                                <th style="width: 20%;">Total</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr data-label="Bilet">
-                                <td>Abonament General (3 Zile)</td>
-                                <td>150 EUR</td>
-                                <td><input type="number" value="1" min="1"></td>
-                                <td>150 EUR</td>
-                                <td><button class="remove-btn">&times;</button></td>
-                            </tr>
-                            <tr data-label="Bilet">
-                                <td>Bilet Zilnic (Vineri)</td>
-                                <td>60 EUR</td>
-                                <td><input type="number" value="2" min="1"></td>
-                                <td>120 EUR</td>
-                                <td><button class="remove-btn">&times;</button></td>
-                            </tr>
-                            <tr data-label="Bilet">
-                                <td>Abonament VIP (3 Zile)</td>
-                                <td>250 EUR</td>
-                                <td><input type="number" value="1" min="1"></td>
-                                <td>250 EUR</td>
-                                <td><button class="remove-btn">&times;</button></td>
-                            </tr>
+                        <tbody id="cartTableBody">
                         </tbody>
                     </table>
+                    <p id="emptyCartMsg" style="display:none; text-align:center; padding:20px;">Coșul este gol.</p>
                 </div>
 
                 <div class="cart-summary">
                     <h2>Sumar Comandă</h2>
 
                     <div class="summary-line">
-                        <span>Subtotal Articole:</span>
-                        <span>470 EUR</span>
-                    </div>
-
-                    <div class="summary-line">
-                        <span>Donație:</span>
-                        <input type="number" id="donation-amount" value="0" min="0"> EUR
-                    </div>
-
-                    <div class="summary-line">
-                        <span>Taxe & Procesare:</span>
-                        <span>5 EUR</span>
+                        <span>Total Bilete:</span>
+                        <span id="subtotalDisplay">0 RON</span>
                     </div>
 
                     <hr>
 
                     <div class="summary-line total">
                         <strong>Total de Plată:</strong>
-                        <strong>475 EUR</strong>
+                        <strong id="totalDisplay">0 RON</strong>
                     </div>
 
-                    <button class="checkout-btn">Finalizează Comanda</button>
+                    <button id="finalizeBtn" class="checkout-btn">Finalizează Comanda</button>
+                    <p id="orderStatus" style="text-align:center; margin-top:10px; font-weight:bold;"></p>
                 </div>
 
             </div>
         </div>
-        <script defer src="cart.js"></script>
     </main>
 
     <canvas id="particle-canvas" class="particle-background"></canvas>
-    <script defer src="script.js"></script>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const tableBody = document.getElementById('cartTableBody');
+            const emptyMsg = document.getElementById('emptyCartMsg');
+            const subtotalDisplay = document.getElementById('subtotalDisplay');
+            const totalDisplay = document.getElementById('totalDisplay');
+            const finalizeBtn = document.getElementById('finalizeBtn');
+            const orderStatus = document.getElementById('orderStatus');
+
+            // 1. Citim Coșul din LocalStorage
+            let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+
+            function renderCart() {
+                tableBody.innerHTML = '';
+                let grandTotal = 0;
+
+                if (cart.length === 0) {
+                    emptyMsg.style.display = 'block';
+                    document.querySelector('table').style.display = 'none';
+                    finalizeBtn.style.display = 'none';
+                } else {
+                    emptyMsg.style.display = 'none';
+                    document.querySelector('table').style.display = 'table';
+                    finalizeBtn.style.display = 'block';
+
+                    cart.forEach((item, index) => {
+                        grandTotal += item.total;
+                        const row = `
+                        <tr>
+                            <td>${item.type}</td>
+                            <td>${item.price} RON</td>
+                            <td>${item.quantity}</td>
+                            <td>${item.total} RON</td>
+                        </tr>
+                    `;
+                        tableBody.innerHTML += row;
+                    });
+                }
+
+                subtotalDisplay.textContent = grandTotal + " RON";
+                totalDisplay.textContent = grandTotal + " RON";
+            }
+
+            renderCart();
+
+            // 2. LOGICA DE FINALIZARE COMANDĂ (Trimitere la Database)
+            finalizeBtn.addEventListener('click', async function () {
+
+                // Verificăm userul
+                const userEmail = localStorage.getItem('userEmail');
+                if (!userEmail) {
+                    alert("Eroare: Nu ești conectat!");
+                    window.location.href = 'Login.html';
+                    return;
+                }
+
+                // Pregătim datele pentru PHP
+                const orderData = {
+                    email: userEmail,
+                    items: cart
+                };
+
+                finalizeBtn.textContent = "Se procesează...";
+                finalizeBtn.disabled = true;
+
+                try {
+                    // Trimitem la scriptul PHP nou
+                    const response = await fetch('http://localhost:8080/place_order.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(orderData)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        orderStatus.style.color = "green";
+                        orderStatus.textContent = "Comandă reușită! Redirect...";
+
+                        // Golim coșul
+                        localStorage.removeItem('shoppingCart');
+
+                        setTimeout(() => {
+                            window.location.href = 'Profile.html';
+                        }, 2000);
+                    } else {
+                        throw new Error(result.message);
+                    }
+
+                } catch (error) {
+                    console.error(error);
+                    orderStatus.style.color = "red";
+                    orderStatus.textContent = "Eroare: " + error.message;
+                    finalizeBtn.textContent = "Încearcă din nou";
+                    finalizeBtn.disabled = false;
+                }
+            });
+        });
+    </script>
 
     <footer class="site-footer">
         <div class="footer-left">© 2025 Urban Beat</div>

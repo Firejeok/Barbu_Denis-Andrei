@@ -85,7 +85,7 @@
         <section class="ticket-section">
             <h2>Selectează Tipul de Bilet</h2>
 
-            <form action="proceseaza_plata.php" method="POST" class="ticket-form">
+            <form id="ticketForm" class="ticket-form">
 
                 <div class="ticket-option">
                     <input type="radio" id="general" name="ticket-type" value="General Access" required>
@@ -132,6 +132,49 @@
             <a href="Contact.html" class="btn">Contact</a>
         </div>
     </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Logica de Header și Login Check (deja existentă) rămâne...
+
+            // --- LOGICA DE ADĂUGARE ÎN COȘ ---
+            const ticketForm = document.getElementById('ticketForm');
+
+            if (ticketForm) {
+                ticketForm.addEventListener('submit', function (e) {
+                    e.preventDefault(); // Oprim trimiterea standard a formularului
+
+                    // 1. Preluăm datele selectate
+                    const selectedOption = document.querySelector('input[name="ticket-type"]:checked');
+                    const quantity = document.getElementById('quantity').value;
+
+                    if (!selectedOption) {
+                        alert("Te rog selectează un tip de bilet!");
+                        return;
+                    }
+
+                    // Extragem prețul din HTML (sau îl setăm manual)
+                    let price = 0;
+                    if (selectedOption.value === 'General Access') price = 250;
+                    if (selectedOption.value === 'VIP') price = 650;
+
+                    // 2. Creăm obiectul produs
+                    const cartItem = {
+                        type: selectedOption.value,
+                        price: price,
+                        quantity: parseInt(quantity),
+                        total: price * parseInt(quantity)
+                    };
+
+                    // 3. Salvăm în LocalStorage (Coșul virtual)
+                    // Suprascriem coșul vechi pentru simplitate, sau adăugăm la el (push)
+                    localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
+
+                    // 4. Redirecționăm către Coș
+                    window.location.href = 'Cos.html';
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

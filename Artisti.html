@@ -7,58 +7,139 @@
     <title>Artiști Festival - Numele Festivalului</title>
     <link rel="stylesheet" href="Index.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
     <header class="site-header">
-        <div class="logo">
-            <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
-        </div>
 
+        <div class="header-left-group">
+            <div class="logo">
+                <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+            </div>
+            <a href="FAQ.html" class="btn btn-faq-left">FAQ</a>
+        </div>
 
         <nav class="main-nav">
-            <a href="Login.html" class="btn">Login</a>
-            <a href="Register.html" class="btn">Register</a>
-            <a href="FAQ.html" class="btn">FAQ</a>
+            <a href="Login.html" class="btn auth-link">Login</a>
+            <a href="Register.html" class="btn auth-link">Register</a>
         </nav>
 
-        <!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
-        <div class="quick-nav-container">
-            <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div id="quickNavMenu" class="quick-nav-menu">
-                <a href="index.html" class="quick-nav-link">Acasă</a>
-                <a href="Artisti.html" class="quick-nav-link">Artiști</a>
-                <a href="CumBil.html" class="quick-nav-link">Bilete</a>
-                <a href="regulament.html" class="quick-nav-link">Regulament</a>
-                <a href="FAQ.html" class="quick-nav-link">FAQ</a>
-                <a href="profile.html" class="quick-nav-link">Profil</a>
+        <div class="header-right-section">
+
+            <a href="profile.html" id="userHeaderDisplay" class="user-header-display" style="display: none;">
+                <span id="userHeaderName">Salut!</span>
+                <div class="header-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </a>
+
+            <div class="quick-nav-container">
+                <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                    <span></span><span></span><span></span>
+                </button>
+                <div id="quickNavMenu" class="quick-nav-menu">
+                    <a href="index.html" class="quick-nav-link">Acasă</a>
+                    <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                    <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+                    <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                    <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                    <a href="profile.html" class="quick-nav-link">Profil</a>
+                </div>
             </div>
         </div>
-        <script>
-            window.onload = function () {
-                const toggleButton = document.getElementById('quickNavToggle');
-                const menu = document.getElementById('quickNavMenu');
 
-                // Asigură că funcția se rulează doar dacă elementele există
-                if (!toggleButton || !menu) return;
+        <div class="speaker-wall left-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
+        <div class="speaker-wall right-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
 
-                // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
+    </header>
+    <script>
+        window.onload = function () {
+            const toggleButton = document.getElementById('quickNavToggle');
+            const menu = document.getElementById('quickNavMenu');
+
+            // Asigură că funcția se rulează doar dacă elementele există
+            if (!toggleButton || !menu) return;
+
+            // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
+            toggleButton.addEventListener('click', () => {
+                // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
+                toggleButton.classList.toggle('open');
+
+                // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
+                menu.classList.toggle('active');
+
+                // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
+            });
+
+            // Opțional: Închide meniul dacă se dă click pe un link din interior
+            const links = menu.querySelectorAll('.quick-nav-link');
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    toggleButton.classList.remove('open');
+                    menu.classList.remove('active');
+                });
+            });
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // ---------------------------------------------------------
+            // 1. LOGICA DE LOGIN (AFIȘARE USER vs BUTOANE)
+            // ---------------------------------------------------------
+            const userDisplay = document.getElementById('userHeaderDisplay');
+            const userNameSpan = document.getElementById('userHeaderName');
+            const authLinks = document.querySelectorAll('.auth-link'); // Login & Register
+
+            // Verificăm memoria browserului
+            let currentUser = null;
+            const storedUser = localStorage.getItem('currentUser');
+            const storedEmail = localStorage.getItem('userEmail');
+
+            if (storedUser) {
+                try { currentUser = JSON.parse(storedUser); } catch (e) { }
+            } else if (storedEmail) {
+                currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
+            }
+
+            if (currentUser) {
+                // === UTILIZATOR LOGAT ===
+                // 1. Arată zona cu "Salut!"
+                if (userDisplay) {
+                    userDisplay.style.display = 'flex';
+                    const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
+                    if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
+                }
+                // 2. Ascunde butoanele Login/Register
+                authLinks.forEach(link => link.style.display = 'none');
+            } else {
+                // === NE-LOGAT ===
+                // 1. Ascunde zona cu "Salut!"
+                if (userDisplay) userDisplay.style.display = 'none';
+                // 2. Arată butoanele Login/Register
+                authLinks.forEach(link => link.style.display = 'inline-block');
+            }
+
+            // ---------------------------------------------------------
+            // 2. LOGICA MENIU HAMBURGER (QUICK NAV)
+            // ---------------------------------------------------------
+            const toggleButton = document.getElementById('quickNavToggle');
+            const menu = document.getElementById('quickNavMenu');
+
+            if (toggleButton && menu) {
                 toggleButton.addEventListener('click', () => {
-                    // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
                     toggleButton.classList.toggle('open');
-
-                    // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
                     menu.classList.toggle('active');
-
-                    // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
                 });
 
-                // Opțional: Închide meniul dacă se dă click pe un link din interior
+                // Închide meniul la click pe link
                 const links = menu.querySelectorAll('.quick-nav-link');
                 links.forEach(link => {
                     link.addEventListener('click', () => {
@@ -66,10 +147,10 @@
                         menu.classList.remove('active');
                     });
                 });
-            };
+            }
+        });
+    </script>
 
-        </script>
-    </header>
 
     <div class="artists-container" id="artists-grid">
 
@@ -336,6 +417,7 @@
         // Pornire la încărcarea paginii
         document.addEventListener('DOMContentLoaded', loadArtists);
     </script>
+
     <canvas id="particle-canvas" class="particle-background"></canvas>
     <script defer src="script.js"></script>
 

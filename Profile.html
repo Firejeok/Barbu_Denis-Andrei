@@ -63,6 +63,10 @@
                 </div>
 
                 <div class="profile-actions">
+                    <button id="adminBtn" class="profile-btn"
+                        style="background-color: gold; color: black; display: none; margin-bottom: 10px;">
+                        ★ PANOU ADMIN
+                    </button>
                     <button class="profile-btn edit-btn">Editează Profil</button>
                     <button class="profile-btn logout-btn">Deconectare</button>
                 </div>
@@ -124,14 +128,27 @@
 
         // Funcția de creare card bilet
         function createTicketCard(ticket) {
+            // Verificăm statusul
             const statusClass = (ticket.status_bilet && ticket.status_bilet.toLowerCase() === 'valid') ? 'active' : 'used';
             const statusText = ticket.status_bilet ? ticket.status_bilet.toUpperCase() : 'STATUS';
+
+            // Formatăm afișarea cantității
+            // Dacă cantitatea e mai mare ca 1, o afișăm îngroșat
+            let quantityBadge = '';
+            if (ticket.cantitate > 1) {
+                quantityBadge = `<span style="color: #04b3d2; font-weight: bold; margin-left: 5px;">(x${ticket.cantitate})</span>`;
+            }
 
             return `
             <div class="ticket-item">
                 <div class="ticket-info">
-                    <h3>${ticket.tip_bilet}</h3>
-                    <p class="ticket-date"><i class="fa-regular fa-calendar"></i> ${ticket.data_eveniment}</p>
+                    <h3>${ticket.tip_bilet} ${quantityBadge}</h3>
+                    <p class="ticket-date">
+                        <i class="fa-regular fa-calendar"></i> ${ticket.data_eveniment}
+                    </p>
+                    <p style="font-size: 0.85rem; color: #ccc; margin-top: 5px;">
+                        Preț Total: ${ticket.pret_total} RON
+                    </p>
                     <span class="status ${statusClass}">${statusText}</span>
                 </div>
                 <button class="download-btn" onclick="alert('Descărcare PDF indisponibilă momentan.')">
@@ -171,6 +188,20 @@
                 if (data.success) {
                     const user = data.user_info;
                     const tickets = data.bilete;
+                    const localUser = JSON.parse(localStorage.getItem('currentUser'));
+
+                    if (localUser && localUser.role === 'admin') {
+                        const adminBtn = document.getElementById('adminBtn');
+                        if (adminBtn) {
+                            adminBtn.style.display = 'block'; // Îl facem vizibil doar pentru tine!
+                            adminBtn.onclick = function () {
+                                alert("Aici vei avea panoul tău special pe viitor!");
+                                // window.location.href = 'AdminPanel.html'; // Pe viitor
+                            };
+                        }
+                        // Opțional: Adăugăm un badge lângă nume
+                        if (headerName) headerName.innerHTML += ' <span style="color:gold; font-size:0.6em;">(ADMIN)</span>';
+                    }
 
                     // 1. Populăm datele utilizatorului
                     if (headerName) headerName.textContent = `Salut, ${user.nume}!`;

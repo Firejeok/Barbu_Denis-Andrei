@@ -41,7 +41,7 @@
                 <div id="quickNavMenu" class="quick-nav-menu">
                     <a href="index.html" class="quick-nav-link">Acasă</a>
                     <a href="Artisti.html" class="quick-nav-link">Artiști</a>
-                    <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+                    <a href="CumBil.html" class="quick-nav-link" onclick="verificSiMergi(event)">Bilete</a>
                     <a href="regulament.html" class="quick-nav-link">Regulament</a>
                     <a href="FAQ.html" class="quick-nav-link">FAQ</a>
                     <a href="profile.html" class="quick-nav-link">Profil</a>
@@ -63,7 +63,7 @@
     <h1>Bine ai venit la Urban Beat!</h1>
 
     <div style="text-align: center; margin-top: 50px;">
-        <a href="CumBil.html" class="buy-ticket-btn">Cumpara Bilet!</a>
+        <a href="CumBil.html" class="buy-ticket-btn" onclick="verificSiMergi(event)">Cumpara Bilet!</a>
     </div>
 
     <div class="countdown-section">
@@ -88,7 +88,20 @@
         </div>
         <p id="event-status" class="status-msg"></p>
     </div>
+    <script>
+        function verificSiMergi(e) {
+            // Verificăm dacă utilizatorul e logat
+            const user = localStorage.getItem('userEmail') || localStorage.getItem('currentUser');
 
+            if (!user) {
+                // Dacă NU e logat:
+                e.preventDefault(); // Oprim navigarea către CumBil.html
+                alert("Trebuie să fii conectat pentru a cumpăra un bilet!");
+                window.location.href = "Login.html"; // Îl trimitem la login
+            }
+            // Dacă e logat, link-ul funcționează normal și merge la CumBil.html
+        }
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // --- LOGICA MENIU HAMBURGER ---
@@ -290,5 +303,6 @@
         <a href="Contact.html" class="btn">Contact</a>
     </div>
 </footer>
+
 
 </html>

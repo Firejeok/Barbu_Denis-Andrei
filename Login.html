@@ -56,17 +56,11 @@
 
             if (loginForm) {
                 loginForm.addEventListener('submit', async function (event) {
-                    event.preventDefault(); // Oprește reîncărcarea paginii
+                    event.preventDefault();
 
-                    const formData = new FormData(loginForm);
-                    // Convertim FormData în JSON pentru PHP
-                    const plainFormData = Object.fromEntries(formData.entries());
-                    const jsonString = JSON.stringify(plainFormData);
-
-                    // ⚠️ ATENȚIE: Dacă fișierele PHP sunt într-un folder în htdocs (ex: "proiect"), 
-                    // adresa trebuie să fie 'http://localhost/proiect/login.php'
-                    // Am scos portul :8080 pentru că XAMPP rulează de obicei pe 80.
-                    const API_LOGIN_URL = 'http://localhost:8080/login.php';
+                    const emailInput = document.getElementById('email').value;
+                    const passwordInput = document.getElementById('password').value;
+                    const API_LOGIN_URL = 'http://localhost:8080/login.php'; // Verifică dacă ai port 8080 sau nu
 
                     try {
                         statusMessage.innerHTML = '<span style="color:blue;">Se verifică...</span>';
@@ -74,33 +68,28 @@
                         const response = await fetch(API_LOGIN_URL, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: jsonString
+                            body: JSON.stringify({ email: emailInput, password: passwordInput })
                         });
-
-                        // Verificăm dacă fișierul PHP a fost găsit
-                        if (!response.ok) {
-                            throw new Error(`Eroare HTTP: ${response.status} (Verifică URL-ul!)`);
-                        }
 
                         const data = await response.json();
 
                         if (data.success) {
-                            // === PAS CRITIC: SALVĂM EMAILUL PENTRU PROFIL ===
-                            localStorage.setItem('userEmail', plainFormData.email);
+                            // === AICI E NOUTATEA ===
+                            // Salvăm userul cu tot cu ROL (admin/user)
+                            localStorage.setItem('currentUser', JSON.stringify(data.user));
+                            localStorage.setItem('userEmail', emailInput);
 
-                            statusMessage.innerHTML = '<span style="color:green;">Login reușit! Redirecționare...</span>';
+                            statusMessage.innerHTML = '<span style="color:green;">Login reușit!</span>';
 
-                            // Așteptăm puțin și redirecționăm
                             setTimeout(() => {
                                 window.location.href = "Profile.html";
                             }, 1000);
                         } else {
                             statusMessage.innerHTML = `<span style="color:red;">${data.message}</span>`;
                         }
-
                     } catch (error) {
                         console.error("Eroare:", error);
-                        statusMessage.innerHTML = `<span style="color:red;">Eroare tehnică: ${error.message}</span>`;
+                        statusMessage.innerHTML = '<span style="color:red;">Eroare conexiune server.</span>';
                     }
                 });
             }
