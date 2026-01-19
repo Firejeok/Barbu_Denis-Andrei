@@ -41,11 +41,15 @@
         </button>
         <div id="quickNavMenu" class="quick-nav-menu">
           <a href="index.html" class="quick-nav-link">Acasă</a>
+          <a href="program.html" class="quick-nav-link">Program</a>
           <a href="Artisti.html" class="quick-nav-link">Artiști</a>
-          <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+          <a href="CumBil.html" class="quick-nav-link" onclick="verificSiMergi(event)">Bilete</a>
           <a href="regulament.html" class="quick-nav-link">Regulament</a>
           <a href="FAQ.html" class="quick-nav-link">FAQ</a>
           <a href="profile.html" class="quick-nav-link">Profil</a>
+          <a href="Donatii.html" class="quick-nav-link">Donații</a>
+          <a href="recenzii.html" class="quick-nav-link">Recenzii</a>
+
         </div>
       </div>
     </div>
@@ -118,66 +122,85 @@
   </footer>
   <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
 
-      // ---------------------------------------------------------
-      // 1. LOGICA DE LOGIN (AFIȘARE USER vs BUTOANE)
-      // ---------------------------------------------------------
-      const userDisplay = document.getElementById('userHeaderDisplay');
-      const userNameSpan = document.getElementById('userHeaderName');
-      const authLinks = document.querySelectorAll('.auth-link'); // Login & Register
+    // ---------------------------------------------------------
+    // 1. LOGICA DE LOGIN (AFIȘARE USER vs BUTOANE)
+    // ---------------------------------------------------------
+    const userDisplay = document.getElementById('userHeaderDisplay');
+    const userNameSpan = document.getElementById('userHeaderName');
+    const authLinks = document.querySelectorAll('.auth-link'); // Login & Register
 
-      // Verificăm dacă avem user salvat
-      let currentUser = null;
-      const storedUser = localStorage.getItem('currentUser');
-      const storedEmail = localStorage.getItem('userEmail');
+    // Verificăm dacă avem user salvat
+    let currentUser = null;
+    const storedUser = localStorage.getItem('currentUser');
+    const storedEmail = localStorage.getItem('userEmail');
 
-      if (storedUser) {
-        try { currentUser = JSON.parse(storedUser); } catch (e) { }
-      } else if (storedEmail) {
-        currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
+    if (storedUser) {
+      try { currentUser = JSON.parse(storedUser); } catch (e) { }
+    } else if (storedEmail) {
+      currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
+    }
+
+    if (currentUser) {
+      // === UTILIZATOR LOGAT ===
+      // 1. Arată zona cu "Salut!"
+      if (userDisplay) {
+        userDisplay.style.display = 'flex';
+        // Calculăm numele de afișat
+        const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
+        if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
       }
+      // 2. Ascunde butoanele Login/Register
+      authLinks.forEach(link => link.style.display = 'none');
+    } else {
+      // === NE-LOGAT ===
+      // 1. Ascunde zona cu "Salut!"
+      if (userDisplay) userDisplay.style.display = 'none';
+      // 2. Arată butoanele Login/Register
+      authLinks.forEach(link => link.style.display = 'inline-block');
+    }
 
-      if (currentUser) {
-        // === UTILIZATOR LOGAT ===
-        // 1. Arată zona cu "Salut!"
-        if (userDisplay) {
-          userDisplay.style.display = 'flex';
-          // Calculăm numele de afișat
-          const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
-          if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
+    // ---------------------------------------------------------
+    // 2. LOGICA MENIU HAMBURGER & SCROLL
+    // --------------------------------------------------------
+
+    // 1. SELECTĂM ELEMENTELE
+    const toggleButton = document.getElementById('quickNavToggle');
+    const menu = document.getElementById('quickNavMenu');
+    const navLinks = document.querySelectorAll('.quick-nav-link'); // Toate link-urile din meniu
+
+    // 2. FUNCȚIONALITATE HAMBURGER (DESCHIDE/ÎNCHIDE)
+    if (toggleButton && menu) {
+      toggleButton.addEventListener('click', () => {
+        toggleButton.classList.toggle('open');
+        menu.classList.toggle('active');
+      });
+    }
+
+    // 3. SECURIZARE MENIU (INTERCEPTEAZĂ CLICK-URILE)
+    navLinks.forEach(link => {
+      link.addEventListener('click', function (e) {
+
+        // Verificăm dacă utilizatorul este logat
+        const user = localStorage.getItem('userEmail') || localStorage.getItem('currentUser');
+
+        // Daca NU este logat
+        if (!user) {
+          e.preventDefault(); // OPRIM navigarea către pagina dorită
+
+          // Închidem meniul vizual (ca să nu rămână deschis peste pagina de login)
+          if (toggleButton) toggleButton.classList.remove('open');
+          if (menu) menu.classList.remove('active');
+
+          // Alertăm și redirecționăm
+          alert("Accesul la meniu este permis doar utilizatorilor conectați! Te rugăm să te autentifici.");
+          window.location.href = 'Login.html';
+        } else {
+          // Dacă ESTE logat, doar închidem meniul și lăsăm link-ul să meargă
+          if (toggleButton) toggleButton.classList.remove('open');
+          if (menu) menu.classList.remove('active');
         }
-        // 2. Ascunde butoanele Login/Register
-        authLinks.forEach(link => link.style.display = 'none');
-      } else {
-        // === NE-LOGAT ===
-        // 1. Ascunde zona cu "Salut!"
-        if (userDisplay) userDisplay.style.display = 'none';
-        // 2. Arată butoanele Login/Register
-        authLinks.forEach(link => link.style.display = 'inline-block');
-      }
-
-      // ---------------------------------------------------------
-      // 2. LOGICA MENIU HAMBURGER & SCROLL
-      // ---------------------------------------------------------
-      const toggleButton = document.getElementById('quickNavToggle');
-      const menu = document.getElementById('quickNavMenu');
-
-      if (toggleButton && menu) {
-        toggleButton.addEventListener('click', () => {
-          toggleButton.classList.toggle('open');
-          menu.classList.toggle('active');
-        });
-
-        // Închide meniul la click pe link
-        const links = menu.querySelectorAll('.quick-nav-link');
-        links.forEach(link => {
-          link.addEventListener('click', () => {
-            toggleButton.classList.remove('open');
-            menu.classList.remove('active');
-          });
-        });
-      }
+      });
     });
   </script>
 

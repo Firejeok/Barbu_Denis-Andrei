@@ -1,15 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="ro">
 
 <head>
     <meta charset="UTF-8">
-    <title>Cumpără Bilet - Urban Beat</title>
+    <title>Admin - Donații</title>
     <link rel="stylesheet" href="Index.css">
-    <link rel="stylesheet" href="Bilete.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-table-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #04b3d2;
+            color: black;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .total-box {
+            background: #ffd700;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body>
+
     <header class="site-header">
 
         <div class="header-left-group">
@@ -46,7 +90,6 @@
                     <a href="FAQ.html" class="quick-nav-link">FAQ</a>
                     <a href="profile.html" class="quick-nav-link">Profil</a>
                     <a href="Donatii.html" class="quick-nav-link">Donații</a>
-                    <a href="recenzii.html" class="quick-nav-link">Recenzii</a>
 
                 </div>
             </div>
@@ -62,6 +105,37 @@
         </div>
 
     </header>
+
+    <main>
+        <div class="admin-table-container">
+            <h1>Istoric Donații</h1>
+
+            <div class="total-box">
+                Total Strâns: <span id="totalSum">0</span> RON
+            </div>
+
+            <table id="donationsTable">
+                <thead>
+                    <tr>
+                        <th>Nume Donator</th>
+                        <th>Email</th>
+                        <th>Sumă (RON)</th>
+                        <th>Mesaj</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td colspan="5" style="text-align:center;">Se încarcă...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <canvas id="particle-canvas" class="particle-background"></canvas>
+    <script src="script.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
@@ -104,7 +178,6 @@
                 });
             });
 
-
             // --- LOGICA DISPLAY UTILIZATOR (Salut, User) ---
             const userDisplay = document.getElementById('userHeaderDisplay');
             const userNameSpan = document.getElementById('userHeaderName');
@@ -144,102 +217,46 @@
                 authLinks.forEach(link => link.style.display = 'inline-block');
             }
         });
-    </script>
-    </header>
 
-    <main>
-        <h1>Alege Biletul Tău pentru Urban Beat</h1>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Verificare Securitate (Doar Admin)
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (!user || user.role !== 'admin') {
+                alert("ACCES INTERZIS!");
+                window.location.href = 'Index.html';
+                return;
+            }
 
-        <section class="ticket-section">
-            <h2>Selectează Tipul de Bilet</h2>
+            // 2. Încărcare Date
+            try {
+                const res = await fetch('http://localhost:8080/get_donations.php');
+                const data = await res.json();
+                const tbody = document.getElementById('tableBody');
 
-            <form id="ticketForm" class="ticket-form">
+                if (data.success) {
+                    tbody.innerHTML = '';
+                    let total = 0;
 
-                <div class="ticket-option">
-                    <input type="radio" id="general" name="ticket-type" value="General Access" required>
-                    <label for="general">
-                        <span class="type-name">General Access</span>
-                        <span class="price">250 RON</span>
-                        <p class="description">Acces 3 zile la festival (vineri, sâmbătă, duminică).</p>
-                    </label>
-                </div>
-
-                <div class="ticket-option">
-                    <input type="radio" id="vip" name="ticket-type" value="VIP" required>
-                    <label for="vip">
-                        <span class="type-name">VIP Experience</span>
-                        <span class="price">650 RON</span>
-                        <p class="description">Acces 3 zile, zonă dedicată VIP, bar privat, vedere premium la scenă.</p>
-                    </label>
-                </div>
-
-                <hr>
-
-                <div class="form-group">
-                    <label for="quantity">Număr de Bilete:</label>
-                    <input type="number" id="quantity" name="quantity" min="1" max="10" value="1" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email pentru livrare Bilet:</label>
-                    <input type="email" id="email" name="email" placeholder="exemplu@mail.com" required>
-                </div>
-
-                <button type="submit" class="submit-btn">Finalizează Comanda și Plătește</button>
-            </form>
-        </section>
-
-    </main>
-    <canvas id="particle-canvas" class="particle-background"></canvas>
-    <script defer src="script.js"></script>
-
-    <footer class="site-footer">
-        <div class="footer-left">© 2025 Urban Beat</div>
-        <div class="footer-right">
-            <a href="FAQ.html" class="btn">Faq</a>
-            <a href="Contact.html" class="btn">Contact</a>
-        </div>
-    </footer>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Logica de Header și Login Check (deja existentă) rămâne...
-
-            // --- LOGICA DE ADĂUGARE ÎN COȘ ---
-            const ticketForm = document.getElementById('ticketForm');
-
-            if (ticketForm) {
-                ticketForm.addEventListener('submit', function (e) {
-                    e.preventDefault(); // Oprim trimiterea standard a formularului
-
-                    // 1. Preluăm datele selectate
-                    const selectedOption = document.querySelector('input[name="ticket-type"]:checked');
-                    const quantity = document.getElementById('quantity').value;
-
-                    if (!selectedOption) {
-                        alert("Te rog selectează un tip de bilet!");
-                        return;
+                    if (data.data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Nu există donații încă.</td></tr>';
+                    } else {
+                        data.data.forEach(d => {
+                            total += parseFloat(d.suma);
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td>${d.nume} ${d.prenume || ''}</td>
+                                    <td>${d.email}</td>
+                                    <td style="color:#ffd700; font-weight:bold;">${d.suma}</td>
+                                    <td>${d.mesaj || '-'}</td>
+                                    <td>${d.data_donatie}</td>
+                                </tr>
+                            `;
+                        });
                     }
-
-                    // Extragem prețul din HTML (sau îl setăm manual)
-                    let price = 0;
-                    if (selectedOption.value === 'General Access') price = 250;
-                    if (selectedOption.value === 'VIP') price = 650;
-
-                    // 2. Creăm obiectul produs
-                    const cartItem = {
-                        type: selectedOption.value,
-                        price: price,
-                        quantity: parseInt(quantity),
-                        total: price * parseInt(quantity)
-                    };
-
-                    // 3. Salvăm în LocalStorage (Coșul virtual)
-                    // Suprascriem coșul vechi pentru simplitate, sau adăugăm la el (push)
-                    localStorage.setItem('shoppingCart', JSON.stringify([cartItem]));
-
-                    // 4. Redirecționăm către Coș
-                    window.location.href = 'Cos.html';
-                });
+                    document.getElementById('totalSum').textContent = total.toFixed(2);
+                }
+            } catch (err) {
+                console.error(err);
             }
         });
     </script>

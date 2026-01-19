@@ -12,72 +12,129 @@
 
 <body>
     <header class="site-header">
-        <div class="logo">
-            <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"></a>
+
+        <div class="header-left-group">
+            <div class="logo">
+                <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+            </div>
+            <a href="FAQ.html" class="btn btn-faq-left">FAQ</a>
         </div>
+
         <nav class="main-nav">
-            <a href="Login.html" class="btn">Login</a>
-            <a href="Register.html" class="btn">Register</a>
-            <a href="FAQ.html" class="btn">FAQ</a>
+            <a href="Login.html" class="btn auth-link">Login</a>
+            <a href="Register.html" class="btn auth-link">Register</a>
         </nav>
-        <div class="quick-nav-container">
-            <button id="quickNavToggle" class="hamburger-btn">
-                <span></span><span></span><span></span>
-            </button>
-            <div id="quickNavMenu" class="quick-nav-menu">
-                <a href="index.html" class="quick-nav-link">Acasă</a>
-                <a href="Artisti.html" class="quick-nav-link">Artiști</a>
-                <a href="Reguli.html" class="quick-nav-link">Regulament</a>
-                <a href="Contact.html" class="quick-nav-link">Contact</a>
-                <a href="Profile.html" class="quick-nav-link">Profil</a>
+
+        <div class="header-right-section">
+
+            <a href="profile.html" id="userHeaderDisplay" class="user-header-display" style="display: none;">
+                <span id="userHeaderName">Salut!</span>
+                <div class="header-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </a>
+
+            <div class="quick-nav-container">
+                <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                    <span></span><span></span><span></span>
+                </button>
+                <div id="quickNavMenu" class="quick-nav-menu">
+                    <a href="index.html" class="quick-nav-link">Acasă</a>
+                    <a href="program.html" class="quick-nav-link">Program</a>
+                    <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                    <a href="CumBil.html" class="quick-nav-link" onclick="verificSiMergi(event)">Bilete</a>
+                    <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                    <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                    <a href="profile.html" class="quick-nav-link">Profil</a>
+                    <a href="Donatii.html" class="quick-nav-link">Donații</a>
+                    <a href="recenzii.html" class="quick-nav-link">Recenzii</a>
+
+                </div>
             </div>
         </div>
+
+        <div class="speaker-wall left-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
+        <div class="speaker-wall right-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
+
     </header>
 
     <main>
         <h1>PROFILUL MEU</h1>
 
-        <div class="profile-container">
-            <div class="profile-card user-info-card">
-                <div class="profile-header">
-                    <div class="user-avatar">
-                        <i class="fa-solid fa-user"></i>
+        <div class="profile-container"
+            style="display: flex; flex-wrap: wrap; gap: 20px; max-width: 1200px; margin: 0 auto; align-items: flex-start;">
+
+            <div class="left-column" style="flex: 1; min-width: 300px;">
+
+                <div class="profile-card user-info-card" style="width: 100%; color: white;">
+                    <div class="profile-header">
+                        <div class="user-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <h2 id="header-name">Salut, Vizitator!</h2>
+                        <p class="member-status">Membru Urban Beat</p>
                     </div>
-                    <h2 id="header-name">Salut, Vizitator!</h2>
-                    <p class="member-status">Membru Urban Beat</p>
+
+                    <div class="profile-details">
+                        <div class="detail-row">
+                            <label style="color: #04b3d2;">Nume:</label>
+                            <span id="profile-name">Se încarcă...</span>
+                        </div>
+                        <div class="detail-row">
+                            <label style="color: #04b3d2;">Email:</label>
+                            <span id="profile-email">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <label style="color: #04b3d2;">Telefon:</label>
+                            <span id="profile-phone">-</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button id="adminBtn" class="profile-btn"
+                            style="background-color: gold; color: black; display: none; margin-bottom: 10px;">
+                            ★ PANOU ADMIN
+                        </button>
+
+                        <button class="profile-btn edit-btn" onclick="window.location.href='Donatii.html'">
+                            Donații
+                        </button>
+
+                        <button class="profile-btn logout-btn">Deconectare</button>
+                    </div>
                 </div>
 
-                <div class="profile-details">
-                    <div class="detail-row">
-                        <label>Nume:</label>
-                        <span id="profile-name">Se încarcă...</span>
-                    </div>
-                    <div class="detail-row">
-                        <label>Email:</label>
-                        <span id="profile-email">-</span>
-                    </div>
-                    <div class="detail-row">
-                        <label>Telefon:</label>
-                        <span id="profile-phone">-</span>
-                    </div>
-                </div>
-
-                <div class="profile-actions">
-                    <button id="adminBtn" class="profile-btn"
-                        style="background-color: gold; color: black; display: none; margin-bottom: 10px;">
-                        ★ PANOU ADMIN
-                    </button>
-                    <button class="profile-btn edit-btn">Editează Profil</button>
-                    <button class="profile-btn logout-btn">Deconectare</button>
-                </div>
             </div>
 
-            <div class="profile-card tickets-card">
-                <h2>Biletele Tale</h2>
-                <div class="tickets-list">
-                    <p style="text-align:center; padding:10px;">Se verifică biletele...</p>
+            <div class="right-column"
+                style="flex: 1.5; min-width: 300px; display: flex; flex-direction: column; gap: 20px;">
+
+                <div class="profile-card tickets-card" style="width: 100%; color: white;">
+                    <h2 style="color: #04b3d2; border-bottom: 1px solid #444; padding-bottom: 10px;">
+                        Biletele Tale
+                    </h2>
+                    <div class="tickets-list">
+                        <p style="text-align:center; padding:10px;">Se verifică biletele...</p>
+                    </div>
                 </div>
+
+                <div class="profile-card donations-card" style="width: 100%; color: white;">
+                    <h2 style="color: #04b3d2; border-bottom: 1px solid #444; padding-bottom: 10px;">
+                        <i class="fa-solid fa-heart"></i> Istoric Donații
+                    </h2>
+                    <div class="donations-list" id="donationsList">
+                        <p style="text-align:center; padding:10px; color:#aaa;">Se încarcă donațiile...</p>
+                    </div>
+                </div>
+
             </div>
+
         </div>
     </main>
 
@@ -89,7 +146,6 @@
         <div class="column outer"></div>
         <div class="column inner"></div>
     </div>
-
     <canvas id="particle-canvas" class="particle-background"></canvas>
 
     <footer class="site-footer">
@@ -100,154 +156,219 @@
     <script src="script.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Meniu Hamburger
+            // --- LOGICA MENIU HAMBURGER ---
             const toggleButton = document.getElementById('quickNavToggle');
             const menu = document.getElementById('quickNavMenu');
+
             if (toggleButton && menu) {
-                toggleButton.addEventListener('click', function () {
+                toggleButton.addEventListener('click', () => {
                     toggleButton.classList.toggle('open');
                     menu.classList.toggle('active');
                 });
+
+                // Închide meniul la click pe link
+                const links = menu.querySelectorAll('.quick-nav-link');
+                links.forEach(link => {
+                    link.addEventListener('click', () => {
+                        toggleButton.classList.remove('open');
+                        menu.classList.remove('active');
+                    });
+                });
+            }
+
+            // --- LOGICA DISPLAY UTILIZATOR (Salut, User) ---
+            const userDisplay = document.getElementById('userHeaderDisplay');
+            const userNameSpan = document.getElementById('userHeaderName');
+            const authLinks = document.querySelectorAll('.auth-link'); // Butoanele Login/Register
+
+            // Verificăm localStorage
+            let currentUser = null;
+            const storedUser = localStorage.getItem('currentUser');
+            const storedEmail = localStorage.getItem('userEmail');
+
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch (e) {
+                    console.error("Eroare la parsarea userului", e);
+                }
+            } else if (storedEmail) {
+                // Dacă avem doar email, creăm un user temporar
+                currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
+            }
+
+            if (currentUser) {
+                // ESTE LOGAT:
+                // 1. Afișăm zona de profil
+                if (userDisplay) {
+                    userDisplay.style.display = 'flex';
+                    // Folosim numele dacă există, altfel email-ul trunchiat, altfel "User"
+                    const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
+                    if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
+                }
+
+                // 2. Ascundem butoanele Login/Register
+                authLinks.forEach(link => link.style.display = 'none');
+            } else {
+                // NU ESTE LOGAT:
+                if (userDisplay) userDisplay.style.display = 'none';
+                authLinks.forEach(link => link.style.display = 'inline-block');
             }
         });
     </script>
 
     <script>
-        // --------------------------------------------------------------------
         // CONFIGURARE API
-        // --------------------------------------------------------------------
-        // Am scos portul 8080 pentru compatibilitate XAMPP standard
+        // Schimbă cu http://localhost:8080/ doar dacă folosești alt port
         const API_PROFILE_URL = 'http://localhost:8080/get_connect.php';
+        const API_MY_DONATIONS = 'http://localhost:8080/get_my_donations.php';
 
         const headerName = document.getElementById('header-name');
         const profileName = document.getElementById('profile-name');
         const profileEmail = document.getElementById('profile-email');
         const profilePhone = document.getElementById('profile-phone');
         const ticketsContainer = document.querySelector('.tickets-list');
+        const donationsContainer = document.getElementById('donationsList'); // Container Donații
         const logoutBtn = document.querySelector('.logout-btn');
 
-        // Funcția de creare card bilet
+        // --- FUNCȚIE GENERARE BILETE ---
         function createTicketCard(ticket) {
-            // Verificăm statusul
             const statusClass = (ticket.status_bilet && ticket.status_bilet.toLowerCase() === 'valid') ? 'active' : 'used';
             const statusText = ticket.status_bilet ? ticket.status_bilet.toUpperCase() : 'STATUS';
-
-            // Formatăm afișarea cantității
-            // Dacă cantitatea e mai mare ca 1, o afișăm îngroșat
-            let quantityBadge = '';
-            if (ticket.cantitate > 1) {
-                quantityBadge = `<span style="color: #04b3d2; font-weight: bold; margin-left: 5px;">(x${ticket.cantitate})</span>`;
-            }
+            let quantityBadge = ticket.cantitate > 1 ? `<span style="color: #04b3d2; font-weight: bold; margin-left: 5px;">(x${ticket.cantitate})</span>` : '';
 
             return `
             <div class="ticket-item">
                 <div class="ticket-info">
                     <h3>${ticket.tip_bilet} ${quantityBadge}</h3>
-                    <p class="ticket-date">
-                        <i class="fa-regular fa-calendar"></i> ${ticket.data_eveniment}
-                    </p>
-                    <p style="font-size: 0.85rem; color: #ccc; margin-top: 5px;">
-                        Preț Total: ${ticket.pret_total} RON
-                    </p>
+                    <p class="ticket-date"><i class="fa-regular fa-calendar"></i> ${ticket.data_eveniment}</p>
+                    <p style="font-size: 0.85rem; color: #ccc; margin-top: 5px;">Preț Total: ${ticket.pret_total} RON</p>
                     <span class="status ${statusClass}">${statusText}</span>
                 </div>
                 <button class="download-btn" onclick="alert('Descărcare PDF indisponibilă momentan.')">
                     <i class="fa-solid fa-download"></i> PDF
                 </button>
-            </div>
-            `;
+            </div>`;
         }
 
-        // Funcția Principală
+        // --- FUNCȚIE GENERARE DONAȚII (NOUĂ) ---
+        function createDonationCard(donatie) {
+            return `
+            <div class="donation-item">
+                <div class="donation-info">
+                    <h3>${donatie.suma} RON</h3>
+                    <p class="donation-message">"${donatie.mesaj || 'Fără mesaj'}"</p>
+                    <p class="donation-date"><i class="fa-regular fa-clock"></i> ${donatie.data_donatie}</p>
+                </div>
+                <i class="fa-solid fa-hand-holding-heart" style="color: #ffd700; font-size: 1.5rem;"></i>
+            </div>`;
+        }
+
+        // --- ÎNCĂRCARE PROFIL ---
         async function loadUserProfile() {
             let userEmail = localStorage.getItem('userEmail');
             if (!userEmail) {
-                // Fallback
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (currentUser && currentUser.email) userEmail = currentUser.email;
             }
 
-            if (!userEmail) {
-                window.location.href = 'Login.html';
-                return;
-            }
+            if (!userEmail) { window.location.href = 'Login.html'; return; }
 
             if (profileName) profileName.textContent = "Se încarcă...";
 
             try {
+                // 1. Luăm datele USER + BILETE
                 const response = await fetch(API_PROFILE_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: userEmail })
                 });
-
-                if (!response.ok) throw new Error(`Eroare HTTP: ${response.status}`);
-
                 const data = await response.json();
 
                 if (data.success) {
                     const user = data.user_info;
                     const tickets = data.bilete;
-                    const localUser = JSON.parse(localStorage.getItem('currentUser'));
 
+                    // Admin Button Logic
+                    const localUser = JSON.parse(localStorage.getItem('currentUser'));
                     if (localUser && localUser.role === 'admin') {
                         const adminBtn = document.getElementById('adminBtn');
                         if (adminBtn) {
-                            adminBtn.style.display = 'block'; // Îl facem vizibil doar pentru tine!
-                            adminBtn.onclick = function () {
-                                alert("Aici vei avea panoul tău special pe viitor!");
-                                // window.location.href = 'AdminPanel.html'; // Pe viitor
-                            };
+                            adminBtn.style.display = 'block';
+                            adminBtn.onclick = function () { alert("Panou Admin (Funcționalitate viitoare)"); };
                         }
-                        // Opțional: Adăugăm un badge lângă nume
                         if (headerName) headerName.innerHTML += ' <span style="color:gold; font-size:0.6em;">(ADMIN)</span>';
                     }
 
-                    // 1. Populăm datele utilizatorului
+                    // Populate User Info
                     if (headerName) headerName.textContent = `Salut, ${user.nume}!`;
                     if (profileName) profileName.textContent = user.nume;
                     if (profileEmail) profileEmail.textContent = user.email;
                     if (profilePhone) profilePhone.textContent = user.telefon || "-";
 
-                    // 2. Populăm lista de bilete SAU mesajul "Nici un bilet"
+                    // Populate Tickets
                     if (ticketsContainer) {
                         if (!tickets || tickets.length === 0) {
-                            // AICI ESTE MESAJUL CERUT:
-                            ticketsContainer.innerHTML = '<p style="text-align:center; padding:20px; color:#fff; font-size:1.1rem;">Nici un bilet momentan.</p>';
+                            ticketsContainer.innerHTML = '<p style="text-align:center; padding:20px; color:#fff;">Nici un bilet momentan.</p>';
                         } else {
                             let ticketsHTML = '';
-                            tickets.forEach(ticket => {
-                                ticketsHTML += createTicketCard(ticket);
-                            });
+                            tickets.forEach(t => ticketsHTML += createTicketCard(t));
                             ticketsContainer.innerHTML = ticketsHTML;
                         }
                     }
 
+                    // 2. ACUM CHEMEM DONAȚIILE (NOU)
+                    loadUserDonations(userEmail);
+
                 } else {
-                    console.error("Eroare Backend:", data.message);
                     alert("Nu am putut încărca profilul: " + data.message);
                     localStorage.clear();
                     window.location.href = 'Login.html';
                 }
 
             } catch (error) {
-                console.error('Eroare detaliată:', error);
+                console.error('Eroare:', error);
                 if (headerName) headerName.textContent = "Eroare conexiune";
-                alert("A apărut o eroare la comunicarea cu serverul.");
             }
         }
 
-        // Logica Logout
+        // --- ÎNCĂRCARE DONAȚII (NOU) ---
+        async function loadUserDonations(email) {
+            if (!donationsContainer) return;
+            try {
+                const res = await fetch(API_MY_DONATIONS, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: email })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    if (data.donatii.length === 0) {
+                        donationsContainer.innerHTML = '<p style="text-align:center; padding:15px; color:#ccc;">Nu ai făcut nicio donație încă.</p>';
+                    } else {
+                        let html = '';
+                        data.donatii.forEach(d => html += createDonationCard(d));
+                        donationsContainer.innerHTML = html;
+                    }
+                } else {
+                    donationsContainer.innerHTML = '<p style="color:red; text-align:center;">Eroare încărcare donații.</p>';
+                }
+            } catch (err) {
+                console.error(err);
+                donationsContainer.innerHTML = '<p style="color:red; text-align:center;">Eroare server.</p>';
+            }
+        }
+
+        // Logout
         if (logoutBtn) {
             logoutBtn.addEventListener('click', function () {
                 localStorage.clear();
-                alert("Te-ai deconectat cu succes.");
                 window.location.href = 'Login.html';
             });
         }
 
-        // Pornire
-        if (window.location.pathname.includes('Profile.html') || document.getElementById('profile-email')) {
+        if (window.location.pathname.toLowerCase().includes('profile')) {
             document.addEventListener('DOMContentLoaded', loadUserProfile);
         }
     </script>

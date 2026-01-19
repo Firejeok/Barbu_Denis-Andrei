@@ -13,31 +13,54 @@
 
 <body>
     <header class="site-header">
-        <div class="logo">
-            <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+
+        <div class="header-left-group">
+            <div class="logo">
+                <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+            </div>
+            <a href="FAQ.html" class="btn btn-faq-left">FAQ</a>
         </div>
 
         <nav class="main-nav">
-            <a href="Login.html" class="btn">Login</a>
-            <a href="Register.html" class="btn">Register</a>
-            <a href="FAQ.html" class="btn">FAQ</a>
+            <a href="Login.html" class="btn auth-link">Login</a>
+            <a href="Register.html" class="btn auth-link">Register</a>
         </nav>
 
-        <!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
-        <div class="quick-nav-container">
-            <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div id="quickNavMenu" class="quick-nav-menu">
-                <a href="index.html" class="quick-nav-link">Acasă</a>
-                <a href="Artisti.html" class="quick-nav-link">Artiști</a>
-                <a href="CumBil.html" class="quick-nav-link">Bilete</a>
-                <a href="regulament.html" class="quick-nav-link">Regulament</a>
-                <a href="FAQ.html" class="quick-nav-link">FAQ</a>
-                <a href="profile.html" class="quick-nav-link">Profil</a>
+        <div class="header-right-section">
+
+            <a href="profile.html" id="userHeaderDisplay" class="user-header-display" style="display: none;">
+                <span id="userHeaderName">Salut!</span>
+                <div class="header-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </a>
+
+            <div class="quick-nav-container">
+                <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                    <span></span><span></span><span></span>
+                </button>
+                <div id="quickNavMenu" class="quick-nav-menu">
+                    <a href="index.html" class="quick-nav-link">Acasă</a>
+                    <a href="program.html" class="quick-nav-link">Program</a>
+                    <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                    <a href="CumBil.html" class="quick-nav-link" onclick="verificSiMergi(event)">Bilete</a>
+                    <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                    <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                    <a href="profile.html" class="quick-nav-link">Profil</a>
+                    <a href="Donatii.html" class="quick-nav-link">Donații</a>
+                    <a href="recenzii.html" class="quick-nav-link">Recenzii</a>
+
+                </div>
             </div>
+        </div>
+
+        <div class="speaker-wall left-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
+        <div class="speaker-wall right-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
         </div>
 
     </header>
@@ -103,34 +126,85 @@
 
     </div>
     <script>
-        window.onload = function () {
-            // --- LOGICA PENTRU MENIU QUICK NAV ---
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // 1. SELECTĂM ELEMENTELE
             const toggleButton = document.getElementById('quickNavToggle');
             const menu = document.getElementById('quickNavMenu');
+            const navLinks = document.querySelectorAll('.quick-nav-link'); // Toate link-urile din meniu
 
+            // 2. FUNCȚIONALITATE HAMBURGER (DESCHIDE/ÎNCHIDE)
             if (toggleButton && menu) {
-                toggleButton.onclick = function () {
+                toggleButton.addEventListener('click', () => {
                     toggleButton.classList.toggle('open');
                     menu.classList.toggle('active');
-                };
+                });
             }
 
-            // --- LOGICA PENTRU BUTONUL SCROLL TO TOP ---
-            const scrollButton = document.getElementById('scrollTopBtn');
-            if (scrollButton) {
-                window.addEventListener('scroll', () => {
-                    if (window.scrollY > 300) {
-                        scrollButton.classList.add('show');
+            // 3. SECURIZARE MENIU (INTERCEPTEAZĂ CLICK-URILE)
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+
+                    // Verificăm dacă utilizatorul este logat
+                    const user = localStorage.getItem('userEmail') || localStorage.getItem('currentUser');
+
+                    // Daca NU este logat
+                    if (!user) {
+                        e.preventDefault(); // OPRIM navigarea către pagina dorită
+
+                        // Închidem meniul vizual (ca să nu rămână deschis peste pagina de login)
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+
+                        // Alertăm și redirecționăm
+                        alert("Accesul la meniu este permis doar utilizatorilor conectați! Te rugăm să te autentifici.");
+                        window.location.href = 'Login.html';
                     } else {
-                        scrollButton.classList.remove('show');
+                        // Dacă ESTE logat, doar închidem meniul și lăsăm link-ul să meargă
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
                     }
                 });
+            });
+            // --- LOGICA DISPLAY UTILIZATOR (Salut, User) ---
+            const userDisplay = document.getElementById('userHeaderDisplay');
+            const userNameSpan = document.getElementById('userHeaderName');
+            const authLinks = document.querySelectorAll('.auth-link'); // Butoanele Login/Register
 
-                scrollButton.onclick = function () {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                };
+            // Verificăm localStorage
+            let currentUser = null;
+            const storedUser = localStorage.getItem('currentUser');
+            const storedEmail = localStorage.getItem('userEmail');
+
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch (e) {
+                    console.error("Eroare la parsarea userului", e);
+                }
+            } else if (storedEmail) {
+                // Dacă avem doar email, creăm un user temporar
+                currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
             }
-        };
+
+            if (currentUser) {
+                // ESTE LOGAT:
+                // 1. Afișăm zona de profil
+                if (userDisplay) {
+                    userDisplay.style.display = 'flex';
+                    // Folosim numele dacă există, altfel email-ul trunchiat, altfel "User"
+                    const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
+                    if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
+                }
+
+                // 2. Ascundem butoanele Login/Register
+                authLinks.forEach(link => link.style.display = 'none');
+            } else {
+                // NU ESTE LOGAT:
+                if (userDisplay) userDisplay.style.display = 'none';
+                authLinks.forEach(link => link.style.display = 'inline-block');
+            }
+        });
     </script>
     <canvas id="particle-canvas" class="particle-background"></canvas>
     <script defer src="script.js"></script>

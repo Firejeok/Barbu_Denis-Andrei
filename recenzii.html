@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recenzii - Urban Beat</title>
+    <link rel="stylesheet" href="Index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <header class="site-header">
+
+        <div class="header-left-group">
+            <div class="logo">
+                <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+            </div>
+            <a href="FAQ.html" class="btn btn-faq-left">FAQ</a>
+        </div>
+
+        <nav class="main-nav">
+            <a href="Login.html" class="btn auth-link">Login</a>
+            <a href="Register.html" class="btn auth-link">Register</a>
+        </nav>
+
+        <div class="header-right-section">
+
+            <a href="profile.html" id="userHeaderDisplay" class="user-header-display" style="display: none;">
+                <span id="userHeaderName">Salut!</span>
+                <div class="header-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </a>
+
+            <div class="quick-nav-container">
+                <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                    <span></span><span></span><span></span>
+                </button>
+                <div id="quickNavMenu" class="quick-nav-menu">
+                    <a href="index.html" class="quick-nav-link">Acasă</a>
+                    <a href="program.html" class="quick-nav-link">Program</a>
+                    <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                    <a href="CumBil.html" class="quick-nav-link" onclick="verificSiMergi(event)">Bilete</a>
+                    <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                    <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                    <a href="profile.html" class="quick-nav-link">Profil</a>
+                    <a href="Donatii.html" class="quick-nav-link">Donații</a>
+                    <a href="recenzii.html" class="quick-nav-link">Recenzii</a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="speaker-wall left-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
+        <div class="speaker-wall right-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="reviews-container">
+            <h1 style="text-align: center; color: white; margin-bottom: 30px;">Ce spun fanii Urban Beat</h1>
+
+            <div class="add-review-box">
+                <h3 style="border-bottom: 1px solid #444; padding-bottom: 10px; margin-bottom: 20px;">Adaugă Recenzie
+                </h3>
+                <form id="reviewForm">
+                    <div class="input-group">
+                        <label>Numele tău:</label>
+                        <input type="text" id="r_nume" placeholder="Cum te numești?" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Nota ta:</label>
+                        <div class="stars-input" id="starContainer">
+                            <i class="fa-solid fa-star" data-value="1"></i>
+                            <i class="fa-solid fa-star" data-value="2"></i>
+                            <i class="fa-solid fa-star" data-value="3"></i>
+                            <i class="fa-solid fa-star" data-value="4"></i>
+                            <i class="fa-solid fa-star" data-value="5"></i>
+                        </div>
+                        <input type="hidden" id="r_nota" value="0" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Mesaj:</label>
+                        <textarea id="r_comentariu" rows="3" placeholder="Cum a fost experiența ta?"
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn"
+                        style="background: #04b3d2; color: white; border: none; width: 100%; padding: 15px; font-weight: bold; border-radius: 25px; cursor: pointer;">TRIMITE
+                        RECENZIA</button>
+                </form>
+            </div>
+
+            <div id="reviewsList">
+                <p style="text-align:center; color:white;">Se încarcă recenziile...</p>
+            </div>
+        </div>
+    </main>
+
+    <canvas id="particle-canvas" class="particle-background"></canvas>
+
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // 1. SELECTĂM ELEMENTELE
+            const toggleButton = document.getElementById('quickNavToggle');
+            const menu = document.getElementById('quickNavMenu');
+            const navLinks = document.querySelectorAll('.quick-nav-link'); // Toate link-urile din meniu
+
+            // 2. FUNCȚIONALITATE HAMBURGER (DESCHIDE/ÎNCHIDE)
+            if (toggleButton && menu) {
+                toggleButton.addEventListener('click', () => {
+                    toggleButton.classList.toggle('open');
+                    menu.classList.toggle('active');
+                });
+            }
+
+            // 3. SECURIZARE MENIU (INTERCEPTEAZĂ CLICK-URILE)
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+
+                    // Verificăm dacă utilizatorul este logat
+                    const user = localStorage.getItem('userEmail') || localStorage.getItem('currentUser');
+
+                    // Daca NU este logat
+                    if (!user) {
+                        e.preventDefault(); // OPRIM navigarea către pagina dorită
+
+                        // Închidem meniul vizual (ca să nu rămână deschis peste pagina de login)
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+
+                        // Alertăm și redirecționăm
+                        alert("Accesul la meniu este permis doar utilizatorilor conectați! Te rugăm să te autentifici.");
+                        window.location.href = 'Login.html';
+                    } else {
+                        // Dacă ESTE logat, doar închidem meniul și lăsăm link-ul să meargă
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+                    }
+                });
+            });
+
+            // --- LOGICA DISPLAY UTILIZATOR (Salut, User) ---
+            const userDisplay = document.getElementById('userHeaderDisplay');
+            const userNameSpan = document.getElementById('userHeaderName');
+            const authLinks = document.querySelectorAll('.auth-link'); // Butoanele Login/Register
+
+            // Verificăm localStorage
+            let currentUser = null;
+            const storedUser = localStorage.getItem('currentUser');
+            const storedEmail = localStorage.getItem('userEmail');
+
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch (e) {
+                    console.error("Eroare la parsarea userului", e);
+                }
+            } else if (storedEmail) {
+                // Dacă avem doar email, creăm un user temporar
+                currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
+            }
+
+            if (currentUser) {
+                // ESTE LOGAT:
+                // 1. Afișăm zona de profil
+                if (userDisplay) {
+                    userDisplay.style.display = 'flex';
+                    // Folosim numele dacă există, altfel email-ul trunchiat, altfel "User"
+                    const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
+                    if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
+                }
+
+                // 2. Ascundem butoanele Login/Register
+                authLinks.forEach(link => link.style.display = 'none');
+            } else {
+                // NU ESTE LOGAT:
+                if (userDisplay) userDisplay.style.display = 'none';
+                authLinks.forEach(link => link.style.display = 'inline-block');
+            }
+        });
+
+        // === CONFIGURARE API ===
+        const API_GET = 'http://localhost:8080/get_reviews.php';
+        const API_MANAGE = 'http://localhost:8080/manage_reviews.php';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadReviews();
+            setupStars();
+
+            // Precompletăm numele dacă e logat
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user && user.nume) {
+                document.getElementById('r_nume').value = user.nume;
+            }
+        });
+
+        // 1. LOGICA STELUȚELOR (Click pentru selectare)
+        function setupStars() {
+            const stars = document.querySelectorAll('.stars-input i');
+            const hiddenInput = document.getElementById('r_nota');
+
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const value = this.getAttribute('data-value');
+                    hiddenInput.value = value;
+
+                    // Colorăm toate stelele până la cea selectată
+                    stars.forEach(s => {
+                        if (s.getAttribute('data-value') <= value) s.classList.add('active');
+                        else s.classList.remove('active');
+                    });
+                });
+            });
+        }
+
+        // 2. ADĂUGARE RECENZIE
+        document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nota = document.getElementById('r_nota').value;
+
+            if (nota == 0) { alert("Te rog selectează o notă (stele)!"); return; }
+
+            const data = {
+                action: 'add',
+                nume: document.getElementById('r_nume').value,
+                nota: nota,
+                comentariu: document.getElementById('r_comentariu').value
+            };
+
+            try {
+                const res = await fetch(API_MANAGE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+
+                if (result.success) {
+                    alert("Mulțumim pentru recenzie!");
+                    document.getElementById('reviewForm').reset();
+                    // Resetăm stelele
+                    document.querySelectorAll('.stars-input i').forEach(s => s.classList.remove('active'));
+                    document.getElementById('r_nota').value = 0;
+                    loadReviews(); // Reîncărcăm lista
+                } else {
+                    alert("Eroare: " + result.message);
+                }
+            } catch (err) { console.error(err); alert("Eroare de conexiune."); }
+        });
+
+        // 3. ÎNCĂRCARE RECENZII
+        async function loadReviews() {
+            try {
+                const res = await fetch(API_GET);
+                const data = await res.json();
+                const container = document.getElementById('reviewsList');
+                container.innerHTML = '';
+
+                if (data.success && data.data.length > 0) {
+                    data.data.forEach(rev => {
+                        // Generăm stelele pentru afișare
+                        let starsHTML = '';
+                        for (let i = 1; i <= 5; i++) {
+                            starsHTML += i <= rev.nota ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
+                        }
+
+                        container.innerHTML += `
+                            <div class="review-card">
+                                <div class="review-header">
+                                    <div>
+                                        <span class="review-author">${rev.nume_utilizator}</span>
+                                        <div class="review-stars">${starsHTML}</div>
+                                    </div>
+                                    <button class="delete-review-btn admin-only" onclick="deleteReview(${rev.id})">
+                                        <i class="fa-solid fa-trash"></i> Șterge
+                                    </button>
+                                </div>
+                                <p>${rev.comentariu}</p>
+                                <span class="review-date">${rev.data_postarii}</span>
+                            </div>
+                        `;
+                    });
+                    checkAdmin(); // Verificăm dacă userul e admin să arătăm butoanele
+                } else {
+                    container.innerHTML = '<p style="text-align:center; color:#aaa;">Fii primul care lasă o recenzie!</p>';
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // 4. ȘTERGERE (ADMIN)
+        window.deleteReview = async (id) => {
+            if (!confirm("Sigur ștergi această recenzie?")) return;
+
+            await fetch(API_MANAGE, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'delete', id: id })
+            });
+            loadReviews();
+        };
+
+        // 5. Verificare Admin
+        function checkAdmin() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user && user.role === 'admin') {
+                document.querySelectorAll('.delete-review-btn').forEach(btn => btn.style.display = 'block');
+            }
+        }
+    </script>
+</body>
+
+</html>

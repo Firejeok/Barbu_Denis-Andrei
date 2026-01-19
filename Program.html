@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Program Festival</title>
+    <link rel="stylesheet" href="Index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <header class="site-header">
+
+        <div class="header-left-group">
+            <div class="logo">
+                <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+            </div>
+            <a href="FAQ.html" class="btn btn-faq-left">FAQ</a>
+        </div>
+
+        <nav class="main-nav">
+            <a href="Login.html" class="btn auth-link">Login</a>
+            <a href="Register.html" class="btn auth-link">Register</a>
+        </nav>
+
+        <div class="header-right-section">
+
+            <div id="adminAddBtn" class="header-add-btn admin-only" style="display: none; cursor: pointer;">
+                <i class="fa-solid fa-plus"></i> Adaugă Eveniment
+            </div>
+
+            <a href="profile.html" id="userHeaderDisplay" class="user-header-display" style="display: none;">
+                <span id="userHeaderName">Salut!</span>
+                <div class="header-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </a>
+
+            <div class="quick-nav-container">
+                <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                    <span></span><span></span><span></span>
+                </button>
+                <div id="quickNavMenu" class="quick-nav-menu">
+                    <a href="index.html" class="quick-nav-link">Acasă</a>
+                    <a href="program.html" class="quick-nav-link">Program</a>
+                    <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                    <a href="CumBil.html" class="quick-nav-link" onclick="verificSiMergi(event)">Bilete</a>
+                    <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                    <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                    <a href="profile.html" class="quick-nav-link">Profil</a>
+                    <a href="Donatii.html" class="quick-nav-link">Donații</a>
+                    <a href="recenzii.html" class="quick-nav-link">Recenzii</a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="speaker-wall left-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
+        <div class="speaker-wall right-wall">
+            <div class="column outer"></div>
+            <div class="column inner"></div>
+        </div>
+
+    </header>
+
+    <main>
+        <div class="schedule-container">
+            <h1 style="text-align:center; margin-bottom:20px;">PROGRAM FESTIVAL</h1>
+
+            <div class="day-tabs">
+                <button class="day-btn active" onclick="filterDay('Vineri')">Vineri</button>
+                <button class="day-btn" onclick="filterDay('Sambata')">Sâmbătă</button>
+                <button class="day-btn" onclick="filterDay('Duminica')">Duminică</button>
+            </div>
+
+            <table class="program-table">
+                <thead>
+                    <tr>
+                        <th>Ora</th>
+                        <th>Artist / Eveniment</th>
+                        <th>Scena</th>
+                        <th class="admin-only">Acțiuni</th>
+                    </tr>
+                </thead>
+                <tbody id="programBody">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="programModal" class="modal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999;">
+
+        <div
+            style="background:#222; width:400px; margin:100px auto; padding:20px; border:2px solid #04b3d2; border-radius:10px; color:white; position: relative; z-index: 10000;">
+
+            <h2 style="text-align:center; color:#04b3d2;">Adaugă în Program</h2>
+
+            <form id="addProgramForm" style="display:flex; flex-direction:column; gap:10px;">
+                <label>Ziua:</label>
+                <select id="p_zi" style="padding:10px;">
+                    <option value="Vineri">Vineri</option>
+                    <option value="Sambata">Sâmbătă</option>
+                    <option value="Duminica">Duminică</option>
+                </select>
+
+                <div style="display:flex; gap:10px;">
+                    <input type="time" id="p_start" required style="flex:1; padding:10px;">
+                    <input type="time" id="p_end" required style="flex:1; padding:10px;">
+                </div>
+
+                <input type="text" id="p_nume" placeholder="Nume Artist / Event" required style="padding:10px;">
+
+                <select id="p_scena" style="padding:10px;">
+                    <option value="Main Stage">Main Stage</option>
+                    <option value="Electronic Dome">Electronic Dome</option>
+                    <option value="Underground Bunker">Underground Bunker</option>
+                </select>
+
+                <button type="submit"
+                    style="background:#ffd700; border:none; padding:10px; font-weight:bold; cursor:pointer;">SALVEAZĂ</button>
+                <button type="button" onclick="document.getElementById('programModal').style.display='none'"
+                    style="background:#444; color:white; border:none; padding:10px; cursor:pointer;">Anulează</button>
+            </form>
+        </div>
+    </div>
+
+    <canvas id="particle-canvas" class="particle-background"></canvas>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // 1. SELECTĂM ELEMENTELE
+            const toggleButton = document.getElementById('quickNavToggle');
+            const menu = document.getElementById('quickNavMenu');
+            const navLinks = document.querySelectorAll('.quick-nav-link'); // Toate link-urile din meniu
+
+            // 2. FUNCȚIONALITATE HAMBURGER (DESCHIDE/ÎNCHIDE)
+            if (toggleButton && menu) {
+                toggleButton.addEventListener('click', () => {
+                    toggleButton.classList.toggle('open');
+                    menu.classList.toggle('active');
+                });
+            }
+
+            // 3. SECURIZARE MENIU (INTERCEPTEAZĂ CLICK-URILE)
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+
+                    // Verificăm dacă utilizatorul este logat
+                    const user = localStorage.getItem('userEmail') || localStorage.getItem('currentUser');
+
+                    // Daca NU este logat
+                    if (!user) {
+                        e.preventDefault(); // OPRIM navigarea către pagina dorită
+
+                        // Închidem meniul vizual (ca să nu rămână deschis peste pagina de login)
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+
+                        // Alertăm și redirecționăm
+                        alert("Accesul la meniu este permis doar utilizatorilor conectați! Te rugăm să te autentifici.");
+                        window.location.href = 'Login.html';
+                    } else {
+                        // Dacă ESTE logat, doar închidem meniul și lăsăm link-ul să meargă
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+                    }
+                });
+            });
+
+            // --- LOGICA DISPLAY UTILIZATOR (Salut, User) ---
+            const userDisplay = document.getElementById('userHeaderDisplay');
+            const userNameSpan = document.getElementById('userHeaderName');
+            const authLinks = document.querySelectorAll('.auth-link'); // Butoanele Login/Register
+
+            // Verificăm localStorage
+            let currentUser = null;
+            const storedUser = localStorage.getItem('currentUser');
+            const storedEmail = localStorage.getItem('userEmail');
+
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch (e) {
+                    console.error("Eroare la parsarea userului", e);
+                }
+            } else if (storedEmail) {
+                // Dacă avem doar email, creăm un user temporar
+                currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
+            }
+
+            if (currentUser) {
+                // ESTE LOGAT:
+                // 1. Afișăm zona de profil
+                if (userDisplay) {
+                    userDisplay.style.display = 'flex';
+                    // Folosim numele dacă există, altfel email-ul trunchiat, altfel "User"
+                    const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
+                    if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
+                }
+
+                // 2. Ascundem butoanele Login/Register
+                authLinks.forEach(link => link.style.display = 'none');
+            } else {
+                // NU ESTE LOGAT:
+                if (userDisplay) userDisplay.style.display = 'none';
+                authLinks.forEach(link => link.style.display = 'inline-block');
+            }
+        });
+        const API_GET = 'http://localhost:8080/get_program.php';
+        const API_MANAGE = 'http://localhost:8080/manage_program.php';
+
+        let allEvents = [];
+        let currentDay = 'Vineri';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgram();
+            checkAdmin();
+        });
+
+        // 1. Verificare Admin
+        function checkAdmin() {
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user && user.role === 'admin') {
+                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block'); // pt butoane simple
+                document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'table-cell'); // pt coloana tabel
+                document.getElementById('adminAddBtn').style.display = 'flex';
+            }
+        }
+
+        // 2. Încărcare Date
+        async function loadProgram() {
+            try {
+                const res = await fetch(API_GET);
+                const data = await res.json();
+                if (data.success) {
+                    allEvents = data.data;
+                    renderTable();
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        // 3. Afișare Tabel
+        function renderTable() {
+            const tbody = document.getElementById('programBody');
+            tbody.innerHTML = '';
+
+            // Filtrăm după ziua selectată
+            const dayEvents = allEvents.filter(e => e.ziua === currentDay);
+
+            if (dayEvents.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Niciun eveniment.</td></tr>';
+                return;
+            }
+
+            dayEvents.forEach(evt => {
+                const row = `
+                    <tr>
+                        <td><span style="color:#04b3d2; font-weight:bold;">${evt.ora_inceput}</span> - ${evt.ora_sfarsit}</td>
+                        <td style="font-size:1.1rem; font-weight:600;">${evt.nume_act}</td>
+                        <td style="color:#ccc;">${evt.scena}</td>
+                        <td class="admin-only" style="display:none;">
+                            <button class="admin-delete-btn" onclick="deleteEvent(${evt.id})">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+            checkAdmin(); // Reaplicăm vizibilitatea admin după randare
+        }
+
+        // 4. Filtrare Zi
+        window.filterDay = function (day) {
+            currentDay = day;
+            // Update butoane vizual
+            document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderTable();
+        }
+
+        // 5. Adăugare Eveniment (Admin)
+        document.getElementById('adminAddBtn').onclick = () => document.getElementById('programModal').style.display = 'block';
+
+        document.getElementById('addProgramForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const data = {
+                action: 'add',
+                ziua: document.getElementById('p_zi').value,
+                ora_inceput: document.getElementById('p_start').value,
+                ora_sfarsit: document.getElementById('p_end').value,
+                nume_act: document.getElementById('p_nume').value,
+                scena: document.getElementById('p_scena').value
+            };
+
+            await fetch(API_MANAGE, {
+                method: 'POST',
+                body: JSON.stringify(data)
+            });
+
+            document.getElementById('programModal').style.display = 'none';
+            loadProgram(); // Refresh tabel
+        };
+
+        // 6. Ștergere Eveniment (Admin)
+        window.deleteEvent = async (id) => {
+            if (!confirm("Sigur ștergi acest eveniment?")) return;
+
+            await fetch(API_MANAGE, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'delete', id: id })
+            });
+            loadProgram();
+        }
+    </script>
+</body>
+
+</html>

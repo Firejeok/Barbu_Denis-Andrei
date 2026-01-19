@@ -2560,3 +2560,397 @@ body {
         border: none;
     }
 }
+
+/* ========================================= */
+/* === STIL BUTON ADMIN (HEADER) === */
+/* ========================================= */
+.header-add-btn {
+    background-color: #ffd700;
+    /* Auriu */
+    color: #000;
+    text-decoration: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+
+    /* Aliniere iconiță + text */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    margin-right: 10px;
+    /* Spațiu față de iconița user */
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.header-add-btn:hover {
+    background-color: #e6c200;
+    transform: scale(1.05);
+}
+
+/* Pe mobil ascundem textul "Adaugă" și lăsăm doar plusul */
+@media (max-width: 600px) {
+    .header-add-btn .btn-text {
+        display: none;
+    }
+
+    .header-add-btn {
+        padding: 8px;
+        /* Buton rotund doar cu iconița */
+        border-radius: 50%;
+    }
+}
+
+/* === FIX VIZIBILITATE ARTIȘTI === */
+
+/* 1. Asigură-te că grila este DEASUPRA particulelor */
+#artists-grid {
+    position: relative;
+    z-index: 10;
+    /* Mai mare decât canvas-ul */
+    min-height: 200px;
+    /* Ca să o vezi chiar și goală */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* 2. Stilizare Card (în caz că lipsea) */
+.artist-card {
+    background: rgba(20, 20, 20, 0.8);
+    /* Fundal semi-transparent */
+    border: 1px solid #04b3d2;
+    /* Bordură albastră neon */
+    border-radius: 10px;
+    width: 250px;
+    /* Mărime fixă */
+    overflow: hidden;
+    color: white;
+    /* Text alb obligatoriu */
+    box-shadow: 0 0 15px rgba(4, 179, 210, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.artist-card:hover {
+    transform: translateY(-5px);
+}
+
+.artist-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.artist-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.artist-info h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+/* STILURI SPECIFICE PROGRAM */
+.schedule-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    color: #fff;
+    position: relative;
+    z-index: 5;
+}
+
+/* Tab-uri pentru Zile */
+.day-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.day-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #04b3d2;
+    color: #fff;
+    padding: 10px 30px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+.day-btn.active,
+.day-btn:hover {
+    background: #04b3d2;
+    color: #000;
+    font-weight: bold;
+}
+
+/* Tabel Program */
+.program-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.program-table th {
+    background: #04b3d2;
+    color: black;
+    padding: 15px;
+    text-align: left;
+}
+
+.program-table td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.program-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Admin Controls */
+.admin-delete-btn {
+    color: #ff4d4d;
+    cursor: pointer;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+}
+
+.admin-only {
+    display: none;
+}
+
+/* Ascuns implicit */
+
+/* Header Button (la fel ca la artisti) */
+.header-add-btn {
+    background-color: #ffd700;
+    color: #000;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+/* --- STILURI SPECIFICE PAGINII DE RECENZII --- */
+.reviews-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    position: relative;
+    z-index: 5;
+}
+
+/* Formular Adăugare */
+.add-review-box {
+    background: rgba(20, 20, 20, 0.9);
+    border: 2px solid #04b3d2;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 40px;
+    color: white;
+    box-shadow: 0 0 20px rgba(4, 179, 210, 0.2);
+}
+
+.stars-input i {
+    color: #ccc;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: color 0.2s;
+}
+
+.stars-input i.active {
+    color: #ffd700;
+}
+
+/* Auriu când e selectat */
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #04b3d2;
+    font-weight: bold;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #222;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Lista Recenzii */
+.review-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--primary-color);
+    /* Linie aurie */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    position: relative;
+    color: white;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-author {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
+.review-stars {
+    color: #ffd700;
+}
+
+.review-date {
+    font-size: 0.8rem;
+    color: #aaa;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Buton Ștergere (Admin) */
+.delete-review-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+    /* Ascuns implicit */
+}
+
+.delete-review-btn:hover {
+    background: red;
+}
+
+/* CSS LOCAL PENTRU DONAȚII */
+.donation-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #04b3d2;
+    border-radius: 15px;
+    color: white;
+    position: relative;
+    z-index: 5;
+}
+
+.amount-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.amount-btn {
+    flex: 1;
+    padding: 15px;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.amount-btn:hover,
+.amount-btn.active {
+    background: #04b3d2;
+    color: black;
+    font-weight: bold;
+    border-color: #04b3d2;
+}
+
+.custom-amount {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #04b3d2;
+    background: #111;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.message-box {
+    width: 100%;
+    padding: 15px;
+    height: 100px;
+    border-radius: 10px;
+    background: #111;
+    border: 1px solid #444;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.donate-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--primary-color);
+    color: white;
+    font-weight: 800;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+}
+
+.donate-submit:hover {
+    transform: scale(1.05);
+}
+
+/* Stil Buton Admin Donații (în caz că nu e preluat din Index.css) */
+.header-add-btn {
+    background-color: #ffd700;
+    color: #000;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    margin-right: 15px;
+    transition: 0.3s;
+}
+
+.header-add-btn:hover {
+    background-color: #e6c200;
+    transform: scale(1.05);
+}

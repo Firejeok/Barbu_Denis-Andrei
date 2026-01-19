@@ -28,6 +28,11 @@
 
         <div class="header-right-section">
 
+            <a href="#" id="headerAddBtn" class="header-add-btn" style="display: none;">
+                <i class="fa-solid fa-plus-circle"></i>
+                <span class="btn-text">Adaugă</span>
+            </a>
+
             <a href="profile.html" id="userHeaderDisplay" class="user-header-display" style="display: none;">
                 <span id="userHeaderName">Salut!</span>
                 <div class="header-avatar">
@@ -41,11 +46,14 @@
                 </button>
                 <div id="quickNavMenu" class="quick-nav-menu">
                     <a href="index.html" class="quick-nav-link">Acasă</a>
+                    <a href="program.html" class="quick-nav-link">Program</a>
                     <a href="Artisti.html" class="quick-nav-link">Artiști</a>
-                    <a href="CumBil.html" class="quick-nav-link">Bilete</a>
+                    <a href="CumBil.html" class="quick-nav-link" onclick="verificSiMergi(event)">Bilete</a>
                     <a href="regulament.html" class="quick-nav-link">Regulament</a>
                     <a href="FAQ.html" class="quick-nav-link">FAQ</a>
                     <a href="profile.html" class="quick-nav-link">Profil</a>
+                    <a href="Donatii.html" class="quick-nav-link">Donații</a>
+                    <a href="recenzii.html" class="quick-nav-link">Recenzii</a>
                 </div>
             </div>
         </div>
@@ -60,375 +68,325 @@
         </div>
 
     </header>
+    <main style="margin-top: 50px; position: relative; z-index: 5;">
+        <h1 style="text-align: center; color: #fff; text-transform: uppercase; letter-spacing: 2px;">Line-up Festival
+        </h1>
+
+        <div class="artists-container" id="artists-grid"
+            style="min-height: 300px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px;">
+        </div>
+    </main>
     <script>
-        window.onload = function () {
-            const toggleButton = document.getElementById('quickNavToggle');
-            const menu = document.getElementById('quickNavMenu');
-
-            // Asigură că funcția se rulează doar dacă elementele există
-            if (!toggleButton || !menu) return;
-
-            // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
-            toggleButton.addEventListener('click', () => {
-                // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
-                toggleButton.classList.toggle('open');
-
-                // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
-                menu.classList.toggle('active');
-
-                // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
-            });
-
-            // Opțional: Închide meniul dacă se dă click pe un link din interior
-            const links = menu.querySelectorAll('.quick-nav-link');
-            links.forEach(link => {
-                link.addEventListener('click', () => {
-                    toggleButton.classList.remove('open');
-                    menu.classList.remove('active');
-                });
-            });
-        };
-
         document.addEventListener('DOMContentLoaded', function () {
 
-            // ---------------------------------------------------------
-            // 1. LOGICA DE LOGIN (AFIȘARE USER vs BUTOANE)
-            // ---------------------------------------------------------
-            const userDisplay = document.getElementById('userHeaderDisplay');
-            const userNameSpan = document.getElementById('userHeaderName');
-            const authLinks = document.querySelectorAll('.auth-link'); // Login & Register
-
-            // Verificăm memoria browserului
-            let currentUser = null;
-            const storedUser = localStorage.getItem('currentUser');
-            const storedEmail = localStorage.getItem('userEmail');
-
-            if (storedUser) {
-                try { currentUser = JSON.parse(storedUser); } catch (e) { }
-            } else if (storedEmail) {
-                currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
-            }
-
-            if (currentUser) {
-                // === UTILIZATOR LOGAT ===
-                // 1. Arată zona cu "Salut!"
-                if (userDisplay) {
-                    userDisplay.style.display = 'flex';
-                    const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
-                    if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
-                }
-                // 2. Ascunde butoanele Login/Register
-                authLinks.forEach(link => link.style.display = 'none');
-            } else {
-                // === NE-LOGAT ===
-                // 1. Ascunde zona cu "Salut!"
-                if (userDisplay) userDisplay.style.display = 'none';
-                // 2. Arată butoanele Login/Register
-                authLinks.forEach(link => link.style.display = 'inline-block');
-            }
-
-            // ---------------------------------------------------------
-            // 2. LOGICA MENIU HAMBURGER (QUICK NAV)
-            // ---------------------------------------------------------
+            // 1. SELECTĂM ELEMENTELE
             const toggleButton = document.getElementById('quickNavToggle');
             const menu = document.getElementById('quickNavMenu');
+            const navLinks = document.querySelectorAll('.quick-nav-link'); // Toate link-urile din meniu
 
+            // 2. FUNCȚIONALITATE HAMBURGER (DESCHIDE/ÎNCHIDE)
             if (toggleButton && menu) {
                 toggleButton.addEventListener('click', () => {
                     toggleButton.classList.toggle('open');
                     menu.classList.toggle('active');
                 });
+            }
 
-                // Închide meniul la click pe link
-                const links = menu.querySelectorAll('.quick-nav-link');
-                links.forEach(link => {
-                    link.addEventListener('click', () => {
-                        toggleButton.classList.remove('open');
-                        menu.classList.remove('active');
-                    });
+            // 3. SECURIZARE MENIU (INTERCEPTEAZĂ CLICK-URILE)
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+
+                    // Verificăm dacă utilizatorul este logat
+                    const user = localStorage.getItem('userEmail') || localStorage.getItem('currentUser');
+
+                    // Daca NU este logat
+                    if (!user) {
+                        e.preventDefault(); // OPRIM navigarea către pagina dorită
+
+                        // Închidem meniul vizual (ca să nu rămână deschis peste pagina de login)
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+
+                        // Alertăm și redirecționăm
+                        alert("Accesul la meniu este permis doar utilizatorilor conectați! Te rugăm să te autentifici.");
+                        window.location.href = 'Login.html';
+                    } else {
+                        // Dacă ESTE logat, doar închidem meniul și lăsăm link-ul să meargă
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+                    }
                 });
+            });
+
+
+            // --- LOGICA DISPLAY UTILIZATOR (Salut, User) ---
+            const userDisplay = document.getElementById('userHeaderDisplay');
+            const userNameSpan = document.getElementById('userHeaderName');
+            const authLinks = document.querySelectorAll('.auth-link'); // Butoanele Login/Register
+
+            // Verificăm localStorage
+            let currentUser = null;
+            const storedUser = localStorage.getItem('currentUser');
+            const storedEmail = localStorage.getItem('userEmail');
+
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch (e) {
+                    console.error("Eroare la parsarea userului", e);
+                }
+            } else if (storedEmail) {
+                // Dacă avem doar email, creăm un user temporar
+                currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
+            }
+
+            if (currentUser) {
+                // ESTE LOGAT:
+                // 1. Afișăm zona de profil
+                if (userDisplay) {
+                    userDisplay.style.display = 'flex';
+                    // Folosim numele dacă există, altfel email-ul trunchiat, altfel "User"
+                    const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
+                    if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
+                }
+
+                // 2. Ascundem butoanele Login/Register
+                authLinks.forEach(link => link.style.display = 'none');
+            } else {
+                // NU ESTE LOGAT:
+                if (userDisplay) userDisplay.style.display = 'none';
+                authLinks.forEach(link => link.style.display = 'inline-block');
             }
         });
     </script>
 
-
-    <div class="artists-container" id="artists-grid">
-
-        <div class="artist-card">
-            <img src="calea/catre/imaginea/artistului1.jpg" alt="Imagine Artist 1" class="artist-image">
-            <div class="artist-info">
-                <h2>Nume Artist 1</h2>
-
-                <a href="#" class="details-button" data-name="Nume Artist 1" data-genre="Rock Alternativ"
-                    data-stage="Main Stage" data-time="Vineri, 22:00 - 23:30"
-                    data-image="calea/catre/imaginea/artistului1.jpg"
-                    data-description="Nume Artist 1 este cap de afiș. Setul va include piese de pe noul album și hit-uri clasice. Nu ratați show-ul lor de lumini!"
-                    data-social-link="https://instagram.com/artist1">
-                    Detalii & Oră
-                </a>
-            </div>
-        </div>
-        <div class="artist-card">
-            <img src="calea/catre/imaginea/artistului2.jpg" alt="Imagine Artist 2" class="artist-image">
-            <div class="artist-info">
-                <h2>Nume Artist 2</h2>
-
-                <a href="#" class="details-button" data-name="Nume Artist 2" data-genre="Techno Progresiv"
-                    data-stage="Electronic Dome" data-time="Sâmbătă, 01:00 - 03:00"
-                    data-image="calea/catre/imaginea/artistului2.jpg"
-                    data-description="Faimosul DJ 2 aduce un set exploziv de 2 ore. Pregătiți-vă pentru un show cu mult bass și efecte vizuale uimitoare."
-                    data-social-link="https://facebook.com/artist2">
-                    Detalii & Oră
-                </a>
-            </div>
-        </div>
-        <div class="artist-card">
-            <img src="calea/catre/imaginea/artistului3.jpg" alt="Imagine Artist 3" class="artist-image">
-            <div class="artist-info">
-                <h2>Nume Artist 3</h2>
-                <a href="#" class="details-button" data-name="Nume Artist 2" data-genre="Techno Progresiv"
-                    data-stage="Electronic Dome" data-time="Sâmbătă, 01:00 - 03:00"
-                    data-image="calea/catre/imaginea/artistului2.jpg"
-                    data-description="Faimosul DJ 2 aduce un set exploziv de 2 ore. Pregătiți-vă pentru un show cu mult bass și efecte vizuale uimitoare."
-                    data-social-link="https://facebook.com/artist2">
-                    Detalii & Oră
-                </a>
-            </div>
-        </div>
-        <div class="artist-card">
-            <img src="calea/catre/imaginea/artistului1.jpg" alt="Imagine Artist 1" class="artist-image">
-            <div class="artist-info">
-                <h2>Nume Artist 1</h2>
-                <a href="#" class="details-button" data-name="Nume Artist 2" data-genre="Techno Progresiv"
-                    data-stage="Electronic Dome" data-time="Sâmbătă, 01:00 - 03:00"
-                    data-image="calea/catre/imaginea/artistului2.jpg"
-                    data-description="Faimosul DJ 2 aduce un set exploziv de 2 ore. Pregătiți-vă pentru un show cu mult bass și efecte vizuale uimitoare."
-                    data-social-link="https://facebook.com/artist2">
-                    Detalii & Oră
-                </a>
-            </div>
-        </div>
-        <div class="artist-card">
-            <img src="calea/catre/imaginea/artistului1.jpg" alt="Imagine Artist 1" class="artist-image">
-            <div class="artist-info">
-                <h2>Nume Artist 1</h2>
-                <a href="#" class="details-button" data-name="Nume Artist 2" data-genre="Techno Progresiv"
-                    data-stage="Electronic Dome" data-time="Sâmbătă, 01:00 - 03:00"
-                    data-image="calea/catre/imaginea/artistului2.jpg"
-                    data-description="Faimosul DJ 2 aduce un set exploziv de 2 ore. Pregătiți-vă pentru un show cu mult bass și efecte vizuale uimitoare."
-                    data-social-link="https://facebook.com/artist2">
-                    Detalii & Oră
-                </a>
-            </div>
-        </div>
-        <div class="artist-card">
-            <img src="calea/catre/imaginea/artistului1.jpg" alt="Imagine Artist 1" class="artist-image">
-            <div class="artist-info">
-                <h2>Nume Artist 1</h2>
-                <a href="#" class="details-button" data-name="Nume Artist 2" data-genre="Techno Progresiv"
-                    data-stage="Electronic Dome" data-time="Sâmbătă, 01:00 - 03:00"
-                    data-image="calea/catre/imaginea/artistului2.jpg"
-                    data-description="Faimosul DJ 2 aduce un set exploziv de 2 ore. Pregătiți-vă pentru un show cu mult bass și efecte vizuale uimitoare."
-                    data-social-link="https://facebook.com/artist2">
-                    Detalii & Oră
-                </a>
-            </div>
+    <div id="addArtistModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-add-btn" style="float:right; cursor:pointer; font-size:28px;">&times;</span>
+            <h2 style="color: #04b3d2; text-align: center; border-bottom: 2px solid #04b3d2; padding-bottom: 10px;">
+                Adaugă Artist Nou
+            </h2>
+            <form id="quickAddForm" style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                <div>
+                    <label style="color: #04b3d2; font-weight: bold;">Nume Scenă</label>
+                    <input type="text" id="new_nume" required placeholder="ex: David Guetta"
+                        style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                </div>
+                <div>
+                    <label style="color: #04b3d2; font-weight: bold;">Gen Muzical</label>
+                    <input type="text" id="new_gen" required placeholder="ex: House"
+                        style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                </div>
+                <div>
+                    <label style="color: #04b3d2; font-weight: bold;">Link Poză (URL)</label>
+                    <input type="text" id="new_poza" placeholder="https://..."
+                        style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div>
+                        <label style="color: #04b3d2; font-weight: bold;">Scena</label>
+                        <select id="new_scena" style="width: 100%; padding: 10px; border-radius: 5px;">
+                            <option value="Main Stage">Main Stage</option>
+                            <option value="Electronic Dome">Electronic Dome</option>
+                            <option value="Underground Bunker">Underground Bunker</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="color: #04b3d2; font-weight: bold;">Ora</label>
+                        <input type="text" id="new_ora" placeholder="Vineri, 22:00"
+                            style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                    </div>
+                </div>
+                <div>
+                    <label style="color: #04b3d2; font-weight: bold;">Descriere</label>
+                    <textarea id="new_descriere" rows="3" placeholder="Scurtă descriere..."
+                        style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;"></textarea>
+                </div>
+                <button type="submit" class="btn"
+                    style="background: #ffd700; color: black; font-weight: bold; border: none; padding: 15px; cursor: pointer; border-radius: 25px;">
+                    SALVEAZĂ ARTISTUL
+                </button>
+            </form>
         </div>
     </div>
 
     <div id="artistModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-
-            <img id="modal-image" src="" alt="Imagine Artist Modal" class="modal-artist-image">
+            <img id="modal-image" src="" alt="Imagine Artist" class="modal-artist-image">
             <div class="modal-info">
                 <h2 id="modal-name">Nume Artist</h2>
-                <p><strong class="modal-label">Gen:</strong> <span id="modal-genre">Rock Alternativ</span></p>
-                <p><strong class="modal-label">Scena:</strong> <span id="modal-stage">Main Stage</span></p>
-                <p><strong class="modal-label">Ora de Început:</strong> <span id="modal-time">22:00 - 23:30</span></p>
-                <p><strong class="modal-label">Descriere:</strong> <span id="modal-description">Biografia completă a
-                        artistului și detalii despre setlist.</span></p>
+                <p><strong class="modal-label">Gen:</strong> <span id="modal-genre"></span></p>
+                <p><strong class="modal-label">Scena:</strong> <span id="modal-stage"></span></p>
+                <p><strong class="modal-label">Ora:</strong> <span id="modal-time"></span></p>
+                <p><strong class="modal-label">Descriere:</strong> <span id="modal-description"></span></p>
                 <a id="modal-social" href="#" target="_blank" class="modal-social-btn">Vezi Social Media</a>
             </div>
         </div>
     </div>
+
     <div class="speaker-wall left-wall">
         <div class="column outer"></div>
         <div class="column inner"></div>
     </div>
-
     <div class="speaker-wall right-wall">
         <div class="column outer"></div>
         <div class="column inner"></div>
-
     </div>
-    <script>
-        // --------------------------------------------------------------------
-        // CONFIGURARE
-        // --------------------------------------------------------------------
-
-        // ATENȚIE: Aceasta presupune că 'artisti.php' este în ACELAȘI folder cu 'Artisti.html'.
-        // Dacă 'artisti.php' este în folderul 'studenti', schimbă în: 'studenti/artisti.php'
-        const API_URL = 'http://localhost:8080/artisti.php';
-
-        const artistsGrid = document.getElementById('artists-grid');
-
-        // Elemente Modal
-        const modal = document.getElementById('artistModal');
-        const closeBtn = document.querySelector('.close-btn');
-        const modalImage = document.getElementById('modal-image');
-        const modalName = document.getElementById('modal-name');
-        const modalGenre = document.getElementById('modal-genre');
-        const modalStage = document.getElementById('modal-stage');
-        const modalTime = document.getElementById('modal-time');
-        const modalDescription = document.getElementById('modal-description');
-        const modalSocial = document.getElementById('modal-social');
-
-        // --------------------------------------------------------------------
-        // 1. Funcția de creare a HTML-ului (Cardul Artistului)
-        // --------------------------------------------------------------------
-        function createArtistCard(artist) {
-            // Verificăm dacă există o imagine, altfel punem una default
-            const imageSrc = artist.url_poza ? artist.url_poza : 'images/default-placeholder.jpg';
-
-            return `
-        <div class="artist-card">
-            <img src="${imageSrc}" alt="Imagine ${artist.nume_scena}" class="artist-image" onerror="this.src='images/default-placeholder.jpg'">
-            <div class="artist-info">
-                <h2>${artist.nume_scena}</h2>
-                
-                <a href="#" class="details-button"
-                    data-name="${artist.nume_scena}"
-                    data-genre="${artist.gen_muzical}"
-                    data-stage="${artist.scena_alocata}"
-                    data-time="${artist.orar_prezentare}"
-                    data-image="${imageSrc}"
-                    data-description="${artist.descriere_scurta}"
-                    data-social-link="${artist.link_social_media}">
-                    Detalii & Oră
-                </a>
-            </div>
-        </div>
-        `;
-        }
-
-        // --------------------------------------------------------------------
-        // 2. Logica Modală (Pop-up)
-        // --------------------------------------------------------------------
-        function openModal(e) {
-            e.preventDefault();
-            // 'currentTarget' asigură că luăm datele de pe buton, chiar dacă dăm click pe textul din interior
-            const data = e.currentTarget.dataset;
-
-            modalImage.src = data.image;
-            modalName.textContent = data.name;
-            modalGenre.textContent = data.genre;
-            modalStage.textContent = data.stage;
-            modalTime.textContent = data.time;
-            modalDescription.textContent = data.description;
-            modalSocial.href = data.socialLink;
-
-            modal.style.display = 'block';
-        }
-
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-
-        // --------------------------------------------------------------------
-        // 3. Atașarea Evenimentelor (Click)
-        // --------------------------------------------------------------------
-        function attachModalEvents() {
-            const detailButtons = document.querySelectorAll('.details-button');
-
-            detailButtons.forEach(button => {
-                button.removeEventListener('click', openModal); // Previne duplicarea
-                button.addEventListener('click', openModal);
-            });
-        }
-
-        // Evenimente globale pentru închiderea modalului
-        if (closeBtn) closeBtn.addEventListener('click', closeModal);
-
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) closeModal();
-        });
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'block') closeModal();
-        });
-
-        // --------------------------------------------------------------------
-        // 4. Funcția Principală: Încărcare date din PHP
-        // --------------------------------------------------------------------
-        async function loadArtists() {
-            if (artistsGrid) {
-                artistsGrid.innerHTML = '<p style="text-align:center; padding:20px;">Se încarcă artiștii...</p>';
-            }
-
-            try {
-                const response = await fetch(API_URL);
-
-                // Verificăm dacă răspunsul rețelei este OK (cod 200)
-                if (!response.ok) {
-                    throw new Error(`Eroare HTTP: ${response.status} - Fișierul PHP nu a fost găsit.`);
-                }
-
-                // Verificăm dacă răspunsul este JSON valid
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error("Răspunsul primit nu este JSON. Verifică erorile din fișierul PHP.");
-                }
-
-                const artists = await response.json();
-
-                if (artistsGrid) {
-                    artistsGrid.innerHTML = ''; // Curățăm loader-ul
-
-                    if (artists.length === 0) {
-                        artistsGrid.innerHTML = '<p style="text-align:center;">Nu există artiști în baza de date.</p>';
-                        return;
-                    }
-
-                    // Generăm cardurile
-                    let htmlContent = '';
-                    artists.forEach(artist => {
-                        htmlContent += createArtistCard(artist);
-                    });
-                    artistsGrid.innerHTML = htmlContent;
-
-                    // Activăm butoanele
-                    attachModalEvents();
-                }
-
-            } catch (error) {
-                console.error('Eroare detaliată:', error);
-                if (artistsGrid) {
-                    artistsGrid.innerHTML = `
-                    <div style="text-align:center; color:red; padding:20px; border:1px solid red; background:#fff0f0;">
-                        <h3>A apărut o eroare!</h3>
-                        <p>${error.message}</p>
-                        <p><small>Verifică consola (F12) pentru detalii tehnice.</small></p>
-                    </div>`;
-                }
-            }
-        }
-
-        // Pornire la încărcarea paginii
-        document.addEventListener('DOMContentLoaded', loadArtists);
-    </script>
 
     <canvas id="particle-canvas" class="particle-background"></canvas>
     <script defer src="script.js"></script>
 
+    <script>
+        // Configurare API (fără port specific, pentru a merge pe orice server)
+        const API_URL = 'http://localhost:8080/artisti.php';
+        const API_ADD_URL = 'http://localhost:8080/add_artist.php';
 
+        const artistsGrid = document.getElementById('artists-grid');
+
+        // Funcția de creare card
+        function createArtistCard(artist) {
+            return `
+            <div class="artist-card">
+                <img src="${artist.url_poza}" alt="${artist.nume_scena}" class="artist-image">
+                <div class="artist-info">
+                    <h2>${artist.nume_scena}</h2>
+                    <a href="#" class="details-button"
+                        data-name="${artist.nume_scena}"
+                        data-genre="${artist.gen_muzical}"
+                        data-stage="${artist.scena_alocata}"
+                        data-time="${artist.orar_prezentare}"
+                        data-image="${artist.url_poza}"
+                        data-description="${artist.descriere_scurta}"
+                        data-social-link="${artist.link_social_media}">
+                        Detalii & Oră
+                    </a>
+                </div>
+            </div>`;
+        }
+
+        // Încărcare Artiști
+        async function loadArtists() {
+            if (!artistsGrid) return;
+            artistsGrid.innerHTML = '<p style="text-align:center; padding:20px; color:white;">Se încarcă artiștii...</p>';
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error("Nu am putut conecta la artisti.php");
+                const artists = await response.json();
+
+                artistsGrid.innerHTML = '';
+                if (artists.length === 0) {
+                    artistsGrid.innerHTML = '<p style="text-align:center; color:white;">Nu există artiști.</p>';
+                    return;
+                }
+                let htmlContent = '';
+                artists.forEach(artist => htmlContent += createArtistCard(artist));
+                artistsGrid.innerHTML = htmlContent;
+                attachModalEvents();
+            } catch (error) {
+                console.error(error);
+                artistsGrid.innerHTML = '<p style="text-align:center; color:red;">Eroare la încărcare.</p>';
+            }
+        }
+
+        // Evenimente Modal Detalii
+        const modal = document.getElementById('artistModal');
+        const closeBtn = document.querySelector('.close-btn');
+
+        function openModal(e) {
+            e.preventDefault();
+            const data = e.currentTarget.dataset;
+            document.getElementById('modal-image').src = data.image;
+            document.getElementById('modal-name').textContent = data.name;
+            document.getElementById('modal-genre').textContent = data.genre;
+            document.getElementById('modal-stage').textContent = data.stage;
+            document.getElementById('modal-time').textContent = data.time;
+            document.getElementById('modal-description').textContent = data.description;
+            document.getElementById('modal-social').href = data.socialLink;
+            modal.style.display = 'block';
+        }
+        function attachModalEvents() {
+            document.querySelectorAll('.details-button').forEach(btn => {
+                btn.addEventListener('click', openModal);
+            });
+        }
+        if (closeBtn) closeBtn.onclick = () => modal.style.display = 'none';
+        window.onclick = (e) => { if (e.target == modal) modal.style.display = 'none'; };
+
+        // === LOGICA ADMIN (SALVARE ARTIST) ===
+        document.addEventListener('DOMContentLoaded', function () {
+            loadArtists();
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const headerAddBtn = document.getElementById('headerAddBtn');
+            const addModal = document.getElementById('addArtistModal');
+            const closeAddBtn = document.querySelector('.close-add-btn');
+            const addForm = document.getElementById('quickAddForm');
+
+            // 1. Arată butonul de Admin
+            if (currentUser && currentUser.role === 'admin' && headerAddBtn) {
+                headerAddBtn.style.display = 'flex';
+                headerAddBtn.onclick = (e) => {
+                    e.preventDefault();
+                    if (addModal) addModal.style.display = 'block';
+                };
+            }
+
+            // 2. Închidere Modal Adăugare
+            if (closeAddBtn) closeAddBtn.onclick = () => addModal.style.display = 'none';
+
+            // 3. SALVAREA PROPRIU-ZISĂ (Aici era problema cu refresh-ul)
+            if (addForm) {
+                addForm.addEventListener('submit', async function (e) {
+                    e.preventDefault(); // <--- ASTA OPREȘTE REFRESH-UL
+
+                    const submitBtn = addForm.querySelector('button[type="submit"]');
+                    submitBtn.textContent = "Se salvează...";
+                    submitBtn.disabled = true;
+
+                    const newArtistData = {
+                        nume: document.getElementById('new_nume').value,
+                        gen: document.getElementById('new_gen').value,
+                        poza: document.getElementById('new_poza').value,
+                        scena: document.getElementById('new_scena').value,
+                        ora: document.getElementById('new_ora').value,
+                        descriere: document.getElementById('new_descriere').value
+                    };
+
+                    try {
+                        const response = await fetch(API_ADD_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(newArtistData)
+                        });
+                        const result = await response.json();
+
+                        if (result.success) {
+                            alert("Artist adăugat!");
+                            addModal.style.display = 'none';
+                            addForm.reset();
+                            loadArtists(); // Reîncarcă lista
+                        } else {
+                            alert("Eroare: " + result.message);
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        alert("Eroare de conexiune cu add_artist.php");
+                    }
+                    submitBtn.textContent = "SALVEAZĂ ARTISTUL";
+                    submitBtn.disabled = false;
+                });
+            }
+        });
+    </script>
+
+    <footer class="site-footer">
+        <div class="footer-left">© 2025 Urban Beat</div>
+        <div class="footer-right">
+            <a href="FAQ.html" class="btn">Faq</a>
+            <a href="Contact.html" class="btn">Contact</a>
+        </div>
+    </footer>
 </body>
-<footer class="site-footer">
-    <div class="footer-left">© 2025 Urban Beat</div>
-    <div class="footer-right">
-        <a href="FAQ.html" class="btn">Faq</a>
-        <a href="Contact.html" class="btn">Contact</a>
-    </div>
-</footer>
 
 </html>

@@ -1,165 +1,239 @@
 <!DOCTYPE html>
-<html>
+<html lang="ro">
 
 <head>
     <meta charset="UTF-8">
-    <title>Donații - Urban Beat</title>
+    <title>Susține Urban Beat</title>
     <link rel="stylesheet" href="Index.css">
-    <link rel="stylesheet" href="Donatii.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
 </head>
 
 <body>
+
     <header class="site-header">
-        <div class="logo">
-            <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+
+        <div class="header-left-group">
+            <div class="logo">
+                <a href="Index.html"><img src="aaa.png" alt="Logo Urban Beat Festival"> </a>
+            </div>
+            <a href="FAQ.html" class="btn btn-faq-left">FAQ</a>
         </div>
 
         <nav class="main-nav">
-            <a href="Login.html" class="btn">Login</a>
-            <a href="Register.html" class="btn">Register</a>
-            <a href="FAQ.html" class="btn">FAQ</a>
+            <a href="Login.html" class="btn auth-link">Login</a>
+            <a href="Register.html" class="btn auth-link">Register</a>
         </nav>
 
-        <!-- Butonul Quick Nav vine AICI, la sfârșitul header-ului, pentru a fi ultimul element la dreapta -->
-        <div class="quick-nav-container">
-            <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <div id="quickNavMenu" class="quick-nav-menu">
-                <a href="index.html" class="quick-nav-link">Acasă</a>
-                <a href="Artisti.html" class="quick-nav-link">Artiști</a>
-                <a href="CumBil.html" class="quick-nav-link">Bilete</a>
-                <a href="regulament.html" class="quick-nav-link">Regulament</a>
-                <a href="FAQ.html" class="quick-nav-link">FAQ</a>
-                <a href="profile.html" class="quick-nav-link">Profil</a>
+        <div class="header-right-section">
+
+            <a href="AdminDonatii.html" id="adminDonationBtn" class="header-add-btn" style="display: none;">
+                <i class="fa-solid fa-sack-dollar"></i> Admin Donații
+            </a>
+            <a href="profile.html" id="userHeaderDisplay" class="user-header-display" style="display: none;">
+                <span id="userHeaderName">Salut!</span>
+                <div class="header-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </a>
+
+            <div class="quick-nav-container">
+                <button id="quickNavToggle" class="hamburger-btn" aria-label="Meniu Navigare Rapidă">
+                    <span></span><span></span><span></span>
+                </button>
+                <<div id="quickNavMenu" class="quick-nav-menu">
+                    <a href="index.html" class="quick-nav-link">Acasă</a>
+                    <a href="program.html" class="quick-nav-link">Program</a>
+                    <a href="Artisti.html" class="quick-nav-link">Artiști</a>
+                    <a href="CumBil.html" class="quick-nav-link" onclick="verificSiMergi(event)">Bilete</a>
+                    <a href="regulament.html" class="quick-nav-link">Regulament</a>
+                    <a href="FAQ.html" class="quick-nav-link">FAQ</a>
+                    <a href="profile.html" class="quick-nav-link">Profil</a>
+                    <a href="Donatii.html" class="quick-nav-link">Donații</a>
+                    <a href="recenzii.html" class="quick-nav-link">Recenzii</a>
+
             </div>
         </div>
+        </div>
+
         <div class="speaker-wall left-wall">
             <div class="column outer"></div>
             <div class="column inner"></div>
         </div>
-
         <div class="speaker-wall right-wall">
             <div class="column outer"></div>
             <div class="column inner"></div>
-
         </div>
-        <script>
-            window.onload = function () {
-                const toggleButton = document.getElementById('quickNavToggle');
-                const menu = document.getElementById('quickNavMenu');
 
-                // Asigură că funcția se rulează doar dacă elementele există
-                if (!toggleButton || !menu) return;
-
-                // Adaugă un ascultător de evenimente pe buton (CORECTAT: 'toggleButton' în loc de 'toggleton')
-                toggleButton.addEventListener('click', () => {
-                    // Comută clasa 'open' pe buton pentru a schimba starea vizuală (animarea X-ului)
-                    toggleButton.classList.toggle('open');
-
-                    // Comută clasa 'active' pe meniul derulant pentru a-l afișa/ascunde
-                    menu.classList.toggle('active');
-
-                    // Opțional: Poți adăuga logica pentru a închide meniul la click în afara lui
-                });
-
-                // Opțional: Închide meniul dacă se dă click pe un link din interior
-                const links = menu.querySelectorAll('.quick-nav-link');
-                links.forEach(link => {
-                    link.addEventListener('click', () => {
-                        toggleButton.classList.remove('open');
-                        menu.classList.remove('active');
-                    });
-                });
-            };
-
-        </script>
     </header>
 
     <main>
-        <h1>Susține Viziunea Urban Beat!</h1>
+        <div class="donation-container">
+            <h1 style="text-align:center; margin-bottom:10px;">Susține Festivalul 💖</h1>
+            <p style="text-align:center; color:#ccc; margin-bottom:30px;">Donația ta ajută tinerii artiști să urce pe
+                scenă.</p>
 
-        <section class="donation-section">
-            <p class="intro-text">
-                Fiecare contribuție ne ajută să creștem calitatea artiștilor, scenografia și experiența generală a
-                festivalului. Îți mulțumim pentru generozitate!
-            </p>
+            <div class="amount-options">
+                <button class="amount-btn" onclick="selectAmount(10)">10 RON</button>
+                <button class="amount-btn" onclick="selectAmount(50)">50 RON</button>
+                <button class="amount-btn active" onclick="selectAmount(100)">100 RON</button>
+            </div>
 
-            <form action="proceseaza_donatie.php" method="POST" class="donation-form">
+            <label>Sau o altă sumă:</label>
+            <input type="number" id="customAmount" class="custom-amount" placeholder="ex: 250" value="100">
 
-                <h2>Alege Suma</h2>
+            <label>Mesaj de încurajare (opțional):</label>
+            <textarea id="message" class="message-box" placeholder="Scrie un gând bun..."></textarea>
 
-                <div class="amount-options">
-                    <input type="radio" id="d25" name="amount" value="25" required>
-                    <label for="d25" class="amount-btn">25 RON</label>
-
-                    <input type="radio" id="d50" name="amount" value="50">
-                    <label for="d50" class="amount-btn">50 RON</label>
-
-                    <input type="radio" id="d100" name="amount" value="100">
-                    <label for="d100" class="amount-btn">100 RON</label>
-                </div>
-
-                <div class="custom-amount">
-                    <label for="custom">Sau introdu o sumă personalizată (RON):</label>
-                    <input type="number" id="custom" name="custom_amount" min="10" placeholder="e.g., 75">
-                </div>
-
-                <div class="form-group">
-                    <label for="donor-name">Nume (Opțional):</label>
-                    <input type="text" id="donor-name" name="donor_name" placeholder="Anonim">
-                </div>
-
-                <button type="submit" class="donate-btn">Donează Acum! 💙</button>
-            </form>
-
-            <p class="thanks-text">Toate tranzacțiile sunt sigure și procesate printr-un partener de plată. Mulțumim!
-            </p>
-        </section>
-
+            <button id="btnDonate" class="donate-submit">DONEAZĂ ACUM</button>
+        </div>
     </main>
 
     <canvas id="particle-canvas" class="particle-background"></canvas>
-    <script defer src="script.js"></script>
-    <button id="scrollTopBtn" title="Mergi sus">
-        &#9650; <!-- Săgeată în sus -->
-    </button>
+
+    <script src="script.js"></script>
 
     <script>
-        // Logica pentru butonul "Go to Top"
-        window.onload = function () {
-            const scrollButton = document.getElementById('scrollTopBtn');
-            // Arată butonul după 300px de scroll
-            const scrollThreshold = 300;
+        document.addEventListener('DOMContentLoaded', function () {
 
-            // Funcția care gestionează vizibilitatea butonului la scroll
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > scrollThreshold) {
-                    scrollButton.classList.add('show');
-                } else {
-                    scrollButton.classList.remove('show');
-                }
-            });
+            // 1. SELECTĂM ELEMENTELE
+            const toggleButton = document.getElementById('quickNavToggle');
+            const menu = document.getElementById('quickNavMenu');
+            const navLinks = document.querySelectorAll('.quick-nav-link'); // Toate link-urile din meniu
 
-            // Funcția care realizează scroll-ul lin înapoi în vârf
-            scrollButton.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth' // Scroll animat
+            // 2. FUNCȚIONALITATE HAMBURGER (DESCHIDE/ÎNCHIDE)
+            if (toggleButton && menu) {
+                toggleButton.addEventListener('click', () => {
+                    toggleButton.classList.toggle('open');
+                    menu.classList.toggle('active');
+                });
+            }
+
+            // 3. SECURIZARE MENIU (INTERCEPTEAZĂ CLICK-URILE)
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+
+                    // Verificăm dacă utilizatorul este logat
+                    const user = localStorage.getItem('userEmail') || localStorage.getItem('currentUser');
+
+                    // Daca NU este logat
+                    if (!user) {
+                        e.preventDefault(); // OPRIM navigarea către pagina dorită
+
+                        // Închidem meniul vizual (ca să nu rămână deschis peste pagina de login)
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+
+                        // Alertăm și redirecționăm
+                        alert("Accesul la meniu este permis doar utilizatorilor conectați! Te rugăm să te autentifici.");
+                        window.location.href = 'Login.html';
+                    } else {
+                        // Dacă ESTE logat, doar închidem meniul și lăsăm link-ul să meargă
+                        if (toggleButton) toggleButton.classList.remove('open');
+                        if (menu) menu.classList.remove('active');
+                    }
                 });
             });
-        };
+            // --- LOGICA DISPLAY UTILIZATOR (Salut, User) ---
+            const userDisplay = document.getElementById('userHeaderDisplay');
+            const userNameSpan = document.getElementById('userHeaderName');
+            const authLinks = document.querySelectorAll('.auth-link'); // Butoanele Login/Register
+
+            // Verificăm localStorage
+            let currentUser = null;
+            const storedUser = localStorage.getItem('currentUser');
+            const storedEmail = localStorage.getItem('userEmail');
+
+            if (storedUser) {
+                try {
+                    currentUser = JSON.parse(storedUser);
+                } catch (e) {
+                    console.error("Eroare la parsarea userului", e);
+                }
+            } else if (storedEmail) {
+                // Dacă avem doar email, creăm un user temporar
+                currentUser = { nume: storedEmail.split('@')[0], email: storedEmail };
+            }
+
+            if (currentUser) {
+                // ESTE LOGAT:
+                // 1. Afișăm zona de profil
+                if (userDisplay) {
+                    userDisplay.style.display = 'flex';
+                    // Folosim numele dacă există, altfel email-ul trunchiat, altfel "User"
+                    const displayName = currentUser.nume || currentUser.prenume || (currentUser.email ? currentUser.email.split('@')[0] : "User");
+                    if (userNameSpan) userNameSpan.textContent = `Salut, ${displayName}!`;
+                }
+
+                // 2. Ascundem butoanele Login/Register
+                authLinks.forEach(link => link.style.display = 'none');
+            } else {
+                // NU ESTE LOGAT:
+                if (userDisplay) userDisplay.style.display = 'none';
+                authLinks.forEach(link => link.style.display = 'inline-block');
+            }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Verificare Rol Admin pentru Buton
+            const user = JSON.parse(localStorage.getItem('currentUser'));
+            if (user && user.role === 'admin') {
+                const adminBtn = document.getElementById('adminDonationBtn');
+                if (adminBtn) adminBtn.style.display = 'flex'; // Îl facem vizibil
+            }
+
+            // 2. Selectare Sumă
+            window.selectAmount = function (val) {
+                document.getElementById('customAmount').value = val;
+                document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+                event.target.classList.add('active');
+            }
+        });
+
+        // 3. Procesare Donație
+        document.getElementById('btnDonate').addEventListener('click', async () => {
+            const userEmail = localStorage.getItem('userEmail');
+
+            if (!userEmail) {
+                alert("Trebuie să fii conectat pentru a dona!");
+                window.location.href = 'Login.html';
+                return;
+            }
+
+            const suma = document.getElementById('customAmount').value;
+            const mesaj = document.getElementById('message').value;
+
+            if (suma < 1) { alert("Te rog introdu o sumă validă."); return; }
+
+            const btn = document.getElementById('btnDonate');
+            btn.textContent = "Se procesează...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('http://localhost:8080/process_donation.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: userEmail, suma: suma, mesaj: mesaj })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    alert("Mulțumim din suflet pentru donație!");
+                    window.location.href = 'profile.html';
+                } else {
+                    alert("Eroare: " + data.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Eroare conexiune.");
+            }
+            btn.textContent = "DONEAZĂ ACUM";
+            btn.disabled = false;
+        });
     </script>
-    <footer class="site-footer">
-        <div class="footer-left">© 2025 Urban Beat</div>
-        <div class="footer-right">
-            <a href="FAQ.html" class="btn">Faq</a>
-            <a href="Contact.html" class="btn">Contact</a>
-        </div>
-    </footer>
 </body>
 
 </html>
